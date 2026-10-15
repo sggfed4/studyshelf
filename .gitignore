@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+src/App.css.backup-*
+src/App.jsx.backup-*
+src/games-before-restore.js
+README-HOVER-CARDS.txt
+README-STUDYSHELF-UPDATE.txt
+public/MADKIDGAMES-ads.txt-line.txt
