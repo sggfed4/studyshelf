@@ -4,12 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#080d16" />
-    <meta name="description" content="StudyShelf organizes a browsable collection of sources and useful web tools." />
+    <meta name="description" content="StudyShelf is a browsable library of browser games and useful web tools." />
     <link rel="icon" type="image/svg+xml" href="/bookshelf.svg" />
     <title>StudyShelf</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if (window.location.hostname === 'studyshelf.org' || window.location.hostname === 'www.studyshelf.org') {
+        const socialBarScript = document.createElement('script');
+        socialBarScript.setAttribute('data-cfasync', 'false');
+        socialBarScript.src = 'https://bauval.org/14/17f4f5ec106bb922cec5d05423d1f336';
+        document.body.appendChild(socialBarScript);
+      }
+    </script>
   </body>
 </html>

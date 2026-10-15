@@ -111,3 +111,282 @@
 @media (prefers-reduced-motion: reduce) {
   .source-card, .source-card__image, .source-card__overlay { transition: none; }
 }
+
+/* StudyShelf 3.1 update: homepage hierarchy, responsive game player, and ad slots. */
+.home-hero {
+  margin: 2px 0 18px;
+  padding: 4px 0 0;
+}
+.home-hero h1 {
+  margin: 3px 0 8px;
+  color: #eff7ff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 6vw, 68px);
+  font-weight: 600;
+  line-height: .98;
+  letter-spacing: -.075em;
+}
+.home-hero__copy {
+  margin: 0;
+  color: #9aadc4;
+  font-size: clamp(13px, 1.35vw, 15px);
+  line-height: 1.65;
+}
+.page-heading--catalog {
+  margin-top: 30px;
+  margin-bottom: 16px;
+  align-items: end;
+}
+.page-heading--catalog h2 {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #e9f3ff;
+  font-size: clamp(22px, 2.4vw, 29px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.05em;
+}
+.ad-slot {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  color: #73869e;
+}
+.ad-label {
+  margin: 0;
+  color: #70839a;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .14em;
+}
+.ad-slot__unit {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.home-banner {
+  width: 100%;
+  margin: 20px auto 26px;
+}
+.home-banner .ad-slot__unit {
+  max-width: 100%;
+}
+.home-native-ad,
+.game-native-ad {
+  margin: 28px auto 0;
+  padding: 17px 12px 18px;
+  border: 1px solid rgba(124, 158, 197, .13);
+  border-radius: 14px;
+  background: rgba(13, 24, 39, .65);
+}
+.native-ad__host {
+  width: min(100%, 760px);
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.native-ad__host > div {
+  max-width: 100%;
+}
+.source-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 22px;
+  align-items: start;
+}
+.source-detail-main {
+  min-width: 0;
+}
+.source-detail-layout .detail-header {
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.source-detail-layout .detail-art {
+  width: 112px;
+  height: 112px;
+  border-radius: 14px;
+}
+.source-detail-layout .detail-copy h1 {
+  margin: 1px 0 8px;
+  font-size: clamp(28px, 3vw, 38px);
+}
+.source-detail-layout .detail-copy > p:not(.eyebrow):not(.fine-print) {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.source-detail-layout .detail-actions {
+  margin-top: 13px;
+}
+.source-detail-layout .fine-print {
+  margin-top: 9px;
+}
+.player-panel {
+  padding: 13px;
+}
+.player-panel-heading {
+  margin-bottom: 11px;
+}
+.player-panel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.player-panel-actions > a {
+  color: #a6cfff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.source-frame-wrap {
+  width: min(100%, 62vw, 108vh);
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+}
+.source-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: inherit;
+  background: #000;
+}
+.source-frame:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+.source-frame-wrap:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+.player-placeholder {
+  min-height: 220px;
+}
+.player-placeholder > p {
+  margin: 0;
+}
+.controls-note {
+  margin: 14px 2px 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(124, 158, 197, .13);
+  border-radius: 12px;
+  background: rgba(14, 23, 37, .7);
+}
+.controls-note .eyebrow {
+  margin: 0 0 5px;
+}
+.controls-note > p:last-child {
+  margin: 0;
+  color: #9eb0c6;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.game-ad-rail {
+  min-width: 0;
+  padding-top: 148px;
+  display: flex;
+  justify-content: center;
+}
+.game-banner-ad {
+  width: 100%;
+  position: sticky;
+  top: 22px;
+}
+.game-banner-ad .ad-slot__unit {
+  max-width: 100%;
+}
+.source-detail-layout + .game-native-ad {
+  margin-top: 22px;
+}
+
+@media (min-width: 1500px) {
+  .source-detail-layout { grid-template-columns: minmax(0, 1fr) 190px; gap: 26px; }
+  .source-frame-wrap { width: min(100%, 62vw, 108vh); }
+}
+@media (max-width: 1189px) {
+  .source-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .game-ad-rail {
+    padding-top: 0;
+    justify-content: center;
+  }
+  .game-banner-ad {
+    position: static;
+  }
+  .game-banner-ad .ad-slot__unit {
+    max-width: 100%;
+  }
+  .source-frame-wrap {
+    width: min(100%, 62vw, 108vh);
+  }
+}
+@media (max-width: 720px) {
+  .home-hero { margin-top: 1px; margin-bottom: 14px; }
+  .home-hero h1 { font-size: clamp(39px, 12vw, 54px); }
+  .home-hero__copy { max-width: 34rem; font-size: 13px; }
+  .home-banner { margin: 17px auto 23px; }
+  .page-heading--catalog { margin-top: 24px; }
+  .source-detail-layout .detail-header {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 13px;
+    margin-bottom: 15px;
+  }
+  .source-detail-layout .detail-art {
+    width: 76px;
+    height: 76px;
+    border-radius: 11px;
+  }
+  .source-detail-layout .detail-copy h1 { font-size: clamp(24px, 7vw, 32px); }
+  .source-detail-layout .detail-copy > p:not(.eyebrow):not(.fine-print) { font-size: 11px; }
+  .source-detail-layout .detail-actions { gap: 6px; margin-top: 10px; }
+  .source-detail-layout .detail-actions .primary-button,
+  .source-detail-layout .detail-actions .secondary-button { min-height: 33px; }
+  .source-frame-wrap {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .player-panel { padding: 10px; }
+  .player-panel-heading { align-items: flex-start; gap: 8px; }
+  .player-panel-heading h2 { font-size: 16px; }
+  .player-panel-actions { gap: 5px; }
+  .player-panel-actions .secondary-button { min-height: 31px; padding: 0 8px; font-size: 9px; }
+  .player-panel-actions > a { font-size: 10px; }
+  .player-placeholder { min-height: 190px; }
+  .game-ad-rail { margin-top: 0; }
+  .home-native-ad, .game-native-ad { margin-top: 20px; padding: 13px 8px; }
+  .native-ad__host { min-height: 90px; }
+  .controls-note { padding: 10px 11px; }
+}
+@media (max-height: 700px) and (min-width: 721px) {
+  .source-frame-wrap { width: min(100%, 62vw, 108vh); }
+  .source-detail-layout .detail-header { margin-bottom: 12px; }
+  .source-detail-layout .detail-art { width: 88px; height: 88px; }
+  .source-detail-layout .detail-copy h1 { font-size: 28px; }
+  .player-placeholder { min-height: 180px; }
+}

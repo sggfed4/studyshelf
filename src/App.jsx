@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { games } from './games'
 import './App.css'
 
@@ -10,7 +10,147 @@ const roomServices = [
   { name: 'CrazyGames', type: 'Browser library', note: 'Open the provider’s own catalog in a new tab.', url: 'https://www.crazygames.com/', icon: '✳' },
 ]
 
-const readSaved = () => { try { return JSON.parse(localStorage.getItem('studyshelf-saved-sources') || '[]') } catch { return [] } }
+const AD_UNITS = {
+  '728x90': {
+    key: 'dbf80ed3c93cd132030865608e342264',
+    width: 728,
+    height: 90,
+    src: 'https://bauval.org/22/dbf80ed3c93cd132030865608e342264',
+  },
+  '320x50': {
+    key: '78207749b234fdb5b06ac5e8a26d59fa',
+    width: 320,
+    height: 50,
+    src: 'https://bauval.org/22/78207749b234fdb5b06ac5e8a26d59fa',
+  },
+  '160x300': {
+    key: '2d50c30a76af0093b115d5eac83393eb',
+    width: 160,
+    height: 300,
+    src: 'https://bauval.org/22/2d50c30a76af0093b115d5eac83393eb',
+  },
+}
+
+const NATIVE_AD_SCRIPT = 'https://bauval.org/21/805d202094bf0f090893bd2cdb9fb26c'
+const NATIVE_AD_CONTAINER_ID = 'container-805d202094bf0f090893bd2cdb9fb26c'
+const AD_HOSTNAMES = new Set(['studyshelf.org', 'www.studyshelf.org'])
+const canServeAds = () => typeof window !== 'undefined' && AD_HOSTNAMES.has(window.location.hostname)
+
+// Adsterra banner snippets share the global `atOptions` name. Load the
+// external scripts one at a time so one banner cannot overwrite another's config.
+let bannerQueue = Promise.resolve()
+function queueBannerAd(slot, unit) {
+  bannerQueue = bannerQueue.catch(() => undefined).then(() => new Promise((resolve) => {
+    if (!canServeAds() || !slot?.isConnected) {
+      resolve()
+      return
+    }
+
+    window.atOptions = {
+      key: unit.key,
+      format: 'iframe',
+      height: unit.height,
+      width: unit.width,
+      params: {},
+    }
+
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = unit.src
+    script.async = false
+
+    let settled = false
+    const finish = () => {
+      if (settled) return
+      settled = true
+      window.clearTimeout(timeoutId)
+      resolve()
+    }
+    script.addEventListener('load', finish, { once: true })
+    script.addEventListener('error', finish, { once: true })
+    const timeoutId = window.setTimeout(finish, 12000)
+    slot.appendChild(script)
+  }))
+  return bannerQueue
+}
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches)
+
+  useEffect(() => {
+    const media = window.matchMedia(query)
+    const update = (event) => setMatches(event.matches)
+    setMatches(media.matches)
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [query])
+
+  return matches
+}
+
+function BannerAd({ size, className = '' }) {
+  const unitRef = useRef(null)
+  const unit = AD_UNITS[size]
+
+  useEffect(() => {
+    const slot = unitRef.current
+    if (!slot || !unit) return undefined
+    void queueBannerAd(slot, unit)
+  }, [unit])
+
+  if (!unit) return null
+
+  return (
+    <section className={`ad-slot ad-slot--${size} ${className}`.trim()} aria-label="Advertisement">
+      <p className="ad-label">ADVERTISEMENT</p>
+      <div className="ad-slot__unit" ref={unitRef} style={{ width: unit.width, height: unit.height }} />
+    </section>
+  )
+}
+
+function ResponsiveHomeBanner() {
+  const useCompact = useMediaQuery('(max-width: 959px)')
+  return <BannerAd key={useCompact ? '320x50' : '728x90'} size={useCompact ? '320x50' : '728x90'} className="home-banner" />
+}
+
+function NativeBannerAd({ className = '' }) {
+  const hostRef = useRef(null)
+
+  useEffect(() => {
+    const host = hostRef.current
+    if (!host || !canServeAds()) return undefined
+
+    const script = document.createElement('script')
+    script.async = true
+    script.setAttribute('data-cfasync', 'false')
+    script.src = NATIVE_AD_SCRIPT
+    host.appendChild(script)
+
+    return () => {
+      script.remove()
+      const container = host.querySelector(`#${NATIVE_AD_CONTAINER_ID}`)
+      if (container) container.replaceChildren()
+    }
+  }, [])
+
+  return (
+    <section className={`ad-slot native-ad ${className}`.trim()} aria-label="Sponsored content">
+      <p className="ad-label">SPONSORED</p>
+      <div className="native-ad__host" ref={hostRef}>
+        <div id={NATIVE_AD_CONTAINER_ID} />
+      </div>
+    </section>
+  )
+}
+
+const readSaved = () => {
+  try {
+    return JSON.parse(localStorage.getItem('studyshelf-saved-sources') || '[]')
+  } catch {
+    return []
+  }
+}
+
 const setPageTitle = (title) => { document.title = `${title} — StudyShelf` }
 
 function Logo() {
@@ -18,7 +158,7 @@ function Logo() {
 }
 
 function Header({ active = 'sources' }) {
-  return <header className="topbar"><Logo /><nav aria-label="Main navigation"><a className={active === 'sources' ? 'active' : ''} href="/">Sources</a><a className={active === 'rooms' ? 'active' : ''} href="/rooms">Rooms</a></nav></header>
+  return <header className="topbar"><Logo /><nav aria-label="Main navigation"><a className={active === 'sources' ? 'active' : ''} href="/">Games</a><a className={active === 'rooms' ? 'active' : ''} href="/rooms">Rooms</a></nav></header>
 }
 
 function Footer() {
@@ -61,22 +201,88 @@ function SourcesPage() {
   const [category, setCategory] = useState('All')
   const categories = useMemo(() => ['All', ...new Set(games.map((source) => source.category))], [])
   const filtered = useMemo(() => games.filter((source) => (category === 'All' || source.category === category) && `${source.name} ${source.category} ${source.description} ${source.tag || ''}`.toLowerCase().includes(query.trim().toLowerCase())), [category, query])
-  setPageTitle('Sources')
-  return <Shell active="sources"><div className="page-heading"><div><p className="eyebrow">YOUR LIBRARY</p><h1>Sources</h1></div><span className="result-count">{filtered.length} items</span></div>
-    <div className="toolbar"><label className="search-box"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search sources..." aria-label="Search sources" /><kbd>⌕</kbd></label><label className="filter-select"><span className="sr-only">Category</span><select value={category} onChange={(event) => setCategory(event.target.value)}>{categories.map((item) => <option key={item}>{item}</option>)}</select></label></div>
+  setPageTitle('StudyShelf')
+
+  return <Shell active="sources">
+    <section className="home-hero">
+      <p className="eyebrow">YOUR GAME LIBRARY</p>
+      <h1>StudyShelf</h1>
+      <p className="home-hero__copy">Find a game, jump in, and make the most of your break.</p>
+    </section>
+    <ResponsiveHomeBanner />
+    <div className="page-heading page-heading--catalog">
+      <div><p className="eyebrow">BROWSE & PLAY</p><h2>Game Library</h2></div>
+      <span className="result-count">{filtered.length} games</span>
+    </div>
+    <div className="toolbar"><label className="search-box"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search games..." aria-label="Search games" /><kbd>⌕</kbd></label><label className="filter-select"><span className="sr-only">Category</span><select value={category} onChange={(event) => setCategory(event.target.value)}>{categories.map((item) => <option key={item}>{item}</option>)}</select></label></div>
     <div className="source-grid">{filtered.map((source) => <SourceCard key={source.slug} source={source} />)}</div>
-    {filtered.length === 0 && <div className="empty-state"><h2>No matching sources</h2><p>Try a different search or category.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
+    {filtered.length === 0 && <div className="empty-state"><h2>No matching games</h2><p>Try a different search or category.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
+    <NativeBannerAd className="home-native-ad" />
   </Shell>
 }
 
 function SourceDetail({ source }) {
   const [saved, setSaved] = useState(() => readSaved().includes(source.slug))
   const [showFrame, setShowFrame] = useState(false)
-  const toggleSave = () => setSaved((current) => { const next = current ? readSaved().filter((item) => item !== source.slug) : [...readSaved(), source.slug]; try { localStorage.setItem('studyshelf-saved-sources', JSON.stringify(next)) } catch {} return !current })
+  const [frameVersion, setFrameVersion] = useState(0)
+  const iframeRef = useRef(null)
+  const wideScreen = useMediaQuery('(min-width: 1190px)')
+  const toggleSave = () => setSaved((current) => {
+    const next = current ? readSaved().filter((item) => item !== source.slug) : [...readSaved(), source.slug]
+    try { localStorage.setItem('studyshelf-saved-sources', JSON.stringify(next)) } catch {}
+    return !current
+  })
+  const openFullscreen = async () => {
+    try {
+      if (iframeRef.current?.requestFullscreen) await iframeRef.current.requestFullscreen()
+    } catch {
+      // Fullscreen can be blocked by browser settings or the embedded provider.
+    }
+  }
   setPageTitle(source.name)
-  return <Shell active="sources"><a className="back-link" href="/">← All sources</a><section className="detail-header"><div className="detail-art" style={{ '--tile-color': source.color }}><img src={source.image} alt="" onError={(event) => { event.currentTarget.style.display = 'none'; event.currentTarget.parentElement.querySelector('span').hidden = false }} /><span hidden>{source.icon}</span></div><div className="detail-copy"><p className="eyebrow">{source.category} / SOURCE</p><h1>{source.name}</h1><p>{source.details || source.description}</p><div className="detail-actions"><button className="primary-button" onClick={() => { setShowFrame(true); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Reload source' : 'Open here'} <span>↘</span></button><button className={`secondary-button ${saved ? 'saved' : ''}`} onClick={toggleSave}>{saved ? '★ Saved' : '☆ Save'}</button><a className="secondary-button" href={source.providerUrl} target="_blank" rel="noopener noreferrer">Provider page ↗</a></div><p className="fine-print">This source is supplied by an independent third party. Availability and embedding support may vary.</p></div></section>
-    <section className="player-panel" id="source-player"><div className="player-panel-heading"><div><p className="eyebrow">SOURCE VIEWER</p><h2>{showFrame ? source.name : 'Ready when you are'}</h2></div>{showFrame && <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Open provider ↗</a>}</div>{showFrame ? <iframe className="source-frame" src={source.embedUrl} title={source.name} allow="fullscreen; autoplay; gamepad" allowFullScreen loading="lazy" referrerPolicy="strict-origin-when-cross-origin" /> : <div className="player-placeholder"><span>{source.icon}</span><p>Open this source in the viewer, or visit its provider directly.</p><button className="primary-button" onClick={() => setShowFrame(true)}>Load source ↘</button></div>}</section>
-    <div className="detail-bottom"><a href="mailto:support@studyshelf.org?subject=StudyShelf%20source%20report">Report an issue ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
+
+  return <Shell active="sources">
+    <a className="back-link" href="/">← All games</a>
+    <div className="source-detail-layout">
+      <div className="source-detail-main">
+        <section className="detail-header">
+          <div className="detail-art" style={{ '--tile-color': source.color }}>
+            <img src={source.image} alt="" onError={(event) => { event.currentTarget.style.display = 'none'; const fallback = event.currentTarget.parentElement?.querySelector('span'); if (fallback) fallback.hidden = false }} />
+            <span hidden>{source.icon}</span>
+          </div>
+          <div className="detail-copy">
+            <p className="eyebrow">{source.category} / GAME</p>
+            <h1>{source.name}</h1>
+            <p>{source.details || source.description}</p>
+            <div className="detail-actions">
+              <button className="primary-button" onClick={() => { setShowFrame(true); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Game loaded' : 'Play here'} <span>↘</span></button>
+              <button className={`secondary-button ${saved ? 'saved' : ''}`} onClick={toggleSave}>{saved ? '★ Saved' : '☆ Save'}</button>
+              <a className="secondary-button" href={source.providerUrl} target="_blank" rel="noopener noreferrer">Open provider ↗</a>
+            </div>
+            <p className="fine-print">Game provided by an independent third party. Some games include controls or overlays managed by the provider.</p>
+          </div>
+        </section>
+        <section className="player-panel" id="source-player">
+          <div className="player-panel-heading">
+            <div><p className="eyebrow">GAME PLAYER</p><h2>{showFrame ? source.name : 'Ready when you are'}</h2></div>
+            <div className="player-panel-actions">
+              {showFrame && <button className="secondary-button" type="button" onClick={() => setFrameVersion((value) => value + 1)}>Reload</button>}
+              {showFrame && <button className="secondary-button" type="button" onClick={openFullscreen}>Fullscreen ⛶</button>}
+              {showFrame && <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Provider page ↗</a>}
+            </div>
+          </div>
+          {showFrame
+            ? <div className="source-frame-wrap"><iframe key={frameVersion} ref={iframeRef} className="source-frame" src={source.embedUrl} title={source.name} allow="fullscreen; autoplay; gamepad" allowFullScreen loading="eager" referrerPolicy="strict-origin-when-cross-origin" /></div>
+            : <div className="player-placeholder"><span>{source.icon}</span><p>Launch the game in the player, or open the provider directly.</p><button className="primary-button" onClick={() => setShowFrame(true)}>Load game ↘</button></div>}
+        </section>
+        {source.controls && <section className="controls-note"><p className="eyebrow">CONTROLS</p><p>{source.controls}</p></section>}
+        <div className="detail-bottom"><a href="mailto:support@studyshelf.org?subject=StudyShelf%20game%20report">Report a game issue ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
+      </div>
+      <aside className="game-ad-rail" aria-label="Advertisement">
+        <BannerAd key={wideScreen ? '160x300' : '320x50'} size={wideScreen ? '160x300' : '320x50'} className="game-banner-ad" />
+      </aside>
+    </div>
+    <NativeBannerAd className="game-native-ad" />
   </Shell>
 }
 
@@ -89,10 +295,10 @@ function RoomsPage() {
 
 function InfoPage({ kind }) {
   const content = {
-    about: { title: 'About StudyShelf', intro: 'StudyShelf organizes a browsable collection of third-party sources and a small directory of web tools.', body: 'Source pages link to independently operated providers. StudyShelf does not claim ownership of third-party content, and provider availability may change.' },
-    privacy: { title: 'Privacy', intro: 'Last updated October 15, 2026.', body: 'StudyShelf stores saved-source preferences in your browser. Hosting providers may process technical information required to deliver and protect the site. When you open an external source or room, that provider may receive connection data and handle it under its own privacy policy. Advertising is not currently enabled in this build. Avoid sharing personal or sensitive information with third-party providers.' },
-    terms: { title: 'Terms', intro: 'Use StudyShelf responsibly and follow the rules that apply to you.', body: 'StudyShelf is a directory and viewer for third-party content. We do not own or guarantee external sources, their availability, or their content. Use of external providers is subject to their own terms. Do not use the site to violate applicable laws, access controls, or network policies.' },
-    contact: { title: 'Contact', intro: 'Need help with StudyShelf?', body: 'For support or to report an issue, email support@studyshelf.org. This address must be configured to receive messages before the site is promoted.' },
+    about: { title: 'About StudyShelf', intro: 'StudyShelf organizes a browsable collection of browser games and useful web tools.', body: 'Game pages link to independently operated providers. StudyShelf does not claim ownership of third-party content, and provider availability may change.' },
+    privacy: { title: 'Privacy', intro: 'Last updated October 15, 2026.', body: 'StudyShelf stores saved-game preferences in your browser. Hosting providers may process technical information required to deliver and protect the site. When you open an external game or room, that provider may receive connection data and handle it under its own privacy policy. StudyShelf also loads third-party advertising scripts for banner, native, and floating advertisements. Advertising providers may process technical data and use cookies or similar technologies under their own privacy policies. Avoid sharing personal or sensitive information with third-party providers.' },
+    terms: { title: 'Terms', intro: 'Use StudyShelf responsibly and follow the rules that apply to you.', body: 'StudyShelf is a directory and viewer for third-party games and content. We do not own or guarantee external sources, their availability, or their content. Use of external providers and advertisements is subject to their own terms. Do not use the site to violate applicable laws, access controls, or network policies.' },
+    contact: { title: 'Contact', intro: 'Need help with StudyShelf?', body: 'For support or to report a game issue, email support@studyshelf.org. This address must be configured to receive messages before the site is promoted.' },
   }
   const page = content[kind] || content.about
   setPageTitle(page.title)
