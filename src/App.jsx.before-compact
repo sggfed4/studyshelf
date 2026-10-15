@@ -1,0 +1,250 @@
+﻿import { useMemo, useState } from "react";
+import "./App.css";
+
+const games = [
+  { id: "neon-drift", title: "Neon Drift", category: "Racing", art: "neon", symbol: "↗" },
+  { id: "orbit-breaker", title: "Orbit Breaker", category: "Arcade", art: "orbit", symbol: "◉" },
+  { id: "pixel-rush", title: "Pixel Rush", category: "Action", art: "pixel", symbol: "✳" },
+  { id: "deep-current", title: "Deep Current", category: "Adventure", art: "ocean", symbol: "≈" },
+  { id: "gravity-lab", title: "Gravity Lab", category: "Puzzle", art: "gravity", symbol: "◌" },
+  { id: "night-run", title: "Night Run", category: "Racing", art: "night", symbol: "⌁" },
+  { id: "tiny-kingdom", title: "Tiny Kingdom", category: "Strategy", art: "kingdom", symbol: "♜" },
+  { id: "vector-zero", title: "Vector Zero", category: "Arcade", art: "vector", symbol: "△" },
+  { id: "slime-shift", title: "Slime Shift", category: "Puzzle", art: "slime", symbol: "●" },
+  { id: "last-light", title: "Last Light", category: "Adventure", art: "light", symbol: "✦" },
+  { id: "turbo-blocks", title: "Turbo Blocks", category: "Racing", art: "blocks", symbol: "▰" },
+  { id: "void-walker", title: "Void Walker", category: "Action", art: "void", symbol: "✧" },
+];
+
+const categories = ["All games", "Action", "Arcade", "Puzzle", "Racing"];
+
+function readDemoVotes() {
+  try {
+    return JSON.parse(localStorage.getItem("studyshelf3-demo-votes") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function App() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All games");
+  const [sort, setSort] = useState("featured");
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [votes, setVotes] = useState(readDemoVotes);
+
+  const filteredGames = useMemo(() => {
+    const search = query.trim().toLowerCase();
+
+    const result = games.filter((game) => {
+      const matchesSearch =
+        !search ||
+        game.title.toLowerCase().includes(search) ||
+        game.category.toLowerCase().includes(search);
+
+      const matchesCategory =
+        category === "All games" || game.category === category;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    if (sort === "popular") {
+      return result.sort(
+        (a, b) =>
+          (votes[b.id]?.score || 0) - (votes[a.id]?.score || 0),
+      );
+    }
+
+    return result;
+  }, [query, category, sort, votes]);
+
+  function vote(gameId, direction) {
+    const nextVotes = {
+      ...votes,
+      [gameId]: {
+        ...(votes[gameId] || {}),
+        direction,
+        score: direction,
+      },
+    };
+
+    setVotes(nextVotes);
+
+    try {
+      localStorage.setItem(
+        "studyshelf3-demo-votes",
+        JSON.stringify(nextVotes),
+      );
+    } catch {
+      // The preview still works if browser storage is unavailable.
+    }
+  }
+
+  function goHome() {
+    setSelectedGame(null);
+    setQuery("");
+    setCategory("All games");
+  }
+
+  return (
+    <div className="site-shell">
+      <header className="topbar">
+        <button className="wordmark" onClick={goHome} aria-label="StudyShelf home">
+          <span className="brand-mark">s<span>/</span></span>
+          <span>studyshelf</span>
+          <span className="brand-version">3.0</span>
+        </button>
+
+        <div className="header-search">
+          <span className="search-symbol" aria-hidden="true">⌕</span>
+          <input
+            aria-label="Search games"
+            placeholder="Find a game..."
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setSelectedGame(null);
+            }}
+          />
+          <kbd> / </kbd>
+        </div>
+
+        <div className="header-status">
+          <span className="status-dot" />
+          <span>THE LIBRARY</span>
+        </div>
+      </header>
+
+      <main className="main-content">
+        {selectedGame ? (
+          <section className="game-detail">
+            <button className="back-link" onClick={() => setSelectedGame(null)}>
+              <span aria-hidden="true">←</span> All games
+            </button>
+
+            <div className="detail-heading">
+              <div>
+                <p className="eyebrow">GAME FILE / {selectedGame.category.toUpperCase()}</p>
+                <h1>{selectedGame.title}</h1>
+              </div>
+              <div className="detail-voting">
+                <span className="vote-label">COMMUNITY SCORE</span>
+                <div className="vote-controls">
+                  <button
+                    className={votes[selectedGame.id]?.direction === 1 ? "vote-button active" : "vote-button"}
+                    onClick={() => vote(selectedGame.id, 1)}
+                    aria-label="Upvote game"
+                  >
+                    ↑
+                  </button>
+                  <strong>{votes[selectedGame.id]?.score || 0}</strong>
+                  <button
+                    className={votes[selectedGame.id]?.direction === -1 ? "vote-button active" : "vote-button"}
+                    onClick={() => vote(selectedGame.id, -1)}
+                    aria-label="Downvote game"
+                  >
+                    ↓
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className={`detail-art art-${selectedGame.art}`}>
+              <span className="art-symbol">{selectedGame.symbol}</span>
+              <div className="preview-message">
+                <span className="preview-icon">◈</span>
+                <strong>GAME PLAYER</strong>
+                <span>Approved game embed will appear here.</span>
+              </div>
+            </div>
+
+            <div className="detail-footer">
+              <span>Votes in this preview are stored only in this browser.</span>
+              <button className="report-link" onClick={() => window.alert("Report submission will be connected to the backend in a later step.")}>
+                Report a problem ↗
+              </button>
+            </div>
+          </section>
+        ) : (
+          <>
+            <section className="library-heading">
+              <div>
+                <p className="eyebrow">YOUR NEXT GAME IS HERE</p>
+                <h1>Find your <span>next favorite.</span></h1>
+              </div>
+              <p className="library-note">
+                A community-built library.<br />
+                Your votes shape what rises.
+              </p>
+            </section>
+
+            <section className="library-controls" aria-label="Library filters">
+              <div className="category-list">
+                {categories.map((item) => (
+                  <button
+                    key={item}
+                    className={category === item ? "category-chip selected" : "category-chip"}
+                    onClick={() => setCategory(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+
+              <label className="sort-control">
+                <span>SORT</span>
+                <select value={sort} onChange={(event) => setSort(event.target.value)}>
+                  <option value="featured">Featured</option>
+                  <option value="popular">Community score</option>
+                </select>
+              </label>
+            </section>
+
+            <section className="library-section">
+              <div className="section-heading">
+                <h2>{query ? "Search results" : category === "All games" ? "The library" : category}</h2>
+                <span>{String(filteredGames.length).padStart(2, "0")} GAMES</span>
+              </div>
+
+              {filteredGames.length > 0 ? (
+                <div className="game-grid">
+                  {filteredGames.map((game, index) => (
+                    <button
+                      key={game.id}
+                      className="game-card"
+                      onClick={() => setSelectedGame(game)}
+                      aria-label={`Open ${game.title}`}
+                    >
+                      <div className={`game-art art-${game.art}`}>
+                        <span className="art-index">{String(index + 1).padStart(2, "0")}</span>
+                        <span className="art-symbol">{game.symbol}</span>
+                        <span className="art-category">{game.category}</span>
+                      </div>
+                      <span className="game-title">{game.title}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="empty-state">
+                  <span>⌕</span>
+                  <h3>No games found</h3>
+                  <p>Try another search.</p>
+                  <button onClick={() => { setQuery(""); setCategory("All games"); }}>
+                    Clear filters
+                  </button>
+                </div>
+              )}
+            </section>
+          </>
+        )}
+      </main>
+
+      <footer className="site-footer">
+        <span>STUDYSHELF <span className="footer-slash">/</span> 3.0</span>
+        <span>BUILT AROUND THE COMMUNITY.</span>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
