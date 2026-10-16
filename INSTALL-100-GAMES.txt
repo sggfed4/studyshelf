@@ -1,0 +1,13 @@
+StudyShelf 3.1 — 100 game expansion
+
+This patch replaces only src/games.js and adds 100 catalog entries to the existing 55 (155 total). It preserves the existing 55 records.
+
+Install safely:
+1. Back up C:\Users\logan\StudyShelf3\src\games.js.
+2. Extract this ZIP into C:\Users\logan\StudyShelf3, allowing it to replace src/games.js.
+3. In PowerShell run:
+   cd C:\Users\logan\StudyShelf3
+   npm.cmd run build
+4. Run npm.cmd run dev and spot-check several new games before publishing.
+
+Source: MadKidGames' published embeddable catalog and its per-game JSON/embed format. The provider confirms the /full/<slug> iframe URL and /games/<slug>/thumb_2.jpg image convention in each game's embed data. The 100 new entries use those standard patterns based on catalog titles; please spot-check gameplay and images because provider slug rules can vary and external games can change.
