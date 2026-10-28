@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ef">
+  <title>Little Calculator</title>
+  <style>
+    :root { color-scheme: light; --ink:#252620; --muted:#85867d; --paper:#f4f3ef; --card:#fffefa; --line:#e9e8e1; --green:#244e3c; --lime:#d9ef83; }
+    * { box-sizing:border-box }
+    body { margin:0; min-height:100vh; background:var(--paper); color:var(--ink); font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button, textarea { font:inherit }
+    .shell { min-height:100vh; display:grid; place-items:center; padding:32px 20px; }
+    .app { width:min(100%, 430px); }
+    .topline { display:flex; align-items:center; justify-content:space-between; margin:0 4px 18px; color:var(--muted); font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+    .brand { display:flex; align-items:center; gap:9px; color:var(--ink); font-weight:700; letter-spacing:.01em; text-transform:none; }
+    .brand-mark { display:grid; place-items:center; width:26px; height:26px; border-radius:9px; color:#fff; background:var(--green); font-size:14px; }
+    .calculator { overflow:hidden; background:var(--card); border:1px solid #e8e7df; border-radius:27px; box-shadow:0 24px 70px #30322212, 0 3px 10px #30322208; }
+    .screen { min-height:180px; padding:28px 28px 21px; display:flex; flex-direction:column; align-items:flex-end; justify-content:flex-end; }
+    .screen-label { width:100%; display:flex; justify-content:space-between; color:var(--muted); font-size:12px; }
+    .expression { margin-top:25px; width:100%; text-align:right; color:#9a9b91; font-size:18px; min-height:25px; overflow-wrap:anywhere; }
+    .display { width:100%; text-align:right; font-size:clamp(46px, 13vw, 64px); font-weight:550; letter-spacing:-.065em; line-height:1.12; overflow-wrap:anywhere; }
+    .keys { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:18px; background:#f8f7f2; border-top:1px solid #eeede7; }
+    .key { min-height:66px; border:0; border-radius:18px; background:#fffefa; color:var(--ink); font-size:21px; font-weight:550; cursor:pointer; box-shadow:inset 0 0 0 1px #eeede7; transition:transform .12s,background .12s,box-shadow .12s; touch-action:manipulation; }
+    .key:hover { background:#fff; box-shadow:inset 0 0 0 1px #dadbd0; }
+    .key:active { transform:scale(.95); }
+    .key:focus-visible, .back:focus-visible, textarea:focus-visible { outline:3px solid #8dac43; outline-offset:2px; }
+    .key.utility { color:#657363; background:#eff1e9; box-shadow:none; }
+    .key.operator { color:var(--green); background:#e8eee7; box-shadow:none; font-size:24px; }
+    .key.equals { color:#fff; background:var(--green); box-shadow:none; font-size:25px; }
+    .key.zero { grid-column:span 2; text-align:left; padding-left:27px; }
+    .hint { text-align:center; color:#999a91; font-size:12px; margin:17px 0 0; }
+    .about { display:none; width:min(100%, 580px); animation:arrive .35s ease both; }
+    body.secret-mode .app { display:none; }
+    body.secret-mode .shell { place-items:center; }
+    body.secret-mode .about { display:block; }
+    .about-card { padding:clamp(28px,7vw,52px); background:var(--card); border:1px solid #e8e7df; border-radius:28px; box-shadow:0 24px 70px #30322212; }
+    .about-kicker { display:inline-flex; align-items:center; gap:8px; margin-bottom:24px; color:var(--green); font-size:12px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; }
+    .about-kicker::before { content:""; width:8px; height:8px; border-radius:50%; background:#91b35a; box-shadow:0 0 0 4px #91b35a22; }
+    h1 { margin:0; font-size:clamp(37px,9vw,61px); line-height:1.02; letter-spacing:-.065em; font-weight:600; }
+    .about-copy { margin:22px 0 30px; color:#77796f; font-size:16px; line-height:1.7; }
+    .message-label { display:block; margin:0 0 9px; color:#77796f; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+    textarea { display:block; width:100%; min-height:148px; resize:vertical; padding:16px; border:1px solid var(--line); border-radius:16px; background:#fbfaf6; color:var(--ink); font-size:15px; line-height:1.65; }
+    .save-row { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:14px; }
+    .save-note { color:#96978e; font-size:12px; line-height:1.5; }
+    .save { border:0; border-radius:13px; padding:12px 17px; color:#fff; background:var(--green); font-weight:650; cursor:pointer; }
+    .save:hover { background:#315e49; }
+    .back { display:block; margin:25px auto 0; border:0; background:none; color:#77796f; font-size:13px; cursor:pointer; }
+    .back:hover { color:var(--green); }
+    @keyframes arrive { from { opacity:0; transform:translateY(9px) } to { opacity:1; transform:translateY(0) } }
+    @media(max-width:400px) { .keys { gap:8px; padding:14px; } .key { min-height:60px; border-radius:15px; } .screen { min-height:165px; padding:23px 23px 18px; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="app" aria-label="Calculator">
+      <div class="topline"><div class="brand"><span class="brand-mark">÷</span> Little Calculator</div><span>Everyday tools</span></div>
+      <div class="calculator">
+        <div class="screen" aria-live="polite" aria-atomic="true">
+          <div class="screen-label"><span>STANDARD</span><span>⌘ K</span></div>
+          <div class="expression" id="expression"></div>
+          <div class="display" id="display">0</div>
+        </div>
+        <div class="keys" id="keys">
+          <button class="key utility" data-action="clear" aria-label="All clear">AC</button>
+          <button class="key utility" data-action="sign" aria-label="Change sign">+/−</button>
+          <button class="key utility" data-action="percent" aria-label="Percent">%</button>
+          <button class="key operator" data-op="÷" aria-label="Divide">÷</button>
+          <button class="key" data-digit="7">7</button><button class="key" data-digit="8">8</button><button class="key" data-digit="9">9</button><button class="key operator" data-op="×" aria-label="Multiply">×</button>
+          <button class="key" data-digit="4">4</button><button class="key" data-digit="5">5</button><button class="key" data-digit="6">6</button><button class="key operator" data-op="−" aria-label="Subtract">−</button>
+          <button class="key" data-digit="1">1</button><button class="key" data-digit="2">2</button><button class="key" data-digit="3">3</button><button class="key operator" data-op="+" aria-label="Add">+</button>
+          <button class="key zero" data-digit="0">0</button><button class="key" data-action="decimal" aria-label="Decimal point">.</button><button class="key equals" data-action="equals" aria-label="Equals">=</button>
+        </div>
+      </div>
+      <p class="hint">A little help with the numbers.</p>
+    </section>
+
+    <section class="about" aria-labelledby="about-title">
+      <div class="about-card">
+        <div class="about-kicker">A little something for you</div>
+        <h1 id="about-title">You found<br>the hidden page.</h1>
+        <p class="about-copy">This is your private corner of the homepage. Write a note, a dedication, or whatever you want someone to discover here.</p>
+        <label class="message-label" for="secret-message">Your secret message</label>
+        <textarea id="secret-message" placeholder="Type your message here…" spellcheck="true"></textarea>
+        <div class="save-row"><span class="save-note" id="save-note">Your message is saved in this browser.</span><button class="save" id="save-message" type="button">Save message</button></div>
+      </div>
+      <button class="back" id="back" type="button">← Back to calculator</button>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const display = document.querySelector('#display');
+      const expression = document.querySelector('#expression');
+      const secretMessage = document.querySelector('#secret-message');
+      const saveNote = document.querySelector('#save-note');
+      let current = '0', previous = null, operator = null, fresh = false, typed = '';
+      const render = () => { display.textContent = current; };
+      const tidy = n => {
+        if (!Number.isFinite(n)) return 'Error';
+        const rounded = Number.parseFloat(n.toPrecision(11));
+        return String(rounded).length > 13 ? rounded.toExponential(6) : String(rounded);
+      };
+      const clear = () => { current='0'; previous=null; operator=null; fresh=false; expression.textContent=''; typed=''; render(); };
+      const digit = d => {
+        if (fresh || current === 'Error') { current='0'; fresh=false; expression.textContent=''; }
+        current = current === '0' ? d : (current.length < 14 ? current+d : current);
+        typed = (typed+d).slice(-40);
+        render();
+        if (typed === '67') { window.location.hash = 'about:page'; openAbout(); }
+      };
+      const calculate = () => {
+        if (operator === null || previous === null) return;
+        const a=Number(previous), b=Number(current); let result;
+        if (operator === '+') result=a+b;
+        if (operator === '−') result=a-b;
+        if (operator === '×') result=a*b;
+        if (operator === '÷') result=b===0 ? NaN : a/b;
+        expression.textContent = `${previous} ${operator} ${current} =`;
+        current=tidy(result); previous=null; operator=null; fresh=true; render();
+      };
+      const chooseOperator = op => {
+        if (current === 'Error') return clear();
+        if (operator && !fresh) calculate();
+        previous=current; operator=op; fresh=true; typed=''; expression.textContent=`${current} ${op}`;
+      };
+      const openAbout = () => {
+        document.body.classList.add('secret-mode');
+        try { secretMessage.value = localStorage.getItem('little-calculator-secret') || ''; } catch {}
+      };
+      const closeAbout = () => { document.body.classList.remove('secret-mode'); if (location.hash === '#about:page') history.replaceState(null,'',location.pathname+location.search); clear(); };
+      if (location.hash === '#about:page') openAbout();
+      document.querySelector('#keys').addEventListener('click', e => {
+        const key=e.target.closest('button'); if (!key) return;
+        if (key.dataset.digit !== undefined) digit(key.dataset.digit);
+        else if (key.dataset.op) chooseOperator(key.dataset.op);
+        else switch (key.dataset.action) {
+          case 'clear': clear(); break;
+          case 'sign': if (current!=='0' && current!=='Error') current=current.startsWith('-')?current.slice(1):'-'+current; render(); typed=''; break;
+          case 'percent': if (current!=='Error') current=tidy(Number(current)/100); render(); typed=''; break;
+          case 'decimal': if (fresh) { current='0.'; fresh=false; } else if (!current.includes('.')) current+='.'; render(); typed=''; break;
+          case 'equals': calculate(); typed=''; break;
+        }
+      });
+      document.addEventListener('keydown', e => {
+        if (document.body.classList.contains('secret-mode')) { if (e.key==='Escape') closeAbout(); return; }
+        if (/^[0-9]$/.test(e.key)) { digit(e.key); e.preventDefault(); }
+        else if (e.key==='.') { document.querySelector('[data-action="decimal"]').click(); e.preventDefault(); }
+        else if (e.key==='Enter' || e.key==='=') { calculate(); typed=''; e.preventDefault(); }
+        else if (e.key==='Backspace') { current=current.length>1?current.slice(0,-1):'0'; render(); typed=''; e.preventDefault(); }
+        else if (e.key==='Escape') clear();
+        else if (e.key==='+') chooseOperator('+');
+        else if (e.key==='-') chooseOperator('−');
+        else if (e.key==='*') chooseOperator('×');
+        else if (e.key==='/') { chooseOperator('÷'); e.preventDefault(); }
+      });
+      document.querySelector('#back').addEventListener('click', closeAbout);
+      document.querySelector('#save-message').addEventListener('click', () => {
+        try { localStorage.setItem('little-calculator-secret', secretMessage.value); saveNote.textContent='Saved on this device.'; }
+        catch { saveNote.textContent='Could not save here. Copy your message before leaving.'; }
+      });
+      secretMessage.addEventListener('input', () => { saveNote.textContent='Unsaved changes'; });
+      window.addEventListener('hashchange', () => { if (location.hash === '#about:page') openAbout(); else if (document.body.classList.contains('secret-mode')) closeAbout(); });
+    })();
+  </script>
+</body>
+</html>

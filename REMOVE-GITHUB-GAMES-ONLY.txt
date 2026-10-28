@@ -1,0 +1,12 @@
+StudyShelf: Remove ONLY the GitHub open-source game batch
+
+This is not a full rollback. It preserves all non-GitHub entries in src/games.js, including the existing catalog and any other recent additions. It removes only game objects whose slug starts with "opensource-", plus the dedicated assets and helper files from that batch.
+
+1. Extract remove-github-games-only.cjs into C:\Users\logan\StudyShelf3 (the folder containing package.json).
+2. Open PowerShell in that folder.
+3. Run:
+   node .\remove-github-games-only.cjs
+   npm.cmd run build
+4. Do not push until the build succeeds and you have checked the catalog.
+
+The script backs up src/games.js before changing it. It rebuilds the games array with valid separators, which also repairs the missing-comma syntax error caused by the GitHub batch insertion. It does not run git reset, commit, or push.

@@ -1,0 +1,16 @@
+STUDYSHELF — LEGAL OPEN-SOURCE GAME ADDITIONS
+
+SAFE MERGE: this patch does NOT replace src/games.js.
+
+1. Extract this ZIP into the root of C:\Users\logan\StudyShelf3.
+2. In PowerShell, run:
+   node .\add-open-source-games.cjs
+3. Then run:
+   npm.cmd run build
+4. Test several new entries in the local site. The games are hosted on the upstream author's GitHub Pages, so iframe compatibility should be verified.
+5. If the build and tests pass:
+   git add src/games.js public/studyshelf-open-source add-open-source-games.cjs OPEN_SOURCE_GAME_CREDITS.md
+   git commit -m "Add 32 MIT-licensed browser game links"
+   git push origin main
+
+The updater is idempotent: running it again will not duplicate entries. It only appends missing catalog entries; it does not delete or replace any existing game.
