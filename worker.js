@@ -2,6 +2,7 @@ import { games } from './src/games.js';
 
 const KNOWN_SLUGS = new Set(games.map((game) => game.slug));
 const SUGGESTION_KINDS = ['game', 'feature', 'bug', 'other'];
+const REPORT_REASONS = ['wont-load', 'black-screen', 'controls', 'slow', 'other'];
 
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
@@ -113,19 +114,52 @@ async function handleApi(request, env) {
   if (path === '/api/stats' && method === 'GET') {
     const dbError = await requireDatabase(env);
     if (dbError) return dbError;
-    const [voteRows, playRows] = await Promise.all([
+    const [voteRows, playRows, reportRows, today] = await Promise.all([
       env.DB.prepare(
         'SELECT game_slug AS slug, SUM(CASE WHEN direction = 1 THEN 1 ELSE 0 END) AS up, SUM(CASE WHEN direction = -1 THEN 1 ELSE 0 END) AS down FROM votes GROUP BY game_slug'
       ).all(),
       env.DB.prepare(
         "SELECT game_slug AS slug, COUNT(*) AS plays, SUM(CASE WHEN day >= date('now', '-6 days') THEN 1 ELSE 0 END) AS plays7d FROM plays GROUP BY game_slug"
       ).all(),
+      env.DB.prepare(
+        "SELECT game_slug AS slug, COUNT(*) AS reports FROM game_reports WHERE status = 'open' AND updated_at >= datetime('now', '-14 days') GROUP BY game_slug"
+      ).all(),
+      env.DB.prepare("SELECT COUNT(DISTINCT player_hash) AS players FROM plays WHERE day = date('now')").first(),
     ]);
     const stats = {};
-    const entry = (slug) => (stats[slug] ||= { up: 0, down: 0, plays: 0, plays7d: 0 });
+    const entry = (slug) => (stats[slug] ||= { up: 0, down: 0, plays: 0, plays7d: 0, reports: 0 });
     for (const row of voteRows.results || []) Object.assign(entry(row.slug), { up: row.up || 0, down: row.down || 0 });
     for (const row of playRows.results || []) Object.assign(entry(row.slug), { plays: row.plays || 0, plays7d: row.plays7d || 0 });
-    return json({ stats }, 200, { 'cache-control': 'public, max-age=60' });
+    for (const row of reportRows.results || []) entry(row.slug).reports = row.reports || 0;
+    return json({ stats, playersToday: today?.players || 0 }, 200, { 'cache-control': 'public, max-age=60' });
+  }
+
+  if (path === '/api/reports' && method === 'POST') {
+    const dbError = await requireDatabase(env);
+    if (dbError) return dbError;
+    if (!env.HASH_SALT) return json({ error: 'The hashing secret is not configured.' }, 503);
+    const body = await readJson(request);
+    const details = typeof body?.details === 'string' ? body.details.trim() : '';
+    if (!body || !KNOWN_SLUGS.has(body.slug) || !REPORT_REASONS.includes(body.reason) || details.length > 500 || !isValidVoterId(body.voterId)) {
+      return json({ error: 'Choose what went wrong (details up to 500 characters).' }, 400);
+    }
+    const reporterHash = await hashValue(body.voterId, env.HASH_SALT);
+    const existing = await env.DB.prepare(
+      "SELECT id FROM game_reports WHERE game_slug = ? AND reporter_hash = ? AND status = 'open'"
+    ).bind(body.slug, reporterHash).first();
+    if (existing) {
+      await env.DB.prepare("UPDATE game_reports SET reason = ?, details = ?, updated_at = datetime('now') WHERE id = ?")
+        .bind(body.reason, details, existing.id).run();
+      return json({ ok: true, message: 'Report updated. Thanks for letting us know!' });
+    }
+    const recent = await env.DB.prepare(
+      "SELECT COUNT(*) AS total FROM game_reports WHERE reporter_hash = ? AND created_at >= datetime('now', '-1 day')"
+    ).bind(reporterHash).first();
+    if ((recent?.total || 0) >= 10) return json({ error: 'Limit reached: each browser can report up to 10 games per day.' }, 429);
+    await env.DB.prepare(
+      "INSERT INTO game_reports (game_slug, reason, details, reporter_hash) VALUES (?, ?, ?, ?)"
+    ).bind(body.slug, body.reason, details, reporterHash).run();
+    return json({ ok: true, message: 'Report sent. Thanks for letting us know!' }, 201);
   }
 
   if (path === '/api/requests' && method === 'POST') {
@@ -157,7 +191,7 @@ async function handleApi(request, env) {
     if (dbError) return dbError;
 
     if (path === '/api/admin/data' && method === 'GET') {
-      const [gameTotals, voteRows, requests, playTotals] = await Promise.all([
+      const [gameTotals, voteRows, requests, playTotals, reports] = await Promise.all([
         env.DB.prepare(
           'SELECT game_slug AS slug, SUM(CASE WHEN direction = 1 THEN 1 ELSE 0 END) AS upvotes, SUM(CASE WHEN direction = -1 THEN 1 ELSE 0 END) AS downvotes, COUNT(*) AS total FROM votes GROUP BY game_slug ORDER BY total DESC, game_slug ASC'
         ).all(),
@@ -170,8 +204,34 @@ async function handleApi(request, env) {
         env.DB.prepare(
           "SELECT game_slug AS slug, COUNT(*) AS plays, SUM(CASE WHEN day >= date('now', '-6 days') THEN 1 ELSE 0 END) AS plays7d FROM plays GROUP BY game_slug ORDER BY plays7d DESC, plays DESC LIMIT 100"
         ).all(),
+        env.DB.prepare(
+          "SELECT id, game_slug AS slug, reason, details, status, created_at, updated_at FROM game_reports ORDER BY CASE status WHEN 'open' THEN 0 ELSE 1 END, updated_at DESC LIMIT 500"
+        ).all(),
       ]);
-      return json({ gameTotals: gameTotals.results || [], votes: voteRows.results || [], requests: requests.results || [], playTotals: playTotals.results || [] });
+      return json({ gameTotals: gameTotals.results || [], votes: voteRows.results || [], requests: requests.results || [], playTotals: playTotals.results || [], reports: reports.results || [] });
+    }
+
+    if (path === '/api/admin/reports/fix-game' && method === 'POST') {
+      const body = await readJson(request);
+      if (!isValidSlug(body?.slug)) return json({ error: 'A valid game slug is required.' }, 400);
+      const result = await env.DB.prepare("UPDATE game_reports SET status = 'fixed', updated_at = datetime('now') WHERE game_slug = ? AND status = 'open'").bind(body.slug).run();
+      return json({ ok: true, fixed: result.meta?.changes || 0 });
+    }
+
+    const reportMatch = path.match(/^\/api\/admin\/reports\/(\d+)$/);
+    if (reportMatch && method === 'PATCH') {
+      const id = Number(reportMatch[1]);
+      const body = await readJson(request);
+      if (!['open', 'fixed'].includes(body?.status)) return json({ error: 'Invalid report status.' }, 400);
+      const result = await env.DB.prepare("UPDATE game_reports SET status = ?, updated_at = datetime('now') WHERE id = ?").bind(body.status, id).run();
+      if (!result.meta?.changes) return json({ error: 'Report not found.' }, 404);
+      return json({ ok: true, id, status: body.status });
+    }
+
+    if (reportMatch && method === 'DELETE') {
+      const result = await env.DB.prepare('DELETE FROM game_reports WHERE id = ?').bind(Number(reportMatch[1])).run();
+      if (!result.meta?.changes) return json({ error: 'Report not found.' }, 404);
+      return json({ ok: true, id: Number(reportMatch[1]) });
     }
 
     const requestMatch = path.match(/^\/api\/admin\/requests\/(\d+)$/);

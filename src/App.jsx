@@ -206,21 +206,35 @@ async function readApiResponse(response) {
   return payload
 }
 
-// Community stats (votes + unique daily plays) for every game, fetched once per page load.
-let statsPromise
-const loadStats = () => {
-  statsPromise ||= fetch('/api/stats').then(readApiResponse).then((data) => data.stats || {}).catch(() => ({}))
-  return statsPromise
+// Community stats (votes, unique daily plays, open reports) for every game, fetched once per page load.
+const EMPTY_COMMUNITY = { stats: {}, playersToday: 0 }
+let communityPromise
+const loadCommunity = () => {
+  communityPromise ||= fetch('/api/stats').then(readApiResponse).then((data) => ({ stats: data.stats || {}, playersToday: data.playersToday || 0 })).catch(() => EMPTY_COMMUNITY)
+  return communityPromise
 }
 
-function useStats() {
-  const [stats, setStats] = useState({})
+function useCommunity() {
+  const [community, setCommunity] = useState(EMPTY_COMMUNITY)
   useEffect(() => {
     let cancelled = false
-    loadStats().then((next) => { if (!cancelled) setStats(next) })
+    loadCommunity().then((next) => { if (!cancelled) setCommunity(next) })
     return () => { cancelled = true }
   }, [])
-  return stats
+  return community
+}
+
+const useStats = () => useCommunity().stats
+
+// The 5 most-played games this week (with at least a few players) get a "Hot" badge.
+const hotSlugsOf = (stats) => new Set(Object.entries(stats).filter(([, stat]) => stat.plays7d >= 3).sort(([, a], [, b]) => b.plays7d - a.plays7d).slice(0, 5).map(([slug]) => slug))
+
+// Same pick for everyone all day (UTC), changes at midnight.
+const gameOfTheDay = () => {
+  const day = new Date().toISOString().slice(0, 10)
+  let hash = 0
+  for (const char of day) hash = (hash * 31 + char.charCodeAt(0)) >>> 0
+  return games[hash % games.length]
 }
 
 const ratingOf = (stat) => {
@@ -411,6 +425,21 @@ function AdminDashboard() {
     finally { setBusy(false) }
   }
 
+  const reportAction = async (url, init, confirmText) => {
+    if (confirmText && !window.confirm(confirmText)) return
+    setBusy(true)
+    setMessage('')
+    try {
+      const response = await fetch(url, { ...init, headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' } })
+      await readApiResponse(response)
+      await loadData(token)
+    } catch (problem) { setError(true); setMessage(problem.message || 'Could not update the report.') }
+    finally { setBusy(false) }
+  }
+  const fixGame = (slug) => reportAction('/api/admin/reports/fix-game', { method: 'POST', body: JSON.stringify({ slug }) })
+  const reopenReport = (id) => reportAction(`/api/admin/reports/${id}`, { method: 'PATCH', body: JSON.stringify({ status: 'open' }) })
+  const deleteReport = (id) => reportAction(`/api/admin/reports/${id}`, { method: 'DELETE' }, 'Delete this report permanently?')
+
   const logout = () => {
     setAuthenticated(false); setData(null); setToken('')
     try { sessionStorage.removeItem('studyshelf-admin-token') } catch {}
@@ -421,6 +450,16 @@ function AdminDashboard() {
   const playTotals = data?.playTotals || []
   const visibleRequests = kindFilter === 'all' ? requests : requests.filter((request) => (request.kind || 'game') === kindFilter)
   const pendingCount = (kind) => requests.filter((request) => request.status === 'pending' && (kind === 'all' || (request.kind || 'game') === kind)).length
+  const reports = data?.reports || []
+  const openReports = reports.filter((report) => report.status === 'open')
+  const fixedReports = reports.filter((report) => report.status === 'fixed').slice(0, 20)
+  // Group open reports by game, most-reported first.
+  const brokenGames = Object.values(openReports.reduce((groups, report) => {
+    const group = (groups[report.slug] ||= { slug: report.slug, reports: [], reasons: {} })
+    group.reports.push(report)
+    group.reasons[report.reason] = (group.reasons[report.reason] || 0) + 1
+    return groups
+  }, {})).sort((a, b) => b.reports.length - a.reports.length)
 
   setPageTitle('Admin Dashboard')
   return <Shell><section className="admin-page">
@@ -428,7 +467,18 @@ function AdminDashboard() {
     {!authenticated && <form className="admin-login" onSubmit={(event) => { event.preventDefault(); void loadData(token) }}><label>Admin token<input type="password" autoComplete="current-password" value={token} onChange={(event) => setToken(event.target.value)} placeholder="Paste the ADMIN_TOKEN secret" required /></label><button className="primary-button" disabled={busy || !token.trim()}>{busy ? 'Checking…' : 'Open dashboard'}</button></form>}
     {message && <p className={`community-message ${error ? 'is-error' : ''}`} role="status">{message}</p>}
     {authenticated && data && <>
-      <div className="admin-metrics"><article><span>Games with votes</span><strong>{data.gameTotals.length}</strong></article><article><span>Total upvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.upvotes || 0), 0)}</strong></article><article><span>Total downvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.downvotes || 0), 0)}</strong></article><article><span>Unique plays (7 days)</span><strong>{playTotals.reduce((sum, row) => sum + (row.plays7d || 0), 0)}</strong></article><article><span>Pending suggestions</span><strong>{pendingCount('all')}</strong></article></div>
+      <div className="admin-metrics"><article><span>Games with votes</span><strong>{data.gameTotals.length}</strong></article><article><span>Total upvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.upvotes || 0), 0)}</strong></article><article><span>Total downvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.downvotes || 0), 0)}</strong></article><article><span>Unique plays (7 days)</span><strong>{playTotals.reduce((sum, row) => sum + (row.plays7d || 0), 0)}</strong></article><article><span>Pending suggestions</span><strong>{pendingCount('all')}</strong></article><article><span>Open game reports</span><strong>{openReports.length}</strong></article></div>
+      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">NEEDS ATTENTION</p><h2>Broken game reports</h2></div><span className="result-count">{brokenGames.length} {brokenGames.length === 1 ? 'game' : 'games'} affected</span></div>
+        <div className="request-list">{brokenGames.map((group) => {
+          const game = gamesBySlug.get(group.slug)
+          return <article className="admin-request" key={group.slug}>
+            <div className="admin-request-top"><div><h3>{game?.name || group.slug}</h3><p>{Object.entries(group.reasons).map(([reason, count]) => `${REPORT_REASONS[reason] || reason} ×${count}`).join(' · ')}</p></div><div className="admin-request-badges"><span className="request-status status-rejected">{group.reports.length} open</span></div></div>
+            <ul className="report-entries">{group.reports.map((report) => <li key={report.id}><span>{REPORT_REASONS[report.reason] || report.reason}</span>{report.details && <q>{report.details}</q>}<small>{report.updated_at} UTC</small><button type="button" className="text-button" disabled={busy} onClick={() => void deleteReport(report.id)}>Delete</button></li>)}</ul>
+            <div className="admin-request-actions"><button className="secondary-button" disabled={busy} onClick={() => void fixGame(group.slug)}>✓ Mark fixed</button>{game && <a className="secondary-button" href={`/sources/${game.slug}`} target="_blank" rel="noopener noreferrer">Test game ↗</a>}{game && <a className="secondary-button" href={game.embedUrl} target="_blank" rel="noopener noreferrer">Open embed URL ↗</a>}</div>
+          </article>
+        })}{!brokenGames.length && <p className="admin-empty">No open reports. Every game is working, as far as players know.</p>}</div>
+        {fixedReports.length > 0 && <details className="admin-fixed-reports"><summary>Recently fixed ({fixedReports.length})</summary><ul className="report-entries">{fixedReports.map((report) => <li key={report.id}><span>{gamesBySlug.get(report.slug)?.name || report.slug}</span><q>{REPORT_REASONS[report.reason] || report.reason}</q><small>{report.updated_at} UTC</small><button type="button" className="text-button" disabled={busy} onClick={() => void reopenReport(report.id)}>Reopen</button></li>)}</ul></details>}
+      </section>
       <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">RANKING</p><h2>Votes by game</h2></div><button className="secondary-button" disabled={busy} onClick={() => void loadData(token)}>Refresh</button></div>
         <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game slug</th><th>Upvotes</th><th>Downvotes</th><th>Total</th></tr></thead><tbody>{data.gameTotals.map((row) => <tr key={row.slug}><td>{row.slug}</td><td>{row.upvotes || 0}</td><td>{row.downvotes || 0}</td><td>{row.total || 0}</td></tr>)}</tbody></table>{!data.gameTotals.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
       </section>
@@ -463,7 +513,7 @@ function Shell({ children, active }) {
   return <div className="app-shell"><Header active={active} /><main className="main-content">{children}</main><Footer /></div>
 }
 
-function SourceCard({ source, stat }) {
+function SourceCard({ source, stat, hot = false }) {
   const rating = ratingOf(stat)
   return <a
     className="source-card"
@@ -472,6 +522,7 @@ function SourceCard({ source, stat }) {
     aria-label={`Open ${source.name}.${rating === null ? '' : ` ${rating}% liked.`} ${source.description}`}
   >
     {rating !== null && <span className="source-card__badge" aria-hidden="true">▲ {rating}%</span>}
+    {hot && <span className="source-card__badge source-card__badge--hot" aria-hidden="true">🔥 Hot</span>}
     <img
       className="source-card__image"
       src={source.image}
@@ -493,10 +544,11 @@ function SourceCard({ source, stat }) {
 }
 
 function Shelf({ eyebrow, title, items, stats, action }) {
+  const hot = useMemo(() => hotSlugsOf(stats), [stats])
   if (!items.length) return null
   return <section className="shelf">
     <div className="shelf-heading"><div><p className="eyebrow">{eyebrow}</p><h2>{title}</h2></div>{action}</div>
-    <div className="shelf-row">{items.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} />)}</div>
+    <div className="shelf-row">{items.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} hot={hot.has(source.slug)} />)}</div>
   </section>
 }
 
@@ -518,8 +570,10 @@ function SourcesPage() {
   const [sort, setSort] = useState(initial.sort)
   const [recent, setRecent] = useState(() => slugsToGames(readRecent()))
   const [saved] = useState(() => slugsToGames(readSaved()))
+  const [dailyPick] = useState(gameOfTheDay)
   const searchRef = useRef(null)
-  const stats = useStats()
+  const { stats, playersToday } = useCommunity()
+  const hot = useMemo(() => hotSlugsOf(stats), [stats])
   const filtered = useMemo(() => sortGames(games.filter((source) => (category === 'All' || source.category === category) && `${source.name} ${source.category} ${source.description} ${source.tag || ''}`.toLowerCase().includes(query.trim().toLowerCase())), sort, stats), [category, query, sort, stats])
   const trending = useMemo(() => sortGames(games.filter((game) => stats[game.slug]?.plays7d), 'trending', stats).slice(0, 12), [stats])
   const browsing = !query.trim() && category === 'All'
@@ -561,17 +615,32 @@ function SourcesPage() {
 
   return <Shell active="sources">
     <section className="home-hero">
-      <p className="eyebrow">YOUR GAME LIBRARY</p>
-      <h1>StudyShelf</h1>
+      {playersToday > 0 && <p className="live-pill"><i aria-hidden="true" />{playersToday.toLocaleString()} {playersToday === 1 ? 'player' : 'players'} today</p>}
+      <h1>StudyShelf<span className="accent-dot">.</span></h1>
       <p className="home-hero__copy">Find a game, jump in, and make the most of your break.</p>
+      <nav className="quick-nav" aria-label="Quick links">
+        <a href="#library"><span aria-hidden="true">▦</span> Game library</a>
+        <button type="button" onClick={playRandom}><span aria-hidden="true">🎲</span> Random game</button>
+        <a href="/rooms"><span aria-hidden="true">◈</span> Rooms</a>
+        <a href="#suggest"><span aria-hidden="true">✎</span> Suggest</a>
+      </nav>
     </section>
     <ResponsiveHomeBanner />
     {browsing && <>
+      <a className="daily-pick" href={`/sources/${dailyPick.slug}`} style={{ '--tile-color': dailyPick.color }}>
+        <img src={dailyPick.image} alt="" loading="lazy" decoding="async" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
+        <div className="daily-pick__copy">
+          <p className="eyebrow">★ GAME OF THE DAY</p>
+          <h2>{dailyPick.name}</h2>
+          <p>{dailyPick.description}</p>
+          <span className="primary-button">Play now <span>↘</span></span>
+        </div>
+      </a>
       <Shelf eyebrow="PICK UP WHERE YOU LEFT OFF" title="Continue playing" items={recent} stats={stats} action={<button type="button" className="text-button" onClick={clearRecent}>Clear</button>} />
       <Shelf eyebrow="YOUR SHELF" title="Saved games" items={saved} stats={stats} />
       <Shelf eyebrow="WHAT EVERYONE’S PLAYING" title="Trending this week" items={trending} stats={stats} action={<button type="button" className="text-button" onClick={() => setSort('trending')}>See all</button>} />
     </>}
-    <div className="page-heading page-heading--catalog">
+    <div className="page-heading page-heading--catalog" id="library">
       <div><p className="eyebrow">BROWSE & PLAY</p><h2>Game Library</h2></div>
       <span className="result-count">{filtered.length} games</span>
     </div>
@@ -581,11 +650,60 @@ function SourcesPage() {
       <button type="button" className="secondary-button random-button" onClick={playRandom} title="Open a random game from this list">🎲 <span>Random</span></button>
     </div>
     <div className="category-chips" role="group" aria-label="Categories">{categories.map((item) => <button type="button" key={item} aria-pressed={category === item} className={`chip ${category === item ? 'active' : ''}`} onClick={() => setCategory(item)}>{item} <span>{categoryCounts[item]}</span></button>)}</div>
-    <div className="source-grid">{filtered.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} />)}</div>
+    <div className="source-grid">{filtered.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} hot={hot.has(source.slug)} />)}</div>
     {filtered.length === 0 && <div className="empty-state"><h2>No matching games</h2><p>Try a different search or category — or suggest the game below.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
     <NativeBannerAd className="home-native-ad" />
     <SuggestionForm />
   </Shell>
+}
+
+const REPORT_REASONS = {
+  'wont-load': 'Won’t load',
+  'black-screen': 'Black or blank screen',
+  controls: 'Controls don’t work',
+  slow: 'Too slow / laggy',
+  other: 'Something else',
+}
+
+function ReportGamePanel({ source, onClose }) {
+  const [reason, setReason] = useState('')
+  const [details, setDetails] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState(false)
+  const [sent, setSent] = useState(false)
+
+  const submit = async (event) => {
+    event.preventDefault()
+    setBusy(true)
+    setMessage('')
+    setError(false)
+    try {
+      const response = await fetch('/api/reports', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ slug: source.slug, reason, details, voterId: getVoterId() }),
+      })
+      const data = await readApiResponse(response)
+      setSent(true)
+      setMessage(data.message || 'Report sent.')
+    } catch (problem) {
+      setError(true)
+      setMessage(problem.message || 'Could not send the report.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return <form className="report-panel" id="report-panel" onSubmit={submit}>
+    <div className="report-panel__heading"><div><p className="eyebrow">REPORT A PROBLEM</p><h3>What’s wrong with {source.name}?</h3></div><button type="button" className="text-button" onClick={onClose}>Close</button></div>
+    {!sent && <>
+      <div className="kind-picker" role="radiogroup" aria-label="What went wrong">{Object.entries(REPORT_REASONS).map(([value, label]) => <button type="button" key={value} role="radio" aria-checked={reason === value} className={`chip ${reason === value ? 'active' : ''}`} onClick={() => setReason(value)}>{label}</button>)}</div>
+      <label>Details <span>(optional)</span><textarea maxLength={500} rows={2} value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Browser or device, what you saw, when it happens…" /></label>
+      <button className="primary-button" type="submit" disabled={busy || !reason}>{busy ? 'Sending…' : 'Send report'}</button>
+    </>}
+    {message && <p className={`community-message ${error ? 'is-error' : ''}`} role="status">{message}</p>}
+  </form>
 }
 
 function SourceDetail({ source }) {
@@ -593,7 +711,9 @@ function SourceDetail({ source }) {
   const [showFrame, setShowFrame] = useState(false)
   const [frameVersion, setFrameVersion] = useState(0)
   const iframeRef = useRef(null)
+  const [showReport, setShowReport] = useState(false)
   const stats = useStats()
+  const openReports = stats[source.slug]?.reports || 0
   const similar = useMemo(() => sortGames(games.filter((game) => game.category === source.category && game.slug !== source.slug), 'top', stats).slice(0, 6), [source, stats])
   const startGame = () => {
     if (!showFrame) recordPlay(source.slug)
@@ -642,8 +762,11 @@ function SourceDetail({ source }) {
               {showFrame && <button className="secondary-button" type="button" onClick={() => setFrameVersion((value) => value + 1)}>Reload</button>}
               {showFrame && <button className="secondary-button" type="button" onClick={openFullscreen}>Fullscreen ⛶</button>}
               {showFrame && <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Provider page ↗</a>}
+              <button className={`secondary-button report-toggle ${showReport ? 'saved' : ''}`} type="button" onClick={() => setShowReport((open) => !open)} aria-expanded={showReport} aria-controls="report-panel">⚑ Not working?</button>
             </div>
           </div>
+          {openReports >= 2 && <p className="report-warning" role="note">⚠ {openReports} players reported problems with this game recently. If it won’t start, try <strong>Reload</strong> or <strong>Open provider</strong>.</p>}
+          {showReport && <ReportGamePanel source={source} onClose={() => setShowReport(false)} />}
           {showFrame
             ? <div className="source-frame-wrap"><iframe key={frameVersion} ref={iframeRef} className="source-frame" src={source.embedUrl} title={source.name} allow="fullscreen; autoplay; gamepad" allowFullScreen loading="eager" referrerPolicy="strict-origin-when-cross-origin" /></div>
             : <div className="player-placeholder"><span>{source.icon}</span><p>Launch the game in the player, or open the provider directly.</p><button className="primary-button" onClick={startGame}>Load game ↘</button></div>}
@@ -651,7 +774,7 @@ function SourceDetail({ source }) {
         <ResponsiveGameBanner />
         {source.controls && <section className="controls-note"><p className="eyebrow">CONTROLS</p><p>{source.controls}</p></section>}
         <Shelf eyebrow="MORE LIKE THIS" title={`More ${source.category} games`} items={similar} stats={stats} action={<a className="text-button" href={`/?cat=${encodeURIComponent(source.category)}`}>See all</a>} />
-        <div className="detail-bottom"><a href="/#suggest">Report a problem or suggest a game ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
+        <div className="detail-bottom"><a href="/#suggest">Suggest a game or feature ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
       </div>
     </div>
     <NativeBannerAd className="game-native-ad" />
