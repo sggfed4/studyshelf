@@ -15,13 +15,8 @@
 		{
 			"binding": "DB",
 			"database_name": "studyshelf-db",
-			"database_id": "REPLACE_WITH_D1_DATABASE_ID",
+			"database_id": "5b470f68-e347-4a63-b538-76477e1aeb51",
 			"migrations_dir": "migrations"
-		},
-		{
-			"binding": "studyshelf_db",
-			"database_name": "studyshelf-db",
-			"database_id": "5b470f68-e347-4a63-b538-76477e1aeb51"
 		}
 	]
 }

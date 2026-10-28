@@ -30,3 +30,6 @@ README-STUDYSHELF-UPDATE.txt
 public/MADKIDGAMES-ads.txt-line.txt
 
 *.bak
+
+.dev.vars
+.wrangler

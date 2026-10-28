@@ -150,7 +150,38 @@ const readSaved = () => {
   }
 }
 
+const RECENT_KEY = 'studyshelf-recent'
+const readRecent = () => {
+  try {
+    return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]')
+  } catch {
+    return []
+  }
+}
+const pushRecent = (slug) => {
+  const next = [slug, ...readRecent().filter((item) => item !== slug)].slice(0, 12)
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(next)) } catch {}
+}
+
+const gamesBySlug = new Map(games.map((game) => [game.slug, game]))
+const slugsToGames = (slugs) => slugs.map((slug) => gamesBySlug.get(slug)).filter(Boolean)
+
 const setPageTitle = (title) => { document.title = `${title} — StudyShelf` }
+
+const THEME_KEY = 'studyshelf-theme'
+const readTheme = () => {
+  try { return localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark' } catch { return 'dark' }
+}
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState(readTheme)
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try { localStorage.setItem(THEME_KEY, theme) } catch {}
+  }, [theme])
+  const next = theme === 'light' ? 'dark' : 'light'
+  return <button type="button" className="theme-toggle" onClick={() => setTheme(next)} aria-label={`Switch to ${next} theme`} title={`Switch to ${next} theme`}>{theme === 'light' ? '☾' : '☀'}</button>
+}
 
 
 function getVoterId() {
@@ -173,6 +204,50 @@ async function readApiResponse(response) {
   const payload = await response.json().catch(() => ({}))
   if (!response.ok) throw new Error(payload.error || `Request failed (${response.status})`)
   return payload
+}
+
+// Community stats (votes + unique daily plays) for every game, fetched once per page load.
+let statsPromise
+const loadStats = () => {
+  statsPromise ||= fetch('/api/stats').then(readApiResponse).then((data) => data.stats || {}).catch(() => ({}))
+  return statsPromise
+}
+
+function useStats() {
+  const [stats, setStats] = useState({})
+  useEffect(() => {
+    let cancelled = false
+    loadStats().then((next) => { if (!cancelled) setStats(next) })
+    return () => { cancelled = true }
+  }, [])
+  return stats
+}
+
+const ratingOf = (stat) => {
+  const total = (stat?.up || 0) + (stat?.down || 0)
+  return total ? Math.round((stat.up / total) * 100) : null
+}
+// Smoothed approval so one lone upvote doesn't outrank a game with 40 up / 2 down.
+const scoreOf = (stat) => ((stat?.up || 0) + 1) / ((stat?.up || 0) + (stat?.down || 0) + 2)
+
+const SORTS = { featured: 'Featured', trending: 'Trending this week', top: 'Top rated', played: 'Most played', az: 'A–Z' }
+
+function sortGames(list, sort, stats) {
+  const desc = (key) => (a, b) => key(b) - key(a)
+  if (sort === 'az') return [...list].sort((a, b) => a.name.localeCompare(b.name))
+  if (sort === 'trending') return [...list].sort(desc((game) => stats[game.slug]?.plays7d || 0))
+  if (sort === 'played') return [...list].sort(desc((game) => stats[game.slug]?.plays || 0))
+  if (sort === 'top') return [...list].sort(desc((game) => scoreOf(stats[game.slug])))
+  return list
+}
+
+function recordPlay(slug) {
+  pushRecent(slug)
+  fetch('/api/plays', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ slug, voterId: getVoterId() }),
+  }).catch(() => {})
 }
 
 function VotePanel({ source }) {
@@ -228,7 +303,15 @@ function VotePanel({ source }) {
   </section>
 }
 
-function GameRequestForm() {
+const SUGGESTION_TYPES = {
+  game: { label: 'Game request', title: 'Game title', placeholder: 'e.g. Snow Rider 3D', details: 'Official game link or anything we should know' },
+  feature: { label: 'Feature idea', title: 'Your idea', placeholder: 'e.g. Leaderboards for each game', details: 'How would it work? Why would it help?' },
+  bug: { label: 'Bug report', title: 'What went wrong?', placeholder: 'e.g. A game won’t load on my Chromebook', details: 'Which game or page, which device, and what happened' },
+  other: { label: 'Something else', title: 'Subject', placeholder: 'What’s on your mind?', details: 'Anything else we should know' },
+}
+
+function SuggestionForm() {
+  const [kind, setKind] = useState('game')
   const [title, setTitle] = useState('')
   const [details, setDetails] = useState('')
   const [busy, setBusy] = useState(false)
@@ -244,26 +327,32 @@ function GameRequestForm() {
       const response = await fetch('/api/requests', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ title, details, voterId: getVoterId() }),
+        body: JSON.stringify({ kind, title, details, voterId: getVoterId() }),
       })
       const data = await readApiResponse(response)
       setTitle('')
       setDetails('')
-      setMessage(data.message || 'Request submitted.')
+      setMessage(data.message || 'Suggestion sent.')
     } catch (problem) {
       setError(true)
-      setMessage(problem.message || 'Could not submit the request.')
+      setMessage(problem.message || 'Could not send the suggestion.')
     } finally {
       setBusy(false)
     }
   }
 
-  return <section className="game-request-panel">
-    <div><p className="eyebrow">COMMUNITY SUGGESTIONS</p><h2>Request a game</h2><p>Tell us what you want added to StudyShelf. Requests go to the site owner for review.</p></div>
+  useEffect(() => {
+    if (window.location.hash === '#suggest') document.getElementById('suggest')?.scrollIntoView({ block: 'start' })
+  }, [])
+
+  const type = SUGGESTION_TYPES[kind]
+  return <section className="game-request-panel" id="suggest">
+    <div><p className="eyebrow">COMMUNITY SUGGESTIONS</p><h2>Suggestions & requests</h2><p>Want a game added, have an idea for the site, or found something broken? Suggestions go straight to the site owner for review.</p></div>
     <form className="game-request-form" onSubmit={submit}>
-      <label>Game title<input required minLength={2} maxLength={100} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="e.g. Snow Rider 3D" /></label>
-      <label>Details <span>(optional)</span><textarea maxLength={1000} value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Official game link or anything we should know" rows={3} /></label>
-      <button className="primary-button" type="submit" disabled={busy || title.trim().length < 2}>{busy ? 'Sending…' : 'Submit request ↗'}</button>
+      <div className="kind-picker" role="radiogroup" aria-label="Suggestion type">{Object.entries(SUGGESTION_TYPES).map(([value, option]) => <button type="button" key={value} role="radio" aria-checked={kind === value} className={`chip ${kind === value ? 'active' : ''}`} onClick={() => setKind(value)}>{option.label}</button>)}</div>
+      <label>{type.title}<input required minLength={2} maxLength={100} value={title} onChange={(event) => setTitle(event.target.value)} placeholder={type.placeholder} /></label>
+      <label>Details <span>(optional)</span><textarea maxLength={1000} value={details} onChange={(event) => setDetails(event.target.value)} placeholder={type.details} rows={3} /></label>
+      <button className="primary-button" type="submit" disabled={busy || title.trim().length < 2}>{busy ? 'Sending…' : 'Send suggestion ↗'}</button>
       {message && <p className={`community-message ${error ? 'is-error' : ''}`} role="status">{message}</p>}
     </form>
   </section>
@@ -276,6 +365,7 @@ function AdminDashboard() {
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('Enter your private admin token to load votes and game requests.')
   const [error, setError] = useState(false)
+  const [kindFilter, setKindFilter] = useState('all')
 
   const loadData = async (candidate = token) => {
     setBusy(true)
@@ -327,13 +417,18 @@ function AdminDashboard() {
     setMessage('Signed out.'); setError(false)
   }
 
+  const requests = data?.requests || []
+  const playTotals = data?.playTotals || []
+  const visibleRequests = kindFilter === 'all' ? requests : requests.filter((request) => (request.kind || 'game') === kindFilter)
+  const pendingCount = (kind) => requests.filter((request) => request.status === 'pending' && (kind === 'all' || (request.kind || 'game') === kind)).length
+
   setPageTitle('Admin Dashboard')
   return <Shell><section className="admin-page">
     <div className="page-heading"><div><p className="eyebrow">PRIVATE TOOLS</p><h1>StudyShelf Admin</h1></div>{authenticated && <button className="secondary-button" type="button" onClick={logout}>Sign out</button>}</div>
     {!authenticated && <form className="admin-login" onSubmit={(event) => { event.preventDefault(); void loadData(token) }}><label>Admin token<input type="password" autoComplete="current-password" value={token} onChange={(event) => setToken(event.target.value)} placeholder="Paste the ADMIN_TOKEN secret" required /></label><button className="primary-button" disabled={busy || !token.trim()}>{busy ? 'Checking…' : 'Open dashboard'}</button></form>}
     {message && <p className={`community-message ${error ? 'is-error' : ''}`} role="status">{message}</p>}
     {authenticated && data && <>
-      <div className="admin-metrics"><article><span>Games with votes</span><strong>{data.gameTotals.length}</strong></article><article><span>Total upvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.upvotes || 0), 0)}</strong></article><article><span>Total downvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.downvotes || 0), 0)}</strong></article><article><span>Game requests</span><strong>{data.requests.length}</strong></article></div>
+      <div className="admin-metrics"><article><span>Games with votes</span><strong>{data.gameTotals.length}</strong></article><article><span>Total upvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.upvotes || 0), 0)}</strong></article><article><span>Total downvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.downvotes || 0), 0)}</strong></article><article><span>Unique plays (7 days)</span><strong>{playTotals.reduce((sum, row) => sum + (row.plays7d || 0), 0)}</strong></article><article><span>Pending suggestions</span><strong>{pendingCount('all')}</strong></article></div>
       <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">RANKING</p><h2>Votes by game</h2></div><button className="secondary-button" disabled={busy} onClick={() => void loadData(token)}>Refresh</button></div>
         <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game slug</th><th>Upvotes</th><th>Downvotes</th><th>Total</th></tr></thead><tbody>{data.gameTotals.map((row) => <tr key={row.slug}><td>{row.slug}</td><td>{row.upvotes || 0}</td><td>{row.downvotes || 0}</td><td>{row.total || 0}</td></tr>)}</tbody></table>{!data.gameTotals.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
       </section>
@@ -341,8 +436,12 @@ function AdminDashboard() {
         <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game</th><th>Vote</th><th>Anonymous voter ref</th><th>Last updated (UTC)</th></tr></thead><tbody>{data.votes.map((vote, index) => <tr key={`${vote.slug}-${vote.voter_ref}-${index}`}><td>{vote.slug}</td><td><span className={`vote-kind ${vote.direction === 1 ? 'up' : 'down'}`}>{vote.direction === 1 ? '▲ Upvote' : '▼ Downvote'}</span></td><td><code>{vote.voter_ref}</code></td><td>{vote.updated_at} UTC</td></tr>)}</tbody></table>{!data.votes.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
         <p className="fine-print">Voter references are salted hashes, not names, email addresses, or IP addresses. Votes are anonymous and can be changed by the same browser.</p>
       </section>
-      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">INBOX</p><h2>Game requests</h2></div><span className="result-count">{data.requests.filter((request) => request.status === 'pending').length} pending</span></div>
-        <div className="request-list">{data.requests.map((request) => <article className="admin-request" key={request.id}><div className="admin-request-top"><div><h3>{request.title}</h3><p>{request.created_at} UTC · Request #{request.id}</p></div><span className={`request-status status-${request.status}`}>{request.status}</span></div>{request.details && <p className="admin-request-details">{request.details}</p>}<div className="admin-request-actions"><button className="secondary-button" disabled={busy} onClick={() => void updateRequest(request.id, 'pending')}>Pending</button><button className="secondary-button" disabled={busy} onClick={() => void updateRequest(request.id, 'approved')}>Approve</button><button className="secondary-button" disabled={busy} onClick={() => void updateRequest(request.id, 'rejected')}>Reject</button><button className="danger-button" disabled={busy} onClick={() => void deleteRequest(request.id)}>Delete spam</button></div></article>)}{!data.requests.length && <p className="admin-empty">No game requests yet.</p>}</div>
+      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">POPULARITY</p><h2>Most played</h2></div><span className="result-count">Unique browsers per day</span></div>
+        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game</th><th>Last 7 days</th><th>All time</th></tr></thead><tbody>{playTotals.map((row) => <tr key={row.slug}><td>{gamesBySlug.get(row.slug)?.name || row.slug}</td><td>{row.plays7d || 0}</td><td>{row.plays || 0}</td></tr>)}</tbody></table>{!playTotals.length && <p className="admin-empty">No plays recorded yet.</p>}</div>
+      </section>
+      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">INBOX</p><h2>Suggestions</h2></div><span className="result-count">{pendingCount('all')} pending</span></div>
+        <div className="kind-picker admin-kind-filter" role="group" aria-label="Filter suggestions">{[['all', 'All'], ...Object.entries(SUGGESTION_TYPES).map(([value, option]) => [value, option.label])].map(([value, label]) => <button type="button" key={value} aria-pressed={kindFilter === value} className={`chip ${kindFilter === value ? 'active' : ''}`} onClick={() => setKindFilter(value)}>{label} <span>{pendingCount(value)}</span></button>)}</div>
+        <div className="request-list">{visibleRequests.map((request) => <article className="admin-request" key={request.id}><div className="admin-request-top"><div><h3>{request.title}</h3><p>{request.created_at} UTC · #{request.id}</p></div><div className="admin-request-badges"><span className={`request-kind kind-${request.kind || 'game'}`}>{SUGGESTION_TYPES[request.kind || 'game']?.label}</span><span className={`request-status status-${request.status}`}>{request.status}</span></div></div>{request.details && <p className="admin-request-details">{request.details}</p>}<div className="admin-request-actions"><button className="secondary-button" disabled={busy} onClick={() => void updateRequest(request.id, 'pending')}>Pending</button><button className="secondary-button" disabled={busy} onClick={() => void updateRequest(request.id, 'approved')}>Approve</button><button className="secondary-button" disabled={busy} onClick={() => void updateRequest(request.id, 'rejected')}>Reject</button><button className="danger-button" disabled={busy} onClick={() => void deleteRequest(request.id)}>Delete spam</button></div></article>)}{!visibleRequests.length && <p className="admin-empty">No suggestions here yet.</p>}</div>
       </section>
     </>}
   </section></Shell>
@@ -353,7 +452,7 @@ function Logo() {
 }
 
 function Header({ active = 'sources' }) {
-  return <header className="topbar"><Logo /><nav aria-label="Main navigation"><a className={active === 'sources' ? 'active' : ''} href="/">Games</a><a className={active === 'rooms' ? 'active' : ''} href="/rooms">Rooms</a></nav></header>
+  return <header className="topbar"><Logo /><nav aria-label="Main navigation"><a className={active === 'sources' ? 'active' : ''} href="/">Games</a><a className={active === 'rooms' ? 'active' : ''} href="/rooms">Rooms</a><ThemeToggle /></nav></header>
 }
 
 function Footer() {
@@ -364,13 +463,15 @@ function Shell({ children, active }) {
   return <div className="app-shell"><Header active={active} /><main className="main-content">{children}</main><Footer /></div>
 }
 
-function SourceCard({ source }) {
+function SourceCard({ source, stat }) {
+  const rating = ratingOf(stat)
   return <a
     className="source-card"
     href={`/sources/${source.slug}`}
     style={{ '--tile-color': source.color }}
-    aria-label={`Open ${source.name}. ${source.description}`}
+    aria-label={`Open ${source.name}.${rating === null ? '' : ` ${rating}% liked.`} ${source.description}`}
   >
+    {rating !== null && <span className="source-card__badge" aria-hidden="true">▲ {rating}%</span>}
     <img
       className="source-card__image"
       src={source.image}
@@ -391,12 +492,72 @@ function SourceCard({ source }) {
   </a>
 }
 
+function Shelf({ eyebrow, title, items, stats, action }) {
+  if (!items.length) return null
+  return <section className="shelf">
+    <div className="shelf-heading"><div><p className="eyebrow">{eyebrow}</p><h2>{title}</h2></div>{action}</div>
+    <div className="shelf-row">{items.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} />)}</div>
+  </section>
+}
+
+const categoryCounts = games.reduce((counts, game) => ({ ...counts, [game.category]: (counts[game.category] || 0) + 1 }), {})
+const categories = ['All', ...Object.keys(categoryCounts).sort((a, b) => categoryCounts[b] - categoryCounts[a])]
+categoryCounts.All = games.length
+
+const readCatalogParams = () => {
+  const params = new URLSearchParams(window.location.search)
+  const category = params.get('cat')
+  const sort = params.get('sort')
+  return { query: params.get('q') || '', category: categories.includes(category) ? category : 'All', sort: SORTS[sort] ? sort : 'featured' }
+}
+
 function SourcesPage() {
-  const [query, setQuery] = useState('')
-  const [category, setCategory] = useState('All')
-  const categories = useMemo(() => ['All', ...new Set(games.map((source) => source.category))], [])
-  const filtered = useMemo(() => games.filter((source) => (category === 'All' || source.category === category) && `${source.name} ${source.category} ${source.description} ${source.tag || ''}`.toLowerCase().includes(query.trim().toLowerCase())), [category, query])
+  const [initial] = useState(readCatalogParams)
+  const [query, setQuery] = useState(initial.query)
+  const [category, setCategory] = useState(initial.category)
+  const [sort, setSort] = useState(initial.sort)
+  const [recent, setRecent] = useState(() => slugsToGames(readRecent()))
+  const [saved] = useState(() => slugsToGames(readSaved()))
+  const searchRef = useRef(null)
+  const stats = useStats()
+  const filtered = useMemo(() => sortGames(games.filter((source) => (category === 'All' || source.category === category) && `${source.name} ${source.category} ${source.description} ${source.tag || ''}`.toLowerCase().includes(query.trim().toLowerCase())), sort, stats), [category, query, sort, stats])
+  const trending = useMemo(() => sortGames(games.filter((game) => stats[game.slug]?.plays7d), 'trending', stats).slice(0, 12), [stats])
+  const browsing = !query.trim() && category === 'All'
   setPageTitle('StudyShelf')
+
+  // Keep the URL in sync so searches and filters can be shared or bookmarked.
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (query.trim()) params.set('q', query.trim())
+    if (category !== 'All') params.set('cat', category)
+    if (sort !== 'featured') params.set('sort', sort)
+    const search = params.toString()
+    window.history.replaceState(null, '', `${search ? `/?${search}` : '/'}${window.location.hash}`)
+  }, [query, category, sort])
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)
+      if (event.key === '/' && !typing) {
+        event.preventDefault()
+        searchRef.current?.focus()
+      } else if (event.key === 'Escape' && document.activeElement === searchRef.current) {
+        setQuery('')
+        searchRef.current.blur()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [])
+
+  const playRandom = () => {
+    const pool = filtered.length ? filtered : games
+    window.location.href = `/sources/${pool[Math.floor(Math.random() * pool.length)].slug}`
+  }
+  const clearRecent = () => {
+    try { localStorage.removeItem(RECENT_KEY) } catch {}
+    setRecent([])
+  }
 
   return <Shell active="sources">
     <section className="home-hero">
@@ -405,15 +566,25 @@ function SourcesPage() {
       <p className="home-hero__copy">Find a game, jump in, and make the most of your break.</p>
     </section>
     <ResponsiveHomeBanner />
+    {browsing && <>
+      <Shelf eyebrow="PICK UP WHERE YOU LEFT OFF" title="Continue playing" items={recent} stats={stats} action={<button type="button" className="text-button" onClick={clearRecent}>Clear</button>} />
+      <Shelf eyebrow="YOUR SHELF" title="Saved games" items={saved} stats={stats} />
+      <Shelf eyebrow="WHAT EVERYONE’S PLAYING" title="Trending this week" items={trending} stats={stats} action={<button type="button" className="text-button" onClick={() => setSort('trending')}>See all</button>} />
+    </>}
     <div className="page-heading page-heading--catalog">
       <div><p className="eyebrow">BROWSE & PLAY</p><h2>Game Library</h2></div>
       <span className="result-count">{filtered.length} games</span>
     </div>
-    <div className="toolbar"><label className="search-box"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search games..." aria-label="Search games" /><kbd>⌕</kbd></label><label className="filter-select"><span className="sr-only">Category</span><select value={category} onChange={(event) => setCategory(event.target.value)}>{categories.map((item) => <option key={item}>{item}</option>)}</select></label></div>
-    <div className="source-grid">{filtered.map((source) => <SourceCard key={source.slug} source={source} />)}</div>
-    {filtered.length === 0 && <div className="empty-state"><h2>No matching games</h2><p>Try a different search or category.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
+    <div className="toolbar">
+      <label className="search-box"><span>⌕</span><input ref={searchRef} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search games..." aria-label="Search games" aria-keyshortcuts="/" /><kbd title="Press / to search">/</kbd></label>
+      <label className="filter-select"><span className="sr-only">Sort by</span><select value={sort} onChange={(event) => setSort(event.target.value)}>{Object.entries(SORTS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+      <button type="button" className="secondary-button random-button" onClick={playRandom} title="Open a random game from this list">🎲 <span>Random</span></button>
+    </div>
+    <div className="category-chips" role="group" aria-label="Categories">{categories.map((item) => <button type="button" key={item} aria-pressed={category === item} className={`chip ${category === item ? 'active' : ''}`} onClick={() => setCategory(item)}>{item} <span>{categoryCounts[item]}</span></button>)}</div>
+    <div className="source-grid">{filtered.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} />)}</div>
+    {filtered.length === 0 && <div className="empty-state"><h2>No matching games</h2><p>Try a different search or category — or suggest the game below.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
     <NativeBannerAd className="home-native-ad" />
-    <GameRequestForm />
+    <SuggestionForm />
   </Shell>
 }
 
@@ -422,6 +593,12 @@ function SourceDetail({ source }) {
   const [showFrame, setShowFrame] = useState(false)
   const [frameVersion, setFrameVersion] = useState(0)
   const iframeRef = useRef(null)
+  const stats = useStats()
+  const similar = useMemo(() => sortGames(games.filter((game) => game.category === source.category && game.slug !== source.slug), 'top', stats).slice(0, 6), [source, stats])
+  const startGame = () => {
+    if (!showFrame) recordPlay(source.slug)
+    setShowFrame(true)
+  }
   const toggleSave = () => setSaved((current) => {
     const next = current ? readSaved().filter((item) => item !== source.slug) : [...readSaved(), source.slug]
     try { localStorage.setItem('studyshelf-saved-sources', JSON.stringify(next)) } catch {}
@@ -450,7 +627,7 @@ function SourceDetail({ source }) {
             <h1>{source.name}</h1>
             <p>{source.details || source.description}</p>
             <div className="detail-actions">
-              <button className="primary-button" onClick={() => { setShowFrame(true); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Game loaded' : 'Play here'} <span>↘</span></button>
+              <button className="primary-button" onClick={() => { startGame(); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Game loaded' : 'Play here'} <span>↘</span></button>
               <button className={`secondary-button ${saved ? 'saved' : ''}`} onClick={toggleSave}>{saved ? '★ Saved' : '☆ Save'}</button>
               <a className="secondary-button" href={source.providerUrl} target="_blank" rel="noopener noreferrer">Open provider ↗</a>
             </div>
@@ -469,11 +646,12 @@ function SourceDetail({ source }) {
           </div>
           {showFrame
             ? <div className="source-frame-wrap"><iframe key={frameVersion} ref={iframeRef} className="source-frame" src={source.embedUrl} title={source.name} allow="fullscreen; autoplay; gamepad" allowFullScreen loading="eager" referrerPolicy="strict-origin-when-cross-origin" /></div>
-            : <div className="player-placeholder"><span>{source.icon}</span><p>Launch the game in the player, or open the provider directly.</p><button className="primary-button" onClick={() => setShowFrame(true)}>Load game ↘</button></div>}
+            : <div className="player-placeholder"><span>{source.icon}</span><p>Launch the game in the player, or open the provider directly.</p><button className="primary-button" onClick={startGame}>Load game ↘</button></div>}
         </section>
         <ResponsiveGameBanner />
         {source.controls && <section className="controls-note"><p className="eyebrow">CONTROLS</p><p>{source.controls}</p></section>}
-        <div className="detail-bottom"><a href="mailto:support@studyshelf.org?subject=StudyShelf%20game%20report">Report a game issue ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
+        <Shelf eyebrow="MORE LIKE THIS" title={`More ${source.category} games`} items={similar} stats={stats} action={<a className="text-button" href={`/?cat=${encodeURIComponent(source.category)}`}>See all</a>} />
+        <div className="detail-bottom"><a href="/#suggest">Report a problem or suggest a game ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
       </div>
     </div>
     <NativeBannerAd className="game-native-ad" />
@@ -490,7 +668,7 @@ function RoomsPage() {
 function InfoPage({ kind }) {
   const content = {
     about: { title: 'About StudyShelf', intro: 'StudyShelf organizes a browsable collection of browser games and useful web tools.', body: 'Game pages link to independently operated providers. StudyShelf does not claim ownership of third-party content, and provider availability may change.' },
-    privacy: { title: 'Privacy', intro: 'Last updated October 15, 2026.', body: 'StudyShelf stores saved-game preferences in your browser. Hosting providers may process technical information required to deliver and protect the site. When you open an external game or room, that provider may receive connection data and handle it under its own privacy policy. StudyShelf also loads third-party advertising scripts for banner, native, and floating advertisements. Advertising providers may process technical data and use cookies or similar technologies under their own privacy policies. If you vote or submit a game request, StudyShelf stores the game slug, vote direction or request text, timestamps, and a salted hash of a random browser identifier to limit repeat submissions. It does not ask for your name or email address for these features and does not store raw IP addresses in this voting system. Avoid sharing personal or sensitive information in request details.' },
+    privacy: { title: 'Privacy', intro: 'Last updated October 15, 2026.', body: 'StudyShelf stores saved-game preferences in your browser. Hosting providers may process technical information required to deliver and protect the site. When you open an external game or room, that provider may receive connection data and handle it under its own privacy policy. StudyShelf also loads third-party advertising scripts for banner, native, and floating advertisements. Advertising providers may process technical data and use cookies or similar technologies under their own privacy policies. If you vote or send a suggestion, StudyShelf stores the game slug, vote direction or suggestion text, timestamps, and a salted hash of a random browser identifier to limit repeat submissions. When you load a game, StudyShelf records the game slug, the date, and that same salted hash so it can count unique players per day for the Trending and Most played lists. Your recently played games are kept only in your browser. It does not ask for your name or email address for these features and does not store raw IP addresses in this voting system. Avoid sharing personal or sensitive information in request details.' },
     terms: { title: 'Terms', intro: 'Use StudyShelf responsibly and follow the rules that apply to you.', body: 'StudyShelf is a directory and viewer for third-party games and content. We do not own or guarantee external sources, their availability, or their content. Use of external providers and advertisements is subject to their own terms. Do not use the site to violate applicable laws, access controls, or network policies.' },
     contact: { title: 'Contact', intro: 'Need help with StudyShelf?', body: 'For support or to report a game issue, email support@studyshelf.org. This address must be configured to receive messages before the site is promoted.' },
   }

@@ -1,15 +1,24 @@
+import { games } from './src/games.js';
+
+const KNOWN_SLUGS = new Set(games.map((game) => game.slug));
+const SUGGESTION_KINDS = ['game', 'feature', 'bug', 'other'];
+
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
   'cache-control': 'no-store',
   'x-content-type-options': 'nosniff',
 };
 
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), { status, headers: JSON_HEADERS });
+function json(data, status = 200, extraHeaders = {}) {
+  return new Response(JSON.stringify(data), { status, headers: { ...JSON_HEADERS, ...extraHeaders } });
 }
 
 function isValidSlug(value) {
   return typeof value === 'string' && /^[a-z0-9][a-z0-9-]{0,79}$/.test(value);
+}
+
+function isValidVoterId(value) {
+  return typeof value === 'string' && value.length >= 16 && value.length <= 100;
 }
 
 function timingSafeEqual(a, b) {
@@ -68,7 +77,7 @@ async function handleApi(request, env) {
     if (dbError) return dbError;
     if (!env.HASH_SALT) return json({ error: 'The vote hashing secret is not configured.' }, 503);
     const body = await readJson(request);
-    if (!body || !isValidSlug(body.slug) || !['up', 'down', 'remove'].includes(body.vote) || typeof body.voterId !== 'string' || body.voterId.length < 16 || body.voterId.length > 100) {
+    if (!body || !KNOWN_SLUGS.has(body.slug) || !['up', 'down', 'remove'].includes(body.vote) || !isValidVoterId(body.voterId)) {
       return json({ error: 'Invalid vote details.' }, 400);
     }
     const voterHash = await hashValue(body.voterId, env.HASH_SALT);
@@ -88,6 +97,37 @@ async function handleApi(request, env) {
     return json({ ok: true, slug: body.slug, upvotes: counts?.upvotes || 0, downvotes: counts?.downvotes || 0, myVote: body.vote });
   }
 
+  if (path === '/api/plays' && method === 'POST') {
+    const dbError = await requireDatabase(env);
+    if (dbError) return dbError;
+    if (!env.HASH_SALT) return json({ error: 'The hashing secret is not configured.' }, 503);
+    const body = await readJson(request);
+    if (!body || !KNOWN_SLUGS.has(body.slug) || !isValidVoterId(body.voterId)) return json({ error: 'Invalid play details.' }, 400);
+    const playerHash = await hashValue(body.voterId, env.HASH_SALT);
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO plays (game_slug, player_hash, day) VALUES (?, ?, date('now'))"
+    ).bind(body.slug, playerHash).run();
+    return json({ ok: true });
+  }
+
+  if (path === '/api/stats' && method === 'GET') {
+    const dbError = await requireDatabase(env);
+    if (dbError) return dbError;
+    const [voteRows, playRows] = await Promise.all([
+      env.DB.prepare(
+        'SELECT game_slug AS slug, SUM(CASE WHEN direction = 1 THEN 1 ELSE 0 END) AS up, SUM(CASE WHEN direction = -1 THEN 1 ELSE 0 END) AS down FROM votes GROUP BY game_slug'
+      ).all(),
+      env.DB.prepare(
+        "SELECT game_slug AS slug, COUNT(*) AS plays, SUM(CASE WHEN day >= date('now', '-6 days') THEN 1 ELSE 0 END) AS plays7d FROM plays GROUP BY game_slug"
+      ).all(),
+    ]);
+    const stats = {};
+    const entry = (slug) => (stats[slug] ||= { up: 0, down: 0, plays: 0, plays7d: 0 });
+    for (const row of voteRows.results || []) Object.assign(entry(row.slug), { up: row.up || 0, down: row.down || 0 });
+    for (const row of playRows.results || []) Object.assign(entry(row.slug), { plays: row.plays || 0, plays7d: row.plays7d || 0 });
+    return json({ stats }, 200, { 'cache-control': 'public, max-age=60' });
+  }
+
   if (path === '/api/requests' && method === 'POST') {
     const dbError = await requireDatabase(env);
     if (dbError) return dbError;
@@ -95,18 +135,20 @@ async function handleApi(request, env) {
     const body = await readJson(request);
     const title = typeof body?.title === 'string' ? body.title.trim() : '';
     const details = typeof body?.details === 'string' ? body.details.trim() : '';
-    if (title.length < 2 || title.length > 100 || details.length > 1000 || typeof body?.voterId !== 'string' || body.voterId.length < 16 || body.voterId.length > 100) {
-      return json({ error: 'Enter a game title (2–100 characters) and a description up to 1,000 characters.' }, 400);
+    const kind = body?.kind ?? 'game';
+    if (!SUGGESTION_KINDS.includes(kind)) return json({ error: 'Choose a suggestion type.' }, 400);
+    if (title.length < 2 || title.length > 100 || details.length > 1000 || !isValidVoterId(body?.voterId)) {
+      return json({ error: 'Enter a title (2–100 characters) and details up to 1,000 characters.' }, 400);
     }
     const submitterHash = await hashValue(body.voterId, env.HASH_SALT);
     const recent = await env.DB.prepare(
       "SELECT COUNT(*) AS total FROM game_requests WHERE submitter_hash = ? AND created_at >= datetime('now', '-1 day')"
     ).bind(submitterHash).first();
-    if ((recent?.total || 0) >= 3) return json({ error: 'Limit reached: each browser can submit up to 3 requests per day.' }, 429);
+    if ((recent?.total || 0) >= 5) return json({ error: 'Limit reached: each browser can send up to 5 suggestions per day.' }, 429);
     const inserted = await env.DB.prepare(
-      "INSERT INTO game_requests (title, details, status, submitter_hash, created_at) VALUES (?, ?, 'pending', ?, datetime('now'))"
-    ).bind(title, details, submitterHash).run();
-    return json({ ok: true, id: inserted.meta?.last_row_id, message: 'Game request submitted. Thanks!' }, 201);
+      "INSERT INTO game_requests (title, details, kind, status, submitter_hash, created_at) VALUES (?, ?, ?, 'pending', ?, datetime('now'))"
+    ).bind(title, details, kind, submitterHash).run();
+    return json({ ok: true, id: inserted.meta?.last_row_id, message: 'Suggestion sent. Thanks!' }, 201);
   }
 
   if (path.startsWith('/api/admin/')) {
@@ -115,7 +157,7 @@ async function handleApi(request, env) {
     if (dbError) return dbError;
 
     if (path === '/api/admin/data' && method === 'GET') {
-      const [gameTotals, voteRows, requests] = await Promise.all([
+      const [gameTotals, voteRows, requests, playTotals] = await Promise.all([
         env.DB.prepare(
           'SELECT game_slug AS slug, SUM(CASE WHEN direction = 1 THEN 1 ELSE 0 END) AS upvotes, SUM(CASE WHEN direction = -1 THEN 1 ELSE 0 END) AS downvotes, COUNT(*) AS total FROM votes GROUP BY game_slug ORDER BY total DESC, game_slug ASC'
         ).all(),
@@ -123,10 +165,13 @@ async function handleApi(request, env) {
           'SELECT game_slug AS slug, direction, substr(voter_hash, 1, 12) AS voter_ref, created_at, updated_at FROM votes ORDER BY updated_at DESC LIMIT 500'
         ).all(),
         env.DB.prepare(
-          'SELECT id, title, details, status, created_at FROM game_requests ORDER BY CASE status WHEN \'pending\' THEN 0 ELSE 1 END, created_at DESC LIMIT 500'
+          'SELECT id, title, details, kind, status, created_at FROM game_requests ORDER BY CASE status WHEN \'pending\' THEN 0 ELSE 1 END, created_at DESC LIMIT 500'
+        ).all(),
+        env.DB.prepare(
+          "SELECT game_slug AS slug, COUNT(*) AS plays, SUM(CASE WHEN day >= date('now', '-6 days') THEN 1 ELSE 0 END) AS plays7d FROM plays GROUP BY game_slug ORDER BY plays7d DESC, plays DESC LIMIT 100"
         ).all(),
       ]);
-      return json({ gameTotals: gameTotals.results || [], votes: voteRows.results || [], requests: requests.results || [] });
+      return json({ gameTotals: gameTotals.results || [], votes: voteRows.results || [], requests: requests.results || [], playTotals: playTotals.results || [] });
     }
 
     const requestMatch = path.match(/^\/api\/admin\/requests\/(\d+)$/);
