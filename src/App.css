@@ -535,3 +535,4 @@
   .report-entries small{margin-left:0;width:100%}
 }
 @media(prefers-reduced-motion:reduce){.live-pill i{animation:none}.daily-pick{transition:none}}
+.fine-print a{color:#9bceff;text-decoration:underline;text-underline-offset:2px}

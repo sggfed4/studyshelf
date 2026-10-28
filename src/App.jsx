@@ -749,9 +749,13 @@ function SourceDetail({ source }) {
             <div className="detail-actions">
               <button className="primary-button" onClick={() => { startGame(); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Game loaded' : 'Play here'} <span>↘</span></button>
               <button className={`secondary-button ${saved ? 'saved' : ''}`} onClick={toggleSave}>{saved ? '★ Saved' : '☆ Save'}</button>
-              <a className="secondary-button" href={source.providerUrl} target="_blank" rel="noopener noreferrer">Open provider ↗</a>
+              {source.hosted
+                ? <a className="secondary-button" href={source.embedUrl} target="_blank" rel="noopener">Open in new tab ↗</a>
+                : <a className="secondary-button" href={source.providerUrl} target="_blank" rel="noopener noreferrer">Open provider ↗</a>}
             </div>
-            <p className="fine-print">Game provided by an independent third party. Some games include controls or overlays managed by the provider.</p>
+            {source.hosted
+              ? <p className="fine-print">Open-source HTML5 game by <a href="https://github.com/mashukui" target="_blank" rel="noopener noreferrer">mashukui</a>, hosted on StudyShelf under the <a href="/play/LICENSE.txt" target="_blank" rel="noopener">MIT License</a>. <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Source code ↗</a></p>
+              : <p className="fine-print">Game provided by an independent third party. Some games include controls or overlays managed by the provider.</p>}
           </div>
         </section>
         <VotePanel source={source} />
@@ -761,7 +765,7 @@ function SourceDetail({ source }) {
             <div className="player-panel-actions">
               {showFrame && <button className="secondary-button" type="button" onClick={() => setFrameVersion((value) => value + 1)}>Reload</button>}
               {showFrame && <button className="secondary-button" type="button" onClick={openFullscreen}>Fullscreen ⛶</button>}
-              {showFrame && <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Provider page ↗</a>}
+              {showFrame && <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">{source.hosted ? 'Source code ↗' : 'Provider page ↗'}</a>}
               <button className={`secondary-button report-toggle ${showReport ? 'saved' : ''}`} type="button" onClick={() => setShowReport((open) => !open)} aria-expanded={showReport} aria-controls="report-panel">⚑ Not working?</button>
             </div>
           </div>

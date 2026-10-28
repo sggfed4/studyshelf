@@ -1,3 +1,5 @@
+import { openSourceGames } from './openSourceGames.js'
+
 export const games = [
 {
       slug: 'stick-war-legacy', name: 'Stick War Legacy', category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
@@ -1374,5 +1376,6 @@ export const games = [
       controls: 'Use left/right arrows or A/D.',
       embedUrl: 'https://riddleschool.org/slope', providerUrl: 'https://riddleschool.org/slope',
       image: 'https://riddleschool.org/thumbs/slope.webp', tag: '3D REFLEX',
-    }
+    },
+  ...openSourceGames,
 ];
