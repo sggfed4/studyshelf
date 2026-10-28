@@ -1,16 +1,21 @@
-# React + Vite
+# Cloudflare setup for VS Code / GitHub Copilot
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This bundle targets the user's Windows 11 + VS Code workflow.
 
-Currently, two official plugins are available:
+## Install
+1. Extract this folder into `C:\Users\logan\StudyShelf3` so `.vscode\mcp.json` is inside the project.
+2. Open PowerShell in `C:\Users\logan\StudyShelf3`.
+3. Run:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\setup-cloudflare.ps1
+   ```
+   This does not change your system execution policy. It backs up an existing `.vscode\mcp.json`, adds/updates only the Cloudflare MCP entry, then installs Cloudflare skills in the project.
+4. In VS Code, run **Developer: Reload Window** from the Command Palette.
+5. Use GitHub Copilot Chat in **Agent** mode. On first use of the Cloudflare MCP server, complete the Cloudflare OAuth flow in your browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The MCP endpoint is `https://mcp.cloudflare.com/mcp`. Review the OAuth permissions before approving them.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Notes
+- This config is for VS Code's `.vscode/mcp.json` format (`servers`, not `mcpServers`).
+- It does not deploy or change your Cloudflare site, DNS, Workers, Pages, or D1 resources.
+- Keep secrets such as `ADMIN_TOKEN` and `HASH_SALT` out of source control.

@@ -1,5 +1,8 @@
+import { licensedGames } from './licensedGames.js'
+import { openSourceGames } from './openSourceGames.js'
+
 export const games = [
-  {
+{
       slug: 'stick-war-legacy', name: 'Stick War Legacy', category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: 'Mine gold, train troops, defend your statue, and take down enemy armies.',
       details: 'Build an army and manage your resources in this stickman strategy game. Choose when to mine, defend, upgrade, and attack.',
@@ -7,7 +10,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/stick-war-legacy', providerUrl: 'https://www.madkidgames.com/game/stick-war-legacy',
       image: 'https://www.madkidgames.com/games/stick-war-legacy/thumb_2.jpg', tag: 'STRATEGY & BATTLES',
     },
-  {
+{
       slug: 'subway-surfers', name: 'Subway Surfers', category: 'Action', icon: '🚆', color: '#b9f0e6',
       description: 'Dodge trains, grab coins, and see how long you can keep running.',
       details: 'A fast endless runner built around quick reactions, lane changes, jumps, and rolls. The challenge ramps up as you run.',
@@ -15,7 +18,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/subway-surfers', providerUrl: 'https://www.madkidgames.com/game/subway-surfers',
       image: 'https://www.madkidgames.com/games/subway-surfers/thumb_2.jpg', tag: 'ENDLESS RUNNER',
     },
-  {
+{
       slug: 'angry-birds-2', name: 'Angry Birds 2', category: 'Puzzle', icon: '🐦', color: '#ffd0a4',
       description: 'Launch birds, knock down pig towers, and solve physics challenges.',
       details: 'Use a slingshot, pick your launch angle, and bring down structures with carefully timed shots and bird abilities.',
@@ -23,7 +26,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/angry-birds-2', providerUrl: 'https://www.madkidgames.com/game/angry-birds-2',
       image: 'https://www.madkidgames.com/games/angry-birds-2/thumb_2.jpg', tag: 'PHYSICS PUZZLE',
     },
-  {
+{
       slug: 'offroad-outlaws', name: 'Offroad Outlaws', category: 'Driving', icon: '🚙', color: '#e4d0a7',
       description: 'Take on off-road terrain and tricky driving routes.',
       details: 'A driving challenge focused on handling rough terrain, controlling your vehicle, and navigating uneven tracks.',
@@ -31,7 +34,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/offroad-outlaws', providerUrl: 'https://www.madkidgames.com/game/offroad-outlaws',
       image: 'https://www.madkidgames.com/games/offroad-outlaws/thumb_2.jpg', tag: 'OFF-ROAD DRIVING',
     },
-  {
+{
       slug: 'bad-piggies', name: 'Bad Piggies', category: 'Puzzle', icon: '🐷', color: '#c9efb4',
       description: 'Build strange machines and get your pig safely to the finish.',
       details: 'Construct wacky vehicles from the parts available, test your designs, and adjust your build to solve each physics puzzle.',
@@ -39,7 +42,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bad-piggies', providerUrl: 'https://www.madkidgames.com/game/bad-piggies',
       image: 'https://www.madkidgames.com/games/bad-piggies/thumb_2.jpg', tag: 'BUILDING & PHYSICS',
     },
-  {
+{
       slug: 'bowmasters-archery-shooting', name: 'Bowmasters', category: 'Action', icon: '🏹', color: '#e9cff9',
       description: 'Aim carefully and time your shots in an archery duel.',
       details: 'A physics-based aiming game where angle, power, and timing help you land hits and beat your opponents.',
@@ -47,7 +50,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bowmasters-archery-shooting', providerUrl: 'https://www.madkidgames.com/game/bowmasters-archery-shooting',
       image: 'https://www.madkidgames.com/games/bowmasters-archery-shooting/thumb_2.jpg', tag: 'AIMING & SKILL',
     },
-  {
+{
       slug: 'bus-simulator-ultimate', name: 'Bus Simulator Ultimate', category: 'Simulation', icon: '🚌', color: '#b8dfff',
       description: 'Drive a bus, follow routes, and manage each trip.',
       details: 'A vehicle simulator built around driving, route-following, and keeping control on the road.',
@@ -55,7 +58,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bus-simulator-ultimate', providerUrl: 'https://www.madkidgames.com/game/bus-simulator-ultimate',
       image: 'https://www.madkidgames.com/games/bus-simulator-ultimate/thumb_2.jpg', tag: 'DRIVING SIMULATOR',
     },
-  {
+{
       slug: 'purble-place', name: 'Purble Place', category: 'Puzzle', icon: '🧁', color: '#ffd7e5',
       description: 'Play a collection of colorful mini-games and memory challenges.',
       details: 'A bright collection of casual games focused on memory, pattern recognition, and simple puzzle-solving.',
@@ -63,7 +66,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/purble-place', providerUrl: 'https://www.madkidgames.com/game/purble-place',
       image: 'https://www.madkidgames.com/games/purble-place/thumb_2.jpg', tag: 'CASUAL MINI-GAMES',
     },
-  {
+{
       slug: 'hot-wheels-race-off', name: 'Hot Wheels Race Off', category: 'Racing', icon: '🏎️', color: '#ffc7b1',
       description: 'Race toy cars over ramps, loops, and wild stunt tracks.',
       details: 'A stunt-racing game that rewards careful acceleration, balance, and clean landings on steep tracks.',
@@ -71,7 +74,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/hot-wheels-race-off', providerUrl: 'https://www.madkidgames.com/game/hot-wheels-race-off',
       image: 'https://www.madkidgames.com/games/hot-wheels-race-off/thumb_2.jpg', tag: 'STUNT RACING',
     },
-  {
+{
       slug: 'airplane-flight-simulator-evo', name: 'Airplane Flight Simulator Evo', category: 'Simulation', icon: '✈️', color: '#c7dcff',
       description: 'Pilot aircraft through takeoffs, checkpoints, and landing challenges.',
       details: 'A flight simulator with mission-based objectives. Keep your aircraft steady, follow routes, and line up a smooth landing.',
@@ -79,7 +82,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/airplane-flight-simulator-evo', providerUrl: 'https://www.madkidgames.com/game/airplane-flight-simulator-evo',
       image: 'https://www.madkidgames.com/games/airplane-flight-simulator-evo/thumb_2.jpg', tag: 'FLIGHT SIMULATOR',
     },
-  {
+{
       slug: 'free-kick-football-3d-soccer', name: 'Free Kick Football 3D', category: 'Sports', icon: '⚽', color: '#c8f4c9',
       description: 'Bend shots around the wall and aim for the back of the net.',
       details: 'A soccer free-kick challenge that tests your aim and shot timing as you try to beat the keeper.',
@@ -87,7 +90,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/free-kick-football-3d-soccer', providerUrl: 'https://www.madkidgames.com/game/free-kick-football-3d-soccer',
       image: 'https://www.madkidgames.com/games/free-kick-football-3d-soccer/thumb_2.jpg', tag: 'SOCCER SKILLS',
     },
-  {
+{
       slug: 'subway-princess-runner', name: 'Subway Princess Runner', category: 'Action', icon: '👟', color: '#f6c6e5',
       description: 'Switch lanes, jump gaps, and collect coins in an endless run.',
       details: 'An endless runner built around quick lane changes, jumps, slides, and avoiding trains and barriers.',
@@ -95,7 +98,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/subway-princess-runner', providerUrl: 'https://www.madkidgames.com/game/subway-princess-runner',
       image: 'https://www.madkidgames.com/games/subway-princess-runner/thumb_2.jpg', tag: 'ENDLESS RUNNER',
     },
-  {
+{
       slug: 'geometry-dash', name: 'Geometry Dash', category: 'Skill', icon: '🔺', color: '#d2cbff',
       description: 'Jump through spike-filled levels and master the rhythm.',
       details: 'A rhythm platformer where quick reactions and precise timing help you dodge hazards and reach the end of each level.',
@@ -103,7 +106,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/geometry-dash', providerUrl: 'https://www.madkidgames.com/game/geometry-dash',
       image: 'https://www.madkidgames.com/games/geometry-dash/thumb_2.jpg', tag: 'RHYTHM PLATFORMER',
     },
-  {
+{
       slug: 'bouncemasters-penguin-games', name: 'Bouncemasters', category: 'Arcade', icon: '🐧', color: '#b7eaff',
       description: 'Launch a penguin, bounce across the snow, and improve your distance.',
       details: 'A distance game built around launch timing, bouncing physics, and upgrades to help your penguin travel farther.',
@@ -111,7 +114,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bouncemasters-penguin-games', providerUrl: 'https://www.madkidgames.com/game/bouncemasters-penguin-games',
       image: 'https://www.madkidgames.com/games/bouncemasters-penguin-games/thumb_2.jpg', tag: 'ARCADE DISTANCE GAME',
     },
-  {
+{
       slug: 'demolition-derby-2', name: 'Demolition Derby 2', category: 'Driving', icon: '🚘', color: '#ffc9bd',
       description: 'Drive, dodge rivals, and survive the arena in a demolition derby.',
       details: 'A vehicle-combat driving game about staying mobile, managing damage, and outlasting other cars in the arena.',
@@ -119,7 +122,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/demolition-derby-2', providerUrl: 'https://www.madkidgames.com/game/demolition-derby-2',
       image: 'https://www.madkidgames.com/games/demolition-derby-2/thumb_2.jpg', tag: 'ARENA DRIVING',
     },
-  {
+{
       slug: 'idle-miner-tycoon-gold-games', name: 'Idle Miner Tycoon', category: 'Strategy', icon: '⛏️', color: '#f6e6a8',
       description: 'Upgrade miners and equipment to grow a gold-mining business.',
       details: 'A casual management game where you balance production, transport, and upgrades to make your mining operation more efficient.',
@@ -127,7 +130,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/idle-miner-tycoon-gold-games', providerUrl: 'https://www.madkidgames.com/game/idle-miner-tycoon-gold-games',
       image: 'https://www.madkidgames.com/games/idle-miner-tycoon-gold-games/thumb_2.jpg', tag: 'IDLE MANAGEMENT',
     },
-  {
+{
       slug: 'toca-boca-life-city', name: 'Toca Boca Life City', category: 'Simulation', icon: '🏙️', color: '#d4e8ff',
       description: 'Explore a colorful city and create your own stories.',
       details: 'A freeform life-simulation game with interactive locations, characters, and everyday activities.',
@@ -135,7 +138,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-city', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-city',
       image: 'https://www.madkidgames.com/games/toca-boca-life-city/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-vacation', name: 'Toca Boca Life Vacation', category: 'Adventure', icon: '🏖️', color: '#b9e8f4',
       description: 'Explore vacation spots and make your own holiday adventures.',
       details: 'A creative exploration game built around vacation locations, characters, and interactive objects.',
@@ -143,7 +146,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-vacation', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-vacation',
       image: 'https://www.madkidgames.com/games/toca-boca-life-vacation/thumb_2.jpg', tag: 'ADVENTURE',
     },
-  {
+{
       slug: 'toca-boca-life-neighborhood', name: 'Toca Boca Life Neighborhood', category: 'Simulation', icon: '🏡', color: '#d9efc4',
       description: 'Explore a neighborhood full of places and characters.',
       details: 'A sandbox-style life game where you move between locations and create your own scenarios.',
@@ -151,7 +154,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-neighborhood', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-neighborhood',
       image: 'https://www.madkidgames.com/games/toca-boca-life-neighborhood/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-hospital', name: 'Toca Boca Life Hospital', category: 'Simulation', icon: '🏥', color: '#d3f0e5',
       description: 'Explore a hospital and interact with rooms, characters, and equipment.',
       details: 'A creative role-playing game centered on a colorful hospital environment.',
@@ -159,7 +162,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-hospital', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-hospital',
       image: 'https://www.madkidgames.com/games/toca-boca-life-hospital/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'pepi-house-happy-family', name: 'Pepi House Happy Family', category: 'Simulation', icon: '🏠', color: '#f5d9c8',
       description: 'Explore a family home and create everyday stories.',
       details: 'A sandbox game with interactive rooms, objects, and characters.',
@@ -167,7 +170,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/pepi-house-happy-family', providerUrl: 'https://www.madkidgames.com/game/pepi-house-happy-family',
       image: 'https://www.madkidgames.com/games/pepi-house-happy-family/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-school', name: 'Toca Boca Life School', category: 'Simulation', icon: '🎒', color: '#d9e6ff',
       description: 'Explore classrooms and school locations.',
       details: 'A school-themed life simulation focused on exploration and creative play.',
@@ -175,7 +178,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-school', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-school',
       image: 'https://www.madkidgames.com/games/toca-boca-life-school/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-farm', name: 'Toca Boca Life Farm', category: 'Simulation', icon: '🚜', color: '#d6efbd',
       description: 'Explore a farm and create countryside stories.',
       details: 'A creative simulation with farm locations, animals, and interactive activities.',
@@ -183,7 +186,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-farm', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-farm',
       image: 'https://www.madkidgames.com/games/toca-boca-life-farm/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-town', name: 'Toca Boca Life Town', category: 'Simulation', icon: '🏘️', color: '#f5d9b7',
       description: 'Visit different town locations and interact with characters.',
       details: 'A sandbox town experience with locations and objects to explore.',
@@ -191,7 +194,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-town', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-town',
       image: 'https://www.madkidgames.com/games/toca-boca-life-town/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-after-school', name: 'Toca Boca Life After School', category: 'Simulation', icon: '🎨', color: '#e6d4f7',
       description: 'Explore after-school activities and create your own stories.',
       details: 'A life-simulation game built around creative activities and interactive places.',
@@ -199,7 +202,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-after-school', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-after-school',
       image: 'https://www.madkidgames.com/games/toca-boca-life-after-school/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'toca-boca-life-pets', name: 'Toca Boca Life Pets', category: 'Simulation', icon: '🐾', color: '#f4d6d9',
       description: 'Explore pet-themed locations and interact with animals.',
       details: 'A playful simulation with animals, objects, and places to discover.',
@@ -207,7 +210,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/toca-boca-life-pets', providerUrl: 'https://www.madkidgames.com/game/toca-boca-life-pets',
       image: 'https://www.madkidgames.com/games/toca-boca-life-pets/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'my-town-school', name: 'My Town School', category: 'Simulation', icon: '🏫', color: '#cce8f7',
       description: 'Explore a school with classrooms, labs, and activities.',
       details: 'A school simulation focused on role-playing, exploration, and creative stories.',
@@ -215,7 +218,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/my-town-school', providerUrl: 'https://www.madkidgames.com/game/my-town-school',
       image: 'https://www.madkidgames.com/games/my-town-school/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'flat-zombies-defense-and-cleanup', name: 'Flat Zombies Defense & Cleanup', category: 'Action', icon: '🧟', color: '#b7c7c1',
       description: 'Survive waves of zombies in a side-scrolling action game.',
       details: 'A survival action game focused on aiming, timing, and managing incoming threats.',
@@ -223,7 +226,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/flat-zombies-defense-and-cleanup', providerUrl: 'https://www.madkidgames.com/game/flat-zombies-defense-and-cleanup',
       image: 'https://www.madkidgames.com/games/flat-zombies-defense-and-cleanup/thumb_2.jpg', tag: 'ACTION',
     },
-  {
+{
       slug: 'street-racing-3d', name: 'Street Racing 3D', category: 'Racing', icon: '🏁', color: '#f5c9b7',
       description: 'Race through city roads and compete for the finish.',
       details: 'A 3D street racing game with quick driving challenges.',
@@ -231,7 +234,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/street-racing-3d', providerUrl: 'https://www.madkidgames.com/game/street-racing-3d',
       image: 'https://www.madkidgames.com/games/street-racing-3d/thumb_2.jpg', tag: 'RACING',
     },
-  {
+{
       slug: 'racing-in-car-2', name: 'Racing in Car 2', category: 'Racing', icon: '🚘', color: '#cbdcf5',
       description: 'Drive through traffic from a first-person cockpit view.',
       details: 'A driving game focused on steering through traffic and avoiding collisions.',
@@ -239,7 +242,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/racing-in-car-2', providerUrl: 'https://www.madkidgames.com/game/racing-in-car-2',
       image: 'https://www.madkidgames.com/games/racing-in-car-2/thumb_2.jpg', tag: 'RACING',
     },
-  {
+{
       slug: 'hot-wheels-race-off-multiplayer', name: 'Hot Wheels Race Off Multiplayer', category: 'Racing', icon: '🏎️', color: '#ffc9b2',
       description: 'Race toy cars across stunt tracks and ramps.',
       details: 'A stunt-racing game built around acceleration, balance, and clean landings.',
@@ -247,7 +250,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/hot-wheels-race-off-multiplayer', providerUrl: 'https://www.madkidgames.com/game/hot-wheels-race-off-multiplayer',
       image: 'https://www.madkidgames.com/games/hot-wheels-race-off-multiplayer/thumb_2.jpg', tag: 'RACING',
     },
-  {
+{
       slug: 'mountain-bike-xtreme', name: 'Mountain Bike Xtreme', category: 'Sports', icon: '🚵', color: '#cde7c4',
       description: 'Ride a mountain bike across rough downhill terrain.',
       details: 'A bike game focused on balance, momentum, and navigating uneven tracks.',
@@ -255,7 +258,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mountain-bike-xtreme', providerUrl: 'https://www.madkidgames.com/game/mountain-bike-xtreme',
       image: 'https://www.madkidgames.com/games/mountain-bike-xtreme/thumb_2.jpg', tag: 'SPORTS',
     },
-  {
+{
       slug: 'ultimate-car-driving-simulator', name: 'Ultimate Car Driving Simulator', category: 'Driving', icon: '🚗', color: '#c7d8ee',
       description: 'Drive around an open environment and practice your handling.',
       details: 'A driving simulator with open-road exploration and vehicle control.',
@@ -263,7 +266,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/ultimate-car-driving-simulator', providerUrl: 'https://www.madkidgames.com/game/ultimate-car-driving-simulator',
       image: 'https://www.madkidgames.com/games/ultimate-car-driving-simulator/thumb_2.jpg', tag: 'DRIVING',
     },
-  {
+{
       slug: 'banana-kong', name: 'Banana Kong', category: 'Arcade', icon: '🍌', color: '#f4e5a5',
       description: 'Run, jump, and dodge obstacles in a fast arcade adventure.',
       details: 'An endless-runner style game built around quick reactions and collecting items.',
@@ -271,7 +274,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/banana-kong', providerUrl: 'https://www.madkidgames.com/game/banana-kong',
       image: 'https://www.madkidgames.com/games/banana-kong/thumb_2.jpg', tag: 'ARCADE',
     },
-  {
+{
       slug: 'racing-limits', name: 'Racing Limits', category: 'Racing', icon: '🚦', color: '#c5e8df',
       description: 'Thread through traffic and push your speed in racing modes.',
       details: 'A traffic racing game with speed and lane-control challenges.',
@@ -279,7 +282,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/racing-limits', providerUrl: 'https://www.madkidgames.com/game/racing-limits',
       image: 'https://www.madkidgames.com/games/racing-limits/thumb_2.jpg', tag: 'RACING',
     },
-  {
+{
       slug: 'coach-bus-simulator', name: 'Coach Bus Simulator', category: 'Driving', icon: '🚌', color: '#c9e1f7',
       description: 'Drive a coach bus and follow routes safely.',
       details: 'A bus driving simulator centered on route-following and vehicle control.',
@@ -287,7 +290,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/coach-bus-simulator', providerUrl: 'https://www.madkidgames.com/game/coach-bus-simulator',
       image: 'https://www.madkidgames.com/games/coach-bus-simulator/thumb_2.jpg', tag: 'DRIVING',
     },
-  {
+{
       slug: 'my-town-preschool-kids-game', name: 'My Town Preschool Kids Game', category: 'Simulation', icon: '🧸', color: '#f6d8e5',
       description: 'Explore a preschool and interact with activities and characters.',
       details: 'A preschool role-playing game with interactive rooms and everyday scenarios.',
@@ -295,7 +298,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/my-town-preschool-kids-game', providerUrl: 'https://www.madkidgames.com/game/my-town-preschool-kids-game',
       image: 'https://www.madkidgames.com/games/my-town-preschool-kids-game/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'shadow-fight-2', name: 'Shadow Fight 2', category: 'Action', icon: '🥷', color: '#d4d4d4',
       description: 'Fight opponents with timed attacks and defensive moves.',
       details: 'A combat game focused on timing, movement, and choosing the right attack.',
@@ -303,7 +306,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/shadow-fight-2', providerUrl: 'https://www.madkidgames.com/game/shadow-fight-2',
       image: 'https://www.madkidgames.com/games/shadow-fight-2/thumb_2.jpg', tag: 'ACTION',
     },
-  {
+{
       slug: 'driving-school-2016', name: 'Driving School 2016', category: 'Driving', icon: '🚘', color: '#d0dff0',
       description: 'Practice driving and maneuvering through different environments.',
       details: 'A driving simulator built around steering, braking, and vehicle handling.',
@@ -311,7 +314,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/driving-school-2016', providerUrl: 'https://www.madkidgames.com/game/driving-school-2016',
       image: 'https://www.madkidgames.com/games/driving-school-2016/thumb_2.jpg', tag: 'DRIVING',
     },
-  {
+{
       slug: 'driving-school-2017', name: 'Driving School 2017', category: 'Driving', icon: '🚙', color: '#d5e7f4',
       description: 'Take on driving challenges and practice road control.',
       details: 'A driving simulation with vehicle handling and route-based challenges.',
@@ -319,7 +322,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/driving-school-2017', providerUrl: 'https://www.madkidgames.com/game/driving-school-2017',
       image: 'https://www.madkidgames.com/games/driving-school-2017/thumb_2.jpg', tag: 'DRIVING',
     },
-  {
+{
       slug: 'mmx-hill-dash', name: 'MMX Hill Dash', category: 'Racing', icon: '🏍️', color: '#f5d0b6',
       description: 'Race over hills and keep your vehicle balanced.',
       details: 'A physics racing game where acceleration and balance matter on steep terrain.',
@@ -327,7 +330,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mmx-hill-dash', providerUrl: 'https://www.madkidgames.com/game/mmx-hill-dash',
       image: 'https://www.madkidgames.com/games/mmx-hill-dash/thumb_2.jpg', tag: 'RACING',
     },
-  {
+{
       slug: 'dr-panda-town-tales', name: 'Dr. Panda Town Tales', category: 'Simulation', icon: '🐼', color: '#d9e8c9',
       description: 'Explore a town and make up stories with its characters.',
       details: 'A creative town simulation with locations and interactive objects.',
@@ -335,7 +338,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/dr-panda-town-tales', providerUrl: 'https://www.madkidgames.com/game/dr-panda-town-tales',
       image: 'https://www.madkidgames.com/games/dr-panda-town-tales/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'evil-nun-horror-at-school', name: 'Evil Nun Horror at School', category: 'Horror', icon: '👻', color: '#d7d0e8',
       description: 'Explore a spooky school and avoid the dangers inside.',
       details: 'A horror escape game centered on exploration, stealth, and solving the way out.',
@@ -343,7 +346,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/evil-nun-horror-at-school', providerUrl: 'https://www.madkidgames.com/game/evil-nun-horror-at-school',
       image: 'https://www.madkidgames.com/games/evil-nun-horror-at-school/thumb_2.jpg', tag: 'HORROR',
     },
-  {
+{
       slug: 'my-town-hospital-doctor-game', name: 'My Town Hospital Doctor Game', category: 'Simulation', icon: '🩺', color: '#cbe9e6',
       description: 'Explore hospital rooms and role-play different medical activities.',
       details: 'A hospital simulation with interactive rooms, objects, and characters.',
@@ -351,7 +354,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/my-town-hospital-doctor-game', providerUrl: 'https://www.madkidgames.com/game/my-town-hospital-doctor-game',
       image: 'https://www.madkidgames.com/games/my-town-hospital-doctor-game/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'central-hospital-stories', name: 'Central Hospital Stories', category: 'Simulation', icon: '🏥', color: '#d1e8ee',
       description: 'Explore a hospital world and create your own stories.',
       details: 'A role-playing simulation built around hospital spaces and character interactions.',
@@ -359,7 +362,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/central-hospital-stories', providerUrl: 'https://www.madkidgames.com/game/central-hospital-stories',
       image: 'https://www.madkidgames.com/games/central-hospital-stories/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'survivor-io', name: 'Survivor iO', category: 'Action', icon: '⚡', color: '#f0d8b7',
       description: 'Survive waves of enemies and upgrade your abilities.',
       details: 'An action survival game focused on movement, upgrades, and managing enemy waves.',
@@ -367,7 +370,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/survivor-io', providerUrl: 'https://www.madkidgames.com/game/survivor-io',
       image: 'https://www.madkidgames.com/games/survivor-io/thumb_2.jpg', tag: 'ACTION',
     },
-  {
+{
       slug: 'food-fighter-clicker-games', name: 'Food Fighter Clicker Games', category: 'Arcade', icon: '🍔', color: '#f2d6a7',
       description: 'Tap and upgrade your way through a food-themed clicker.',
       details: 'A casual clicker game based on quick interactions and incremental upgrades.',
@@ -375,7 +378,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/food-fighter-clicker-games', providerUrl: 'https://www.madkidgames.com/game/food-fighter-clicker-games',
       image: 'https://www.madkidgames.com/games/food-fighter-clicker-games/thumb_2.jpg', tag: 'ARCADE',
     },
-  {
+{
       slug: 'farm-simulator-evo', name: 'Farm Simulator Evo', category: 'Simulation', icon: '🌾', color: '#cce7bd',
       description: 'Explore farm life and take on vehicle and farming activities.',
       details: 'A farm simulation with machinery, outdoor environments, and task-based play.',
@@ -383,7 +386,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/farm-simulator-evo', providerUrl: 'https://www.madkidgames.com/game/farm-simulator-evo',
       image: 'https://www.madkidgames.com/games/farm-simulator-evo/thumb_2.jpg', tag: 'SIMULATION',
     },
-  {
+{
       slug: 'truckers-of-europe-2', name: 'Truckers of Europe 2', category: 'Driving', icon: '🚛', color: '#c7d9ee',
       description: 'Drive a truck on roads and complete delivery routes.',
       details: 'A truck driving simulator built around vehicle handling and road navigation.',
@@ -391,7 +394,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truckers-of-europe-2', providerUrl: 'https://www.madkidgames.com/game/truckers-of-europe-2',
       image: 'https://www.madkidgames.com/games/truckers-of-europe-2/thumb_2.jpg', tag: 'DRIVING',
     },
-  {
+{
       slug: 'vector-2', name: 'Vector 2', category: 'Action', icon: '🏃', color: '#d4d4d4',
       description: 'Run, jump, and move through a futuristic obstacle course.',
       details: 'A fast-paced parkour action game that rewards timing and clean movement.',
@@ -399,7 +402,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/vector-2', providerUrl: 'https://www.madkidgames.com/game/vector-2',
       image: 'https://www.madkidgames.com/games/vector-2/thumb_2.jpg', tag: 'ACTION',
     },
-  {
+{
       slug: 'slope-down-first-trip', name: 'Slope Down First Trip', category: 'Arcade', icon: '🔵', color: '#c5d9ff',
       description: 'Roll downhill at speed, dodge hazards, and keep your balance on tricky tracks.',
       details: 'A fast downhill challenge built around momentum, steering, and avoiding obstacles across twisting tracks.',
@@ -407,7 +410,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/slope-down-first-trip', providerUrl: 'https://www.madkidgames.com/game/slope-down-first-trip',
       image: 'https://www.madkidgames.com/games/slope-down-first-trip/thumb_2.jpg', tag: 'ARCADE / SKILL',
     },
-  {
+{
       slug: 'mineclicker-idle-minecraft-clicker', name: 'MineClicker: Idle Minecraft Clicker', category: 'Strategy', icon: '⛏️', color: '#c9e5b3',
       description: 'Mine blocks, collect resources, defeat pixel enemies, and upgrade your tools.',
       details: 'An incremental mining game with resource collection, upgrades, helpers, and idle progression in a blocky world.',
@@ -415,7 +418,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mineclicker-idle-minecraft-clicker', providerUrl: 'https://www.madkidgames.com/game/mineclicker-idle-minecraft-clicker',
       image: 'https://www.madkidgames.com/games/mineclicker-idle-minecraft-clicker/thumb_2.jpg', tag: 'MINING / IDLE',
     },
-  {
+{
       slug: 'hill-climb-racing-adventure', name: 'Hill Climb Racing Adventure', category: 'Racing', icon: '🚙', color: '#f0d9a7',
       description: 'Climb steep hills, balance your vehicle, and tackle rough off-road terrain.',
       details: 'A physics-driven driving game where momentum, throttle, and balance help you reach the finish.',
@@ -423,7 +426,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/hill-climb-racing-adventure', providerUrl: 'https://www.madkidgames.com/game/hill-climb-racing-adventure',
       image: 'https://www.madkidgames.com/games/hill-climb-racing-adventure/thumb_2.jpg', tag: 'PHYSICS RACING',
     },
-  {
+{
       slug: 'real-pool-3d', name: 'Real Pool 3D', category: 'Sports', icon: '🎱', color: '#b8e1c0',
       description: 'Line up shots, plan your angles, and sink the 8-ball in a pool game.',
       details: 'A billiards game with realistic table presentation and physics-based cue shots.',
@@ -431,7 +434,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/real-pool-3d', providerUrl: 'https://www.madkidgames.com/game/real-pool-3d',
       image: 'https://www.madkidgames.com/games/real-pool-3d/thumb_2.jpg', tag: 'SPORTS / POOL',
     },
-  {
+{
       slug: 'stick-puzzle-stickman-clash', name: 'Stick Puzzle: Stickman Clash', category: 'Puzzle', icon: '🧩', color: '#e6d1ff',
       description: 'Solve tricky stickman puzzles and use the environment to outsmart opponents.',
       details: 'Puzzle levels combine logical thinking, interactive objects, and stickman battles.',
@@ -439,7 +442,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/stick-puzzle-stickman-clash', providerUrl: 'https://www.madkidgames.com/game/stick-puzzle-stickman-clash',
       image: 'https://www.madkidgames.com/games/stick-puzzle-stickman-clash/thumb_2.jpg', tag: 'PUZZLE / ACTION',
     },
-  {
+{
       slug: 'my-town-beauty-contest', name: "My Town Beauty Contest", category: 'Casual', icon: '🎨', color: '#ffd7e5',
       description: "Explore, create, and play in My Town Beauty Contest.",
       details: "A casual browser game for exploring its world, interacting with characters or objects, and completing small activities.",
@@ -447,7 +450,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/my-town-beauty-contest', providerUrl: 'https://www.madkidgames.com/game/my-town-beauty-contest',
       image: 'https://www.madkidgames.com/games/my-town-beauty-contest/thumb_2.jpg', tag: 'CASUAL & CREATIVE',
     },
-  {
+{
       slug: 'cat-runner-decorate-home', name: "Cat Runner Decorate Home", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Cat Runner Decorate Home for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -455,7 +458,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/cat-runner-decorate-home', providerUrl: 'https://www.madkidgames.com/game/cat-runner-decorate-home',
       image: 'https://www.madkidgames.com/games/cat-runner-decorate-home/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'mr-meat-horror-escape-room', name: "Mr Meat Horror Escape Room", category: 'Action', icon: '👾', color: '#ffc7c7',
       description: "React quickly and survive the challenges in Mr Meat Horror Escape Room.",
       details: "An action-oriented browser game built around movement, timing, and avoiding hazards. Learn the controls and see how far you can get.",
@@ -463,7 +466,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mr-meat-horror-escape-room', providerUrl: 'https://www.madkidgames.com/game/mr-meat-horror-escape-room',
       image: 'https://www.madkidgames.com/games/mr-meat-horror-escape-room/thumb_2.jpg', tag: 'ACTION & SURVIVAL',
     },
-  {
+{
       slug: 'granny', name: "Granny", category: 'Action', icon: '👾', color: '#ffc7c7',
       description: "React quickly and survive the challenges in Granny.",
       details: "An action-oriented browser game built around movement, timing, and avoiding hazards. Learn the controls and see how far you can get.",
@@ -471,7 +474,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/granny', providerUrl: 'https://www.madkidgames.com/game/granny',
       image: 'https://www.madkidgames.com/games/granny/thumb_2.jpg', tag: 'ACTION & SURVIVAL',
     },
-  {
+{
       slug: 'sunny-school-stories', name: "Sunny School Stories", category: 'Casual', icon: '🎨', color: '#ffd7e5',
       description: "Explore, create, and play in Sunny School Stories.",
       details: "A casual browser game for exploring its world, interacting with characters or objects, and completing small activities.",
@@ -479,7 +482,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/sunny-school-stories', providerUrl: 'https://www.madkidgames.com/game/sunny-school-stories',
       image: 'https://www.madkidgames.com/games/sunny-school-stories/thumb_2.jpg', tag: 'CASUAL & CREATIVE',
     },
-  {
+{
       slug: 'sweet-home-stories', name: "Sweet Home Stories", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Sweet Home Stories for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -487,7 +490,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/sweet-home-stories', providerUrl: 'https://www.madkidgames.com/game/sweet-home-stories',
       image: 'https://www.madkidgames.com/games/sweet-home-stories/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'grow-castle-tower-defense', name: "Grow Castle - Tower Defense", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Grow Castle - Tower Defense.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -495,7 +498,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/grow-castle-tower-defense', providerUrl: 'https://www.madkidgames.com/game/grow-castle-tower-defense',
       image: 'https://www.madkidgames.com/games/grow-castle-tower-defense/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'vacation-hotel-stories', name: "Vacation Hotel Stories", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Vacation Hotel Stories for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -503,7 +506,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/vacation-hotel-stories', providerUrl: 'https://www.madkidgames.com/game/vacation-hotel-stories',
       image: 'https://www.madkidgames.com/games/vacation-hotel-stories/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'my-town-stores', name: "My Town Stores", category: 'Casual', icon: '🎨', color: '#ffd7e5',
       description: "Explore, create, and play in My Town Stores.",
       details: "A casual browser game for exploring its world, interacting with characters or objects, and completing small activities.",
@@ -511,7 +514,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/my-town-stores', providerUrl: 'https://www.madkidgames.com/game/my-town-stores',
       image: 'https://www.madkidgames.com/games/my-town-stores/thumb_2.jpg', tag: 'CASUAL & CREATIVE',
     },
-  {
+{
       slug: 'short-life', name: "Short Life", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Short Life for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -519,7 +522,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/short-life', providerUrl: 'https://www.madkidgames.com/game/short-life',
       image: 'https://www.madkidgames.com/games/short-life/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'burrito-bison-launcha-libre', name: "Burrito Bison Launcha Libre", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Burrito Bison Launcha Libre for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -527,7 +530,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/burrito-bison-launcha-libre', providerUrl: 'https://www.madkidgames.com/game/burrito-bison-launcha-libre',
       image: 'https://www.madkidgames.com/games/burrito-bison-launcha-libre/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'my-town-police-games-for-kids', name: "My Town Police Games For Kids", category: 'Casual', icon: '🎨', color: '#ffd7e5',
       description: "Explore, create, and play in My Town Police Games For Kids.",
       details: "A casual browser game for exploring its world, interacting with characters or objects, and completing small activities.",
@@ -535,7 +538,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/my-town-police-games-for-kids', providerUrl: 'https://www.madkidgames.com/game/my-town-police-games-for-kids',
       image: 'https://www.madkidgames.com/games/my-town-police-games-for-kids/thumb_2.jpg', tag: 'CASUAL & CREATIVE',
     },
-  {
+{
       slug: 'pov-car-driving', name: "POV Car Driving", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in POV Car Driving.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -543,7 +546,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/pov-car-driving', providerUrl: 'https://www.madkidgames.com/game/pov-car-driving',
       image: 'https://www.madkidgames.com/games/pov-car-driving/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'golf-orbit-oneshot-golf-games', name: "Golf Orbit Oneshot Golf Games", category: 'Sports', icon: '🏆', color: '#b8e1c0',
       description: "Play a quick match or challenge in Golf Orbit Oneshot Golf Games.",
       details: "A browser sports game focused on timing, aim, and improving your score.",
@@ -551,7 +554,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/golf-orbit-oneshot-golf-games', providerUrl: 'https://www.madkidgames.com/game/golf-orbit-oneshot-golf-games',
       image: 'https://www.madkidgames.com/games/golf-orbit-oneshot-golf-games/thumb_2.jpg', tag: 'SPORTS',
     },
-  {
+{
       slug: 'truck-simulator-pro-2', name: "Truck Simulator PRO 2", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator PRO 2.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -559,7 +562,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-pro-2', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-pro-2',
       image: 'https://www.madkidgames.com/games/truck-simulator-pro-2/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'idle-guy-life-simulator', name: "Idle Guy Life Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Idle Guy Life Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -567,7 +570,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/idle-guy-life-simulator', providerUrl: 'https://www.madkidgames.com/game/idle-guy-life-simulator',
       image: 'https://www.madkidgames.com/games/idle-guy-life-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'altos-adventure', name: "Altos Adventure", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Altos Adventure for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -575,15 +578,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/altos-adventure', providerUrl: 'https://www.madkidgames.com/game/altos-adventure',
       image: 'https://www.madkidgames.com/games/altos-adventure/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
-      slug: 'five-nights-at-freddy-s', name: "Five Nights at Freddy's", category: 'Action', icon: '👾', color: '#ffc7c7',
-      description: "React quickly and survive the challenges in Five Nights at Freddy's.",
-      details: "An action-oriented browser game built around movement, timing, and avoiding hazards. Learn the controls and see how far you can get.",
-      controls: "Use the keyboard or touchscreen controls shown in the game.",
-      embedUrl: 'https://www.madkidgames.com/full/five-nights-at-freddy-s', providerUrl: 'https://www.madkidgames.com/game/five-nights-at-freddy-s',
-      image: 'https://www.madkidgames.com/games/five-nights-at-freddy-s/thumb_2.jpg', tag: 'ACTION & SURVIVAL',
-    },
-  {
+{
       slug: 'stickman-world-battle', name: "Stickman World Battle", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Stickman World Battle.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -591,7 +586,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/stickman-world-battle', providerUrl: 'https://www.madkidgames.com/game/stickman-world-battle',
       image: 'https://www.madkidgames.com/games/stickman-world-battle/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'smashy-road-wanted', name: "Smashy Road Wanted", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Smashy Road Wanted for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -599,7 +594,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/smashy-road-wanted', providerUrl: 'https://www.madkidgames.com/game/smashy-road-wanted',
       image: 'https://www.madkidgames.com/games/smashy-road-wanted/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'royal-battletown-gta-game', name: "Royal Battletown GTA Game", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Royal Battletown GTA Game.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -607,7 +602,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/royal-battletown-gta-game', providerUrl: 'https://www.madkidgames.com/game/royal-battletown-gta-game',
       image: 'https://www.madkidgames.com/games/royal-battletown-gta-game/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'short-ride', name: "Short Ride", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Short Ride for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -615,7 +610,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/short-ride', providerUrl: 'https://www.madkidgames.com/game/short-ride',
       image: 'https://www.madkidgames.com/games/short-ride/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'bounce-tales', name: "Bounce Tales", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Bounce Tales for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -623,7 +618,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bounce-tales', providerUrl: 'https://www.madkidgames.com/game/bounce-tales',
       image: 'https://www.madkidgames.com/games/bounce-tales/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'run-sausage-run', name: "Run Sausage Run", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Run Sausage Run for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -631,7 +626,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/run-sausage-run', providerUrl: 'https://www.madkidgames.com/game/run-sausage-run',
       image: 'https://www.madkidgames.com/games/run-sausage-run/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'scary-neighbor-3d', name: "Scary Neighbor 3D", category: 'Action', icon: '👾', color: '#ffc7c7',
       description: "React quickly and survive the challenges in Scary Neighbor 3D.",
       details: "An action-oriented browser game built around movement, timing, and avoiding hazards. Learn the controls and see how far you can get.",
@@ -639,7 +634,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/scary-neighbor-3d', providerUrl: 'https://www.madkidgames.com/game/scary-neighbor-3d',
       image: 'https://www.madkidgames.com/games/scary-neighbor-3d/thumb_2.jpg', tag: 'ACTION & SURVIVAL',
     },
-  {
+{
       slug: 'rocket-car-ball', name: "Rocket Car Ball", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Rocket Car Ball.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -647,7 +642,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/rocket-car-ball', providerUrl: 'https://www.madkidgames.com/game/rocket-car-ball',
       image: 'https://www.madkidgames.com/games/rocket-car-ball/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'bottle-flip-3d-tap-and-jump', name: "Bottle Flip 3D Tap & Jump", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Bottle Flip 3D Tap & Jump for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -655,7 +650,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bottle-flip-3d-tap-and-jump', providerUrl: 'https://www.madkidgames.com/game/bottle-flip-3d-tap-and-jump',
       image: 'https://www.madkidgames.com/games/bottle-flip-3d-tap-and-jump/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'grow-empire-rome', name: "Grow Empire Rome", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Grow Empire Rome.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -663,7 +658,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/grow-empire-rome', providerUrl: 'https://www.madkidgames.com/game/grow-empire-rome',
       image: 'https://www.madkidgames.com/games/grow-empire-rome/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'mmx-hill-dash-2-race-offroad', name: "MMX Hill Dash 2 - Race Offroad", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in MMX Hill Dash 2 - Race Offroad.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -671,7 +666,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mmx-hill-dash-2-race-offroad', providerUrl: 'https://www.madkidgames.com/game/mmx-hill-dash-2-race-offroad',
       image: 'https://www.madkidgames.com/games/mmx-hill-dash-2-race-offroad/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-simulator-usa-classic', name: "Truck Simulator USA Classic", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator USA Classic.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -679,7 +674,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-usa-classic', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-usa-classic',
       image: 'https://www.madkidgames.com/games/truck-simulator-usa-classic/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-simulator-europe', name: "Truck Simulator Europe", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator Europe.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -687,7 +682,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-europe', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-europe',
       image: 'https://www.madkidgames.com/games/truck-simulator-europe/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'driving-school-classics', name: "Driving School Classics", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Driving School Classics.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -695,7 +690,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/driving-school-classics', providerUrl: 'https://www.madkidgames.com/game/driving-school-classics',
       image: 'https://www.madkidgames.com/games/driving-school-classics/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-simulator-ultimate-3d', name: "Truck Simulator Ultimate 3D", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator Ultimate 3D.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -703,7 +698,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-ultimate-3d', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-ultimate-3d',
       image: 'https://www.madkidgames.com/games/truck-simulator-ultimate-3d/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'stunt-car-challenge-3', name: "Stunt Car Challenge 3", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Stunt Car Challenge 3.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -711,7 +706,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/stunt-car-challenge-3', providerUrl: 'https://www.madkidgames.com/game/stunt-car-challenge-3',
       image: 'https://www.madkidgames.com/games/stunt-car-challenge-3/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'fun-kids-train-racing-games', name: "Fun Kids Train Racing Games", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Fun Kids Train Racing Games.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -719,7 +714,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/fun-kids-train-racing-games', providerUrl: 'https://www.madkidgames.com/game/fun-kids-train-racing-games',
       image: 'https://www.madkidgames.com/games/fun-kids-train-racing-games/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'racing-fever-moto', name: "Racing Fever Moto", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Racing Fever Moto.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -727,7 +722,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/racing-fever-moto', providerUrl: 'https://www.madkidgames.com/game/racing-fever-moto',
       image: 'https://www.madkidgames.com/games/racing-fever-moto/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'ship-inc-packaging-simulator', name: "Ship Inc Packaging Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Ship Inc Packaging Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -735,7 +730,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/ship-inc-packaging-simulator', providerUrl: 'https://www.madkidgames.com/game/ship-inc-packaging-simulator',
       image: 'https://www.madkidgames.com/games/ship-inc-packaging-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'moto-rider-go-highway-traffic', name: "Moto Rider GO Highway Traffic", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Moto Rider GO Highway Traffic.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -743,7 +738,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/moto-rider-go-highway-traffic', providerUrl: 'https://www.madkidgames.com/game/moto-rider-go-highway-traffic',
       image: 'https://www.madkidgames.com/games/moto-rider-go-highway-traffic/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-simulator-offroad-4', name: "Truck Simulator OffRoad 4", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator OffRoad 4.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -751,7 +746,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-offroad-4', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-offroad-4',
       image: 'https://www.madkidgames.com/games/truck-simulator-offroad-4/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'mountain-climb-4x4-car-drive', name: "Mountain Climb 4x4 Car Drive", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Mountain Climb 4x4 Car Drive.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -759,7 +754,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mountain-climb-4x4-car-drive', providerUrl: 'https://www.madkidgames.com/game/mountain-climb-4x4-car-drive',
       image: 'https://www.madkidgames.com/games/mountain-climb-4x4-car-drive/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'drag-sim-2018', name: "Drag Sim 2018", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Drag Sim 2018.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -767,7 +762,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/drag-sim-2018', providerUrl: 'https://www.madkidgames.com/game/drag-sim-2018',
       image: 'https://www.madkidgames.com/games/drag-sim-2018/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'jurassic-world-simulator', name: "Jurassic World Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Jurassic World Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -775,7 +770,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/jurassic-world-simulator', providerUrl: 'https://www.madkidgames.com/game/jurassic-world-simulator',
       image: 'https://www.madkidgames.com/games/jurassic-world-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'fishing-inc', name: "Fishing Inc", category: 'Arcade', icon: '🎮', color: '#ffe0a8',
       description: "Jump into Fishing Inc for a quick arcade challenge.",
       details: "A pick-up-and-play browser game focused on quick reactions, timing, and beating your previous result.",
@@ -783,7 +778,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/fishing-inc', providerUrl: 'https://www.madkidgames.com/game/fishing-inc',
       image: 'https://www.madkidgames.com/games/fishing-inc/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
-  {
+{
       slug: 'stunt-bike-extreme', name: "Stunt Bike Extreme", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Stunt Bike Extreme.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -791,7 +786,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/stunt-bike-extreme', providerUrl: 'https://www.madkidgames.com/game/stunt-bike-extreme',
       image: 'https://www.madkidgames.com/games/stunt-bike-extreme/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-racing-game-3d', name: "Truck Racing Game 3D", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Racing Game 3D.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -799,15 +794,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-racing-game-3d', providerUrl: 'https://www.madkidgames.com/game/truck-racing-game-3d',
       image: 'https://www.madkidgames.com/games/truck-racing-game-3d/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
-      slug: 'car-eats-car-2-racing-game', name: "Car Eats Car 2 - Racing Game", category: 'Driving', icon: '🏁', color: '#c6e7ff',
-      description: "Race, steer, and handle the challenges in Car Eats Car 2 - Racing Game.",
-      details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
-      controls: "Use the keyboard or the on-screen controls shown in the game. Vehicle bindings may vary by version.",
-      embedUrl: 'https://www.madkidgames.com/full/car-eats-car-2-racing-game', providerUrl: 'https://www.madkidgames.com/game/car-eats-car-2-racing-game',
-      image: 'https://www.madkidgames.com/games/car-eats-car-2-racing-game/thumb_2.jpg', tag: 'RACING & DRIVING',
-    },
-  {
+{
       slug: 'carage-open-world-simulator-3d', name: "CarAge Open World Simulator 3D", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in CarAge Open World Simulator 3D.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -815,7 +802,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/carage-open-world-simulator-3d', providerUrl: 'https://www.madkidgames.com/game/carage-open-world-simulator-3d',
       image: 'https://www.madkidgames.com/games/carage-open-world-simulator-3d/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'fastest-cars-traffic-racer', name: "Fastest Cars Traffic Racer", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Fastest Cars Traffic Racer.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -823,7 +810,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/fastest-cars-traffic-racer', providerUrl: 'https://www.madkidgames.com/game/fastest-cars-traffic-racer',
       image: 'https://www.madkidgames.com/games/fastest-cars-traffic-racer/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-simulator-offroad-2', name: "Truck Simulator Offroad 2", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator Offroad 2.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -831,7 +818,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-offroad-2', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-offroad-2',
       image: 'https://www.madkidgames.com/games/truck-simulator-offroad-2/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'truck-simulator-17', name: "Truck Simulator 17", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Truck Simulator 17.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -839,7 +826,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/truck-simulator-17', providerUrl: 'https://www.madkidgames.com/game/truck-simulator-17',
       image: 'https://www.madkidgames.com/games/truck-simulator-17/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'euro-truck-driver-18-truckers-wanted', name: "Euro Truck Driver 18 - Truckers Wanted", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Euro Truck Driver 18 - Truckers Wanted.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -847,7 +834,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/euro-truck-driver-18-truckers-wanted', providerUrl: 'https://www.madkidgames.com/game/euro-truck-driver-18-truckers-wanted',
       image: 'https://www.madkidgames.com/games/euro-truck-driver-18-truckers-wanted/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'formula-f1-race-lite', name: "Formula F1 Race Lite", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Formula F1 Race Lite.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -855,7 +842,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/formula-f1-race-lite', providerUrl: 'https://www.madkidgames.com/game/formula-f1-race-lite',
       image: 'https://www.madkidgames.com/games/formula-f1-race-lite/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'offroad-jeep-4x4-car-driving-simulator', name: "Offroad Jeep 4x4 Car Driving Simulator", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Offroad Jeep 4x4 Car Driving Simulator.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -863,7 +850,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/offroad-jeep-4x4-car-driving-simulator', providerUrl: 'https://www.madkidgames.com/game/offroad-jeep-4x4-car-driving-simulator',
       image: 'https://www.madkidgames.com/games/offroad-jeep-4x4-car-driving-simulator/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'bike-race-racing-game', name: "Bike Race Racing Game", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Bike Race Racing Game.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -871,7 +858,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bike-race-racing-game', providerUrl: 'https://www.madkidgames.com/game/bike-race-racing-game',
       image: 'https://www.madkidgames.com/games/bike-race-racing-game/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'mad-truck-challenge-4x4-racing', name: "Mad Truck Challenge 4x4 Racing", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Mad Truck Challenge 4x4 Racing.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -879,7 +866,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mad-truck-challenge-4x4-racing', providerUrl: 'https://www.madkidgames.com/game/mad-truck-challenge-4x4-racing',
       image: 'https://www.madkidgames.com/games/mad-truck-challenge-4x4-racing/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'crazy-gt-car-stunts-simulator-ramp-car-stunts', name: "Crazy GT Car Stunts Simulator Ramp Car Stunts", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Crazy GT Car Stunts Simulator Ramp Car Stunts.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -887,7 +874,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/crazy-gt-car-stunts-simulator-ramp-car-stunts', providerUrl: 'https://www.madkidgames.com/game/crazy-gt-car-stunts-simulator-ramp-car-stunts',
       image: 'https://www.madkidgames.com/games/crazy-gt-car-stunts-simulator-ramp-car-stunts/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'infinite-speed-no-limit-racer', name: "Infinite Speed No Limit Racer", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Infinite Speed No Limit Racer.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -895,7 +882,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/infinite-speed-no-limit-racer', providerUrl: 'https://www.madkidgames.com/game/infinite-speed-no-limit-racer',
       image: 'https://www.madkidgames.com/games/infinite-speed-no-limit-racer/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'monster-truck-go-racing-games', name: "Monster Truck Go Racing Games", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Monster Truck Go Racing Games.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -903,7 +890,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/monster-truck-go-racing-games', providerUrl: 'https://www.madkidgames.com/game/monster-truck-go-racing-games',
       image: 'https://www.madkidgames.com/games/monster-truck-go-racing-games/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'hill-climb-racing-mcqueen', name: "Hill Climb Racing McQueen", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Hill Climb Racing McQueen.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -911,7 +898,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/hill-climb-racing-mcqueen', providerUrl: 'https://www.madkidgames.com/game/hill-climb-racing-mcqueen',
       image: 'https://www.madkidgames.com/games/hill-climb-racing-mcqueen/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'temple-rider-bmx-racing-3d', name: "Temple Rider BMX Racing 3D", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Temple Rider BMX Racing 3D.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -919,7 +906,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/temple-rider-bmx-racing-3d', providerUrl: 'https://www.madkidgames.com/game/temple-rider-bmx-racing-3d',
       image: 'https://www.madkidgames.com/games/temple-rider-bmx-racing-3d/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'car-battle-simulator', name: "Car Battle Simulator", category: 'Driving', icon: '🏁', color: '#c6e7ff',
       description: "Race, steer, and handle the challenges in Car Battle Simulator.",
       details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
@@ -927,7 +914,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/car-battle-simulator', providerUrl: 'https://www.madkidgames.com/game/car-battle-simulator',
       image: 'https://www.madkidgames.com/games/car-battle-simulator/thumb_2.jpg', tag: 'RACING & DRIVING',
     },
-  {
+{
       slug: 'keep-on-mining', name: "Keep On Mining", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Keep On Mining.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -935,7 +922,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/keep-on-mining', providerUrl: 'https://www.madkidgames.com/game/keep-on-mining',
       image: 'https://www.madkidgames.com/games/keep-on-mining/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'missile-dude-rpg-idle-hero', name: "Missile Dude RPG Idle Hero", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Missile Dude RPG Idle Hero.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -943,7 +930,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/missile-dude-rpg-idle-hero', providerUrl: 'https://www.madkidgames.com/game/missile-dude-rpg-idle-hero',
       image: 'https://www.madkidgames.com/games/missile-dude-rpg-idle-hero/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'nuclear-power-reactor-inc-in', name: "Nuclear Power Reactor INC - IN", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Nuclear Power Reactor INC - IN.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -951,7 +938,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/nuclear-power-reactor-inc-in', providerUrl: 'https://www.madkidgames.com/game/nuclear-power-reactor-inc-in',
       image: 'https://www.madkidgames.com/games/nuclear-power-reactor-inc-in/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'fish-tycoon-2-virtual-aquarium', name: "Fish Tycoon 2 Virtual Aquarium", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Fish Tycoon 2 Virtual Aquarium.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -959,7 +946,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/fish-tycoon-2-virtual-aquarium', providerUrl: 'https://www.madkidgames.com/game/fish-tycoon-2-virtual-aquarium',
       image: 'https://www.madkidgames.com/games/fish-tycoon-2-virtual-aquarium/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'holyday-city-tycoon', name: "Holyday City Tycoon", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Holyday City Tycoon.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -967,7 +954,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/holyday-city-tycoon', providerUrl: 'https://www.madkidgames.com/game/holyday-city-tycoon',
       image: 'https://www.madkidgames.com/games/holyday-city-tycoon/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'city-island-3-sim-builder', name: "City Island 3 - Sim Builder", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through City Island 3 - Sim Builder.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -975,7 +962,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/city-island-3-sim-builder', providerUrl: 'https://www.madkidgames.com/game/city-island-3-sim-builder',
       image: 'https://www.madkidgames.com/games/city-island-3-sim-builder/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'survival-island-idle-game', name: "Survival Island Idle Game", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Survival Island Idle Game.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -983,7 +970,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/survival-island-idle-game', providerUrl: 'https://www.madkidgames.com/game/survival-island-idle-game',
       image: 'https://www.madkidgames.com/games/survival-island-idle-game/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'military-battle-simulator', name: "Military Battle Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Military Battle Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -991,7 +978,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/military-battle-simulator', providerUrl: 'https://www.madkidgames.com/game/military-battle-simulator',
       image: 'https://www.madkidgames.com/games/military-battle-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'tower-defense-defense-legend', name: "Tower Defense - Defense Legend", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Tower Defense - Defense Legend.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -999,7 +986,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/tower-defense-defense-legend', providerUrl: 'https://www.madkidgames.com/game/tower-defense-defense-legend',
       image: 'https://www.madkidgames.com/games/tower-defense-defense-legend/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'tower-defense-galaxy-legend', name: "Tower Defense Galaxy Legend", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Tower Defense Galaxy Legend.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1007,7 +994,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/tower-defense-galaxy-legend', providerUrl: 'https://www.madkidgames.com/game/tower-defense-galaxy-legend',
       image: 'https://www.madkidgames.com/games/tower-defense-galaxy-legend/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'stick-guys-defense', name: "Stick Guys Defense", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Stick Guys Defense.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1015,7 +1002,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/stick-guys-defense', providerUrl: 'https://www.madkidgames.com/game/stick-guys-defense',
       image: 'https://www.madkidgames.com/games/stick-guys-defense/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'hero-tower-wars-merge-puzzle', name: "Hero Tower Wars - Merge Puzzle", category: 'Puzzle', icon: '🧩', color: '#e6d1ff',
       description: "Work through the levels and solve the challenges in Hero Tower Wars - Merge Puzzle.",
       details: "A casual puzzle game built around observation, planning, and finding the right move. Try different approaches when a level gets tricky.",
@@ -1023,7 +1010,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/hero-tower-wars-merge-puzzle', providerUrl: 'https://www.madkidgames.com/game/hero-tower-wars-merge-puzzle',
       image: 'https://www.madkidgames.com/games/hero-tower-wars-merge-puzzle/thumb_2.jpg', tag: 'PUZZLE & LOGIC',
     },
-  {
+{
       slug: 'tower-defense-alien-war-td', name: "Tower Defense Alien War TD", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Tower Defense Alien War TD.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1031,7 +1018,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/tower-defense-alien-war-td', providerUrl: 'https://www.madkidgames.com/game/tower-defense-alien-war-td',
       image: 'https://www.madkidgames.com/games/tower-defense-alien-war-td/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'tower-defense-alien-war-td-2', name: "Tower Defense Alien War TD 2", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Tower Defense Alien War TD 2.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1039,7 +1026,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/tower-defense-alien-war-td-2', providerUrl: 'https://www.madkidgames.com/game/tower-defense-alien-war-td-2',
       image: 'https://www.madkidgames.com/games/tower-defense-alien-war-td-2/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'sky-td-hardcore-tower-defense', name: "Sky TD Hardcore Tower Defense", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Sky TD Hardcore Tower Defense.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1047,7 +1034,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/sky-td-hardcore-tower-defense', providerUrl: 'https://www.madkidgames.com/game/sky-td-hardcore-tower-defense',
       image: 'https://www.madkidgames.com/games/sky-td-hardcore-tower-defense/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'kingdom-defense-hero-legend-td', name: "Kingdom Defense Hero Legend TD", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Kingdom Defense Hero Legend TD.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1055,7 +1042,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/kingdom-defense-hero-legend-td', providerUrl: 'https://www.madkidgames.com/game/kingdom-defense-hero-legend-td',
       image: 'https://www.madkidgames.com/games/kingdom-defense-hero-legend-td/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'kingdom-defense-2-sword-hero', name: "Kingdom Defense 2 Sword Hero", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Kingdom Defense 2 Sword Hero.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1063,7 +1050,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/kingdom-defense-2-sword-hero', providerUrl: 'https://www.madkidgames.com/game/kingdom-defense-2-sword-hero',
       image: 'https://www.madkidgames.com/games/kingdom-defense-2-sword-hero/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'dark-vs-light-survival-strategy', name: "Dark vs Light Survival Strategy", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Dark vs Light Survival Strategy.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1071,7 +1058,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/dark-vs-light-survival-strategy', providerUrl: 'https://www.madkidgames.com/game/dark-vs-light-survival-strategy',
       image: 'https://www.madkidgames.com/games/dark-vs-light-survival-strategy/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'orcs-and-humans-epic-battle-simulator', name: "Orcs and Humans - Epic Battle Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Orcs and Humans - Epic Battle Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1079,7 +1066,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/orcs-and-humans-epic-battle-simulator', providerUrl: 'https://www.madkidgames.com/game/orcs-and-humans-epic-battle-simulator',
       image: 'https://www.madkidgames.com/games/orcs-and-humans-epic-battle-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'fantasy-epic-battle-simulator', name: "Fantasy Epic Battle Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Fantasy Epic Battle Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1087,7 +1074,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/fantasy-epic-battle-simulator', providerUrl: 'https://www.madkidgames.com/game/fantasy-epic-battle-simulator',
       image: 'https://www.madkidgames.com/games/fantasy-epic-battle-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'mortician-tycoon-idle-empire', name: "Mortician Tycoon - Idle Empire", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Mortician Tycoon - Idle Empire.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1095,7 +1082,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/mortician-tycoon-idle-empire', providerUrl: 'https://www.madkidgames.com/game/mortician-tycoon-idle-empire',
       image: 'https://www.madkidgames.com/games/mortician-tycoon-idle-empire/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'pegidle', name: "PegIdle", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through PegIdle.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1103,15 +1090,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/pegidle', providerUrl: 'https://www.madkidgames.com/game/pegidle',
       image: 'https://www.madkidgames.com/games/pegidle/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
-      slug: 'idle-worker-tycoon', name: "Idle Worker Tycoon", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
-      description: "Build, manage, or defend your way through Idle Worker Tycoon.",
-      details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
-      controls: "Use the mouse or touchscreen to interact with menus and units. Follow the game’s on-screen instructions.",
-      embedUrl: 'https://www.madkidgames.com/full/idle-worker-tycoon', providerUrl: 'https://www.madkidgames.com/game/idle-worker-tycoon',
-      image: 'https://www.madkidgames.com/games/idle-worker-tycoon/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
-    },
-  {
+{
       slug: 'happy-farm-day-farm-empire-idle-tycoon', name: "Happy Farm Day Farm Empire Idle Tycoon", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Happy Farm Day Farm Empire Idle Tycoon.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1119,7 +1098,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/happy-farm-day-farm-empire-idle-tycoon', providerUrl: 'https://www.madkidgames.com/game/happy-farm-day-farm-empire-idle-tycoon',
       image: 'https://www.madkidgames.com/games/happy-farm-day-farm-empire-idle-tycoon/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'farming-fever', name: "Farming Fever", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Farming Fever.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1127,7 +1106,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/farming-fever', providerUrl: 'https://www.madkidgames.com/game/farming-fever',
       image: 'https://www.madkidgames.com/games/farming-fever/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'farming-fever-2', name: "Farming Fever 2", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Farming Fever 2.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1135,7 +1114,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/farming-fever-2', providerUrl: 'https://www.madkidgames.com/game/farming-fever-2',
       image: 'https://www.madkidgames.com/games/farming-fever-2/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'farm-peace-farming-game', name: "Farm Peace - Farming Game", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Farm Peace - Farming Game.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1143,7 +1122,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/farm-peace-farming-game', providerUrl: 'https://www.madkidgames.com/game/farm-peace-farming-game',
       image: 'https://www.madkidgames.com/games/farm-peace-farming-game/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'family-farm-royal', name: "Family Farm Royal", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Family Farm Royal.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1151,7 +1130,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/family-farm-royal', providerUrl: 'https://www.madkidgames.com/game/family-farm-royal',
       image: 'https://www.madkidgames.com/games/family-farm-royal/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'survival-and-escape-island', name: "Survival & Escape Island", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Survival & Escape Island.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1159,7 +1138,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/survival-and-escape-island', providerUrl: 'https://www.madkidgames.com/game/survival-and-escape-island',
       image: 'https://www.madkidgames.com/games/survival-and-escape-island/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'wolf-survival-simulator', name: "Wolf Survival Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Wolf Survival Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1167,7 +1146,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/wolf-survival-simulator', providerUrl: 'https://www.madkidgames.com/game/wolf-survival-simulator',
       image: 'https://www.madkidgames.com/games/wolf-survival-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'bear-warrior-simulator', name: "Bear Warrior Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Bear Warrior Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1175,7 +1154,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/bear-warrior-simulator', providerUrl: 'https://www.madkidgames.com/game/bear-warrior-simulator',
       image: 'https://www.madkidgames.com/games/bear-warrior-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'lich-ghost-simulator', name: "Lich Ghost Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Lich Ghost Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1183,7 +1162,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/lich-ghost-simulator', providerUrl: 'https://www.madkidgames.com/game/lich-ghost-simulator',
       image: 'https://www.madkidgames.com/games/lich-ghost-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'ice-guardian-simulator', name: "Ice Guardian Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Ice Guardian Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1191,7 +1170,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/ice-guardian-simulator', providerUrl: 'https://www.madkidgames.com/game/ice-guardian-simulator',
       image: 'https://www.madkidgames.com/games/ice-guardian-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'sea-animal-battle-simulator', name: "Sea Animal Battle Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Sea Animal Battle Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1199,7 +1178,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/sea-animal-battle-simulator', providerUrl: 'https://www.madkidgames.com/game/sea-animal-battle-simulator',
       image: 'https://www.madkidgames.com/games/sea-animal-battle-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'ultimate-dog-simulator', name: "Ultimate Dog Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Ultimate Dog Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1207,7 +1186,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/ultimate-dog-simulator', providerUrl: 'https://www.madkidgames.com/game/ultimate-dog-simulator',
       image: 'https://www.madkidgames.com/games/ultimate-dog-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'ghost-simulator', name: "Ghost Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Ghost Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1215,7 +1194,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/ghost-simulator', providerUrl: 'https://www.madkidgames.com/game/ghost-simulator',
       image: 'https://www.madkidgames.com/games/ghost-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'snake-kingdom-simulator', name: "Snake Kingdom Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Snake Kingdom Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1223,7 +1202,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/snake-kingdom-simulator', providerUrl: 'https://www.madkidgames.com/game/snake-kingdom-simulator',
       image: 'https://www.madkidgames.com/games/snake-kingdom-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'yeti-simulator-yeti-vlog-veo-3', name: "Yeti Simulator Yeti Vlog Veo 3", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Yeti Simulator Yeti Vlog Veo 3.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1231,7 +1210,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/yeti-simulator-yeti-vlog-veo-3', providerUrl: 'https://www.madkidgames.com/game/yeti-simulator-yeti-vlog-veo-3',
       image: 'https://www.madkidgames.com/games/yeti-simulator-yeti-vlog-veo-3/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
+{
       slug: 'boar-clan-animal-simulator', name: "Boar Clan Animal Simulator", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Boar Clan Animal Simulator.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1239,15 +1218,7 @@ export const games = [
       embedUrl: 'https://www.madkidgames.com/full/boar-clan-animal-simulator', providerUrl: 'https://www.madkidgames.com/game/boar-clan-animal-simulator',
       image: 'https://www.madkidgames.com/games/boar-clan-animal-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
-  {
-      slug: 'dune-voodoo', name: 'Dune!', category: 'Arcade', icon: '🏜️', color: '#e8d7a9',
-      description: 'Build speed across the dunes, launch above the line, and land cleanly.',
-      details: 'One-button physics arcade game about momentum, airtime, and smooth landings.',
-      controls: 'Hold mouse or Space to build speed; release to launch.',
-      embedUrl: 'https://www.yalogames.com/game/dune', providerUrl: 'https://www.yalogames.com/game/dune',
-      image: 'https://appgallery.io/assets/screenshots/30daf0c902f593ef9296ef597b0ee12d.jpg?id=1291851950&s=1', tag: 'SKILL ARCADE',
-    },
-  {
+{
       slug: 'crazy-cattle-3d', name: 'Crazy Cattle 3D', category: 'Action', icon: '🐑', color: '#f0c2b8',
       description: 'Charge, launch rival sheep, and survive the chaotic arena.',
       details: 'Physics-based sheep battle royale with momentum-driven movement and unpredictable collisions.',
@@ -1255,7 +1226,7 @@ export const games = [
       embedUrl: 'https://html-classic.itch.zone/html/13500947/index.html', providerUrl: 'https://cvlol.itch.io/crazycattle3d',
       image: 'https://cdn.jsdelivr.net/gh/gn-math/covers@main/164.png', tag: '3D ARENA',
     },
-  {
+{
       slug: 'snow-rider-3d', name: 'Snow Rider 3D', category: 'Racing', icon: '🛷', color: '#b9e4ff',
       description: 'Sled down snowy slopes, dodge obstacles, and collect presents.',
       details: 'Endless winter downhill game that rewards quick steering and clean jumps.',
@@ -1263,7 +1234,7 @@ export const games = [
       embedUrl: 'https://snowrider3d.com/embed/snow-rider-3d?preroll=0', providerUrl: 'https://snowrider3d.com/',
       image: 'https://snowrider.com/assets/img/gallery/gallery-1.jpg', tag: 'ENDLESS SLED RIDE',
     },
-  {
+{
       slug: 'riddle-school', name: 'Riddle School', category: 'Puzzle', icon: '🏫', color: '#d4e7fa',
       description: 'Help Phil escape class with point-and-click puzzles.',
       details: 'The original point-and-click escape adventure. Explore, collect objects, and use items.',
@@ -1271,7 +1242,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/', providerUrl: 'https://riddleschool.org/',
       image: 'https://riddleschool.org/thumbs/riddle-school.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'riddle-school-2', name: 'Riddle School 2', category: 'Puzzle', icon: '🧩', color: '#d4e7fa',
       description: 'Help Phil make his way out of school again.',
       details: 'The second Riddle School adventure, continuing the point-and-click escape puzzles.',
@@ -1279,7 +1250,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/riddle-school-2', providerUrl: 'https://riddleschool.org/riddle-school-2',
       image: 'https://riddleschool.org/thumbs/riddle-school-2.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'riddle-school-3', name: 'Riddle School 3', category: 'Puzzle', icon: '🧩', color: '#d4e7fa',
       description: 'Solve more school escape puzzles with Phil.',
       details: 'The third entry adds new rooms, objects, and inventory puzzles.',
@@ -1287,7 +1258,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/riddle-school-3', providerUrl: 'https://riddleschool.org/riddle-school-3',
       image: 'https://riddleschool.org/thumbs/riddle-school-3.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'riddle-school-4', name: 'Riddle School 4', category: 'Puzzle', icon: '🧩', color: '#d4e7fa',
       description: 'Play the unexpected fourth chapter of Riddle School.',
       details: 'A compact entry in the classic school escape series.',
@@ -1295,7 +1266,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/riddle-school-4', providerUrl: 'https://riddleschool.org/riddle-school-4',
       image: 'https://riddleschool.org/thumbs/riddle-school-4.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'riddle-school-5', name: 'Riddle School 5', category: 'Puzzle', icon: '🧩', color: '#d4e7fa',
       description: 'Finish the original Riddle School storyline.',
       details: 'The fifth chapter brings the main Riddle School story to its conclusion.',
@@ -1303,7 +1274,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/riddle-school-5', providerUrl: 'https://riddleschool.org/riddle-school-5',
       image: 'https://riddleschool.org/thumbs/riddle-school-5.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'riddle-transfer', name: 'Riddle Transfer', category: 'Puzzle', icon: '🛸', color: '#d4e7fa',
       description: 'Help Phil escape a strange facility.',
       details: 'A longer point-and-click adventure expanding the series beyond the school.',
@@ -1311,7 +1282,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/riddle-transfer', providerUrl: 'https://riddleschool.org/riddle-transfer',
       image: 'https://riddleschool.org/thumbs/riddle-transfer.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'riddle-transfer-2', name: 'Riddle Transfer 2', category: 'Puzzle', icon: '🛸', color: '#d4e7fa',
       description: 'Complete Phil’s adventure in the final Riddle Transfer chapter.',
       details: 'The concluding chapter of the Riddle Transfer story.',
@@ -1319,7 +1290,7 @@ export const games = [
       embedUrl: 'https://riddleschool.org/riddle-transfer-2', providerUrl: 'https://riddleschool.org/riddle-transfer-2',
       image: 'https://riddleschool.org/thumbs/riddle-transfer-2.webp', tag: 'POINT & CLICK',
     },
-  {
+{
       slug: 'duck-life-1', name: 'Duck Life', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
       description: 'Train a duckling, race, and earn money to rebuild your farm.',
       details: 'The original Duck Life combines running, flying, and swimming training with races.',
@@ -1327,7 +1298,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-1', providerUrl: 'https://ducklife.online/duck-life-1',
       image: 'https://play-lh.googleusercontent.com/vtJKdZwiBoQ0m0QVBvCj6oFBEVCehcPktS58KspbJeQdHOfcpAuGu4eWET97KQMH7M0UChLFxMoaErlpq4isSkE=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
+{
       slug: 'duck-life-2', name: 'Duck Life 2', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
       description: 'Train your duck across more skills and new challenges.',
       details: 'The second game adds obstacle courses and skills to the duck-training formula.',
@@ -1335,7 +1306,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-2', providerUrl: 'https://ducklife.online/duck-life-2',
       image: 'https://play-lh.googleusercontent.com/67-vyIaDu0wI3jck2P7VbZ6m_XVwXbPm2MvtO3SxHMhX6FLGeO9HwiDu8fBDmFKdWX5MxVfy3orVqUh-0MW2_Go=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
+{
       slug: 'duck-life-3', name: 'Duck Life 3', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
       description: 'Evolve your duck, train its skills, and compete in races.',
       details: 'A Duck Life sequel built around training, evolution, and harder races.',
@@ -1343,7 +1314,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-3', providerUrl: 'https://ducklife.online/duck-life-3',
       image: 'https://play-lh.googleusercontent.com/EAPnCDD5Xe1513dMLacO0c_Ol6Pio7uREOk97H9aZ4j5z0rv372C__VQ3xXJaTF0Mk4e819Sjy1gOIfxs6N3k1Y=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
+{
       slug: 'duck-life-4', name: 'Duck Life 4', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
       description: 'Train a champion duck and compete against rival teams.',
       details: 'A fan-favorite entry with training mini-games and championship competition.',
@@ -1351,7 +1322,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-4', providerUrl: 'https://ducklife.online/duck-life-4',
       image: 'https://play-lh.googleusercontent.com/srU8nuFoyQPTiKHNoPNTSXVo52k1svqcxvbB0q5UKBNGOgVR0wkL7f-nrX4i2GL75TBiBq6Blb2BqnWSLRsd0g=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
+{
       slug: 'duck-life-treasure-hunt', name: 'Duck Life: Treasure Hunt', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
       description: 'Run through caves, collect treasure, and upgrade your duck.',
       details: 'An endless-runner take on Duck Life with collectible gear and companions.',
@@ -1359,7 +1330,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-treasure-hunt', providerUrl: 'https://ducklife.online/duck-life-treasure-hunt',
       image: 'https://play-lh.googleusercontent.com/srU8nuFoyQPTiKHNoPNTSXVo52k1svqcxvbB0q5UKBNGOgVR0wkL7f-nrX4i2GL75TBiBq6Blb2BqnWSLRsd0g=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
+{
       slug: 'duck-life-space', name: 'Duck Life: Space', category: 'Adventure', icon: '🚀', color: '#c7e9b4',
       description: 'Train your duck for an intergalactic adventure.',
       details: 'The Duck Life formula takes off with space-themed training and races.',
@@ -1367,15 +1338,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-space', providerUrl: 'https://ducklife.online/duck-life-space',
       image: 'https://play-lh.googleusercontent.com/oX47exmYlf0oET8oJ3J_r8oHkjLt3SOTM9r_b1NGbAnqK5bLjxPalhSSVykFLdjav5_Acuyer_ISh5FHdycpFQQ=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
-      slug: 'duck-life-adventure', name: 'Duck Life: Adventure', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
-      description: 'Explore a duck-filled world, train, battle, and take on quests.',
-      details: 'A larger adventure entry with exploration and RPG-style progression.',
-      controls: 'Use keyboard and mouse; follow the tutorial.',
-      embedUrl: 'https://ducklife.online/duck-life-adventure', providerUrl: 'https://ducklife.online/duck-life-adventure',
-      image: 'https://play-lh.googleusercontent.com/Jph6eFNmHY1PR8LB696by776YCaRxZOrU5xVR2hyACyVXX90RhS2IiWmaqwbIzmJJwKbnqEtiP7S6WpPf1zV97o=w512-h512', tag: 'DUCK LIFE SERIES',
-    },
-  {
+{
       slug: 'duck-life-battle', name: 'Duck Life: Battle', category: 'Action', icon: '🥊', color: '#c7e9b4',
       description: 'Fight rival ducks, collect gear, and grow stronger.',
       details: 'A battle-focused spin-off with customization, equipment, and missions.',
@@ -1383,15 +1346,7 @@ export const games = [
       embedUrl: 'https://ducklife.online/duck-life-battle', providerUrl: 'https://ducklife.online/duck-life-battle',
       image: 'https://play-lh.googleusercontent.com/Jph6eFNmHY1PR8LB696by776YCaRxZOrU5xVR2hyACyVXX90RhS2IiWmaqwbIzmJJwKbnqEtiP7S6WpPf1zV97o=w512-h512', tag: 'DUCK LIFE SERIES',
     },
-  {
-      slug: 'drift-boss', name: 'Drift Boss', category: 'Racing', icon: '🚗', color: '#f8d6a8',
-      description: 'Time your turns and drift across a narrow floating track.',
-      details: 'A one-button driving challenge where every turn demands precise timing.',
-      controls: 'Click, tap, or press Space to turn.',
-      embedUrl: 'https://riddleschool.org/drift-boss', providerUrl: 'https://riddleschool.org/drift-boss',
-      image: 'https://riddleschool.org/thumbs/drift-boss.webp', tag: 'ONE-BUTTON RACING',
-    },
-  {
+{
       slug: 'run-3', name: 'Run 3', category: 'Action', icon: '🏃', color: '#c9d8ff',
       description: 'Run through twisting tunnels in a space-bending platform challenge.',
       details: 'Navigate gaps and rotate the tunnel to keep moving through the galaxy.',
@@ -1399,461 +1354,14 @@ export const games = [
       embedUrl: 'https://riddleschool.org/run-3', providerUrl: 'https://riddleschool.org/run-3',
       image: 'https://riddleschool.org/thumbs/run-3.webp', tag: 'ENDLESS PLATFORMER',
     },
-  {
+{
       slug: 'slope', name: 'Slope', category: 'Action', icon: '🟢', color: '#bfe6c5',
       description: 'Roll down a neon slope and avoid gaps at increasing speed.',
       details: 'A fast 3D reaction game where staying on the track is the challenge.',
       controls: 'Use left/right arrows or A/D.',
       embedUrl: 'https://riddleschool.org/slope', providerUrl: 'https://riddleschool.org/slope',
       image: 'https://riddleschool.org/thumbs/slope.webp', tag: '3D REFLEX',
-    }
-
-{
-  "slug": "opensource-ant-flap",
-  "name": "Ant Flap",
-  "category": "Arcade",
-  "icon": "🐜",
-  "color": "#75d6c7",
-  "description": "Flap through tight branches and chase a new high score.",
-  "details": "A quick-reaction flier with tight gaps and increasingly demanding timing.",
-  "controls": "Press Space or tap to flap.",
-  "embedUrl": "https://mashukui.github.io/web-games/ant-flap/",
-  "providerUrl": "https://mashukui.github.io/web-games/ant-flap/",
-  "image": "/studyshelf-open-source/ant-flap.svg",
-  "tag": "OPEN SOURCE • QUICK REFLEXES"
-},
-{
-  "slug": "opensource-ant-jump",
-  "name": "Ant Jump",
-  "category": "Skill",
-  "icon": "🦗",
-  "color": "#9be0b4",
-  "description": "Bounce upward across moving and fragile platforms.",
-  "details": "An endless vertical climber that rewards steering and careful timing.",
-  "controls": "Use Left/Right or A/D; touch either side to steer.",
-  "embedUrl": "https://mashukui.github.io/web-games/ant-jump/",
-  "providerUrl": "https://mashukui.github.io/web-games/ant-jump/",
-  "image": "/studyshelf-open-source/ant-jump.svg",
-  "tag": "OPEN SOURCE • ENDLESS CLIMBER"
-},
-{
-  "slug": "opensource-block-drop",
-  "name": "Block Drop",
-  "category": "Puzzle",
-  "icon": "🧊",
-  "color": "#83b8ff",
-  "description": "Stack falling blocks, clear lines, and survive the speed.",
-  "details": "A polished falling-block puzzle with levels, score, and hold mechanics.",
-  "controls": "Left/Right to move, Up to rotate, Down to soft drop, Space to hard drop.",
-  "embedUrl": "https://mashukui.github.io/web-games/block-drop/",
-  "providerUrl": "https://mashukui.github.io/web-games/block-drop/",
-  "image": "/studyshelf-open-source/block-drop.svg",
-  "tag": "OPEN SOURCE • BLOCK PUZZLE"
-},
-{
-  "slug": "opensource-breakout",
-  "name": "Breakout",
-  "category": "Arcade",
-  "icon": "🧱",
-  "color": "#ffb86b",
-  "description": "Bounce the ball and smash every brick.",
-  "details": "Classic brick-breaking with level progression, lives, and responsive paddle controls.",
-  "controls": "Move with mouse, touch, or arrow keys; click or Space to launch.",
-  "embedUrl": "https://mashukui.github.io/web-games/breakout/",
-  "providerUrl": "https://mashukui.github.io/web-games/breakout/",
-  "image": "/studyshelf-open-source/breakout.svg",
-  "tag": "OPEN SOURCE • ARCADE CLASSIC"
-},
-{
-  "slug": "opensource-paddle-duel",
-  "name": "Paddle Duel",
-  "category": "Sports",
-  "icon": "🏓",
-  "color": "#ff9da8",
-  "description": "Outplay an AI opponent in a fast paddle duel.",
-  "details": "A Pong-style match with three AI difficulty levels.",
-  "controls": "Move your paddle with mouse, touch, or keyboard controls shown in game.",
-  "embedUrl": "https://mashukui.github.io/web-games/paddle-duel/",
-  "providerUrl": "https://mashukui.github.io/web-games/paddle-duel/",
-  "image": "/studyshelf-open-source/paddle-duel.svg",
-  "tag": "OPEN SOURCE • VS COMPUTER"
-},
-{
-  "slug": "opensource-stack-tower",
-  "name": "Stack Tower",
-  "category": "Skill",
-  "icon": "🏗️",
-  "color": "#b6a0ff",
-  "description": "Drop each block perfectly and build a towering stack.",
-  "details": "A timing-based stacking game built around accuracy and combo scoring.",
-  "controls": "Tap, click, or press Space to drop a block.",
-  "embedUrl": "https://mashukui.github.io/web-games/stack-tower/",
-  "providerUrl": "https://mashukui.github.io/web-games/stack-tower/",
-  "image": "/studyshelf-open-source/stack-tower.svg",
-  "tag": "OPEN SOURCE • TIMING CHALLENGE"
-},
-{
-  "slug": "opensource-whack-a-mole",
-  "name": "Whack-a-Mole",
-  "category": "Arcade",
-  "icon": "🔨",
-  "color": "#f4cf72",
-  "description": "Hit the moles, grab bonus points, and avoid the bombs.",
-  "details": "A 60-second reflex challenge with targets and hazards.",
-  "controls": "Tap or click targets as they appear.",
-  "embedUrl": "https://mashukui.github.io/web-games/whack-a-mole/",
-  "providerUrl": "https://mashukui.github.io/web-games/whack-a-mole/",
-  "image": "/studyshelf-open-source/whack-a-mole.svg",
-  "tag": "OPEN SOURCE • 60-SECOND CHALLENGE"
-},
-{
-  "slug": "opensource-snake",
-  "name": "Snake",
-  "category": "Arcade",
-  "icon": "🐍",
-  "color": "#78dba1",
-  "description": "Eat, grow, and avoid crashing into yourself.",
-  "details": "A clean modern take on the classic snake game with local best scores.",
-  "controls": "Use arrow keys or WASD; swipe on touch screens.",
-  "embedUrl": "https://mashukui.github.io/web-games/snake/",
-  "providerUrl": "https://mashukui.github.io/web-games/snake/",
-  "image": "/studyshelf-open-source/snake.svg",
-  "tag": "OPEN SOURCE • CLASSIC ARCADE"
-},
-{
-  "slug": "opensource-tic-tac-toe",
-  "name": "Tic Tac Toe",
-  "category": "Puzzle",
-  "icon": "⭕",
-  "color": "#8fc9ff",
-  "description": "Challenge an AI or play against a friend on one device.",
-  "details": "A simple classic with an AI opponent designed to be hard to beat.",
-  "controls": "Click or tap a square.",
-  "embedUrl": "https://mashukui.github.io/web-games/tic-tac-toe/",
-  "providerUrl": "https://mashukui.github.io/web-games/tic-tac-toe/",
-  "image": "/studyshelf-open-source/tic-tac-toe.svg",
-  "tag": "OPEN SOURCE • CLASSIC DUEL"
-},
-{
-  "slug": "opensource-connect-four",
-  "name": "Connect Four",
-  "category": "Puzzle",
-  "icon": "🔴",
-  "color": "#ff9b9b",
-  "description": "Connect four discs before your opponent does.",
-  "details": "A turn-based strategy classic with multiple AI difficulty levels.",
-  "controls": "Choose a column with mouse or touch.",
-  "embedUrl": "https://mashukui.github.io/web-games/connect-four/",
-  "providerUrl": "https://mashukui.github.io/web-games/connect-four/",
-  "image": "/studyshelf-open-source/connect-four.svg",
-  "tag": "OPEN SOURCE • STRATEGY PUZZLE"
-},
-{
-  "slug": "opensource-2048",
-  "name": "2048",
-  "category": "Puzzle",
-  "icon": "🔢",
-  "color": "#e8c37d",
-  "description": "Merge matching tiles and chase the 2048 tile.",
-  "details": "A polished number-merging puzzle with undo and a saved best score.",
-  "controls": "Arrow keys or WASD; swipe on mobile.",
-  "embedUrl": "https://mashukui.github.io/web-games/2048/",
-  "providerUrl": "https://mashukui.github.io/web-games/2048/",
-  "image": "/studyshelf-open-source/2048.svg",
-  "tag": "OPEN SOURCE • NUMBER PUZZLE"
-},
-{
-  "slug": "opensource-minesweeper",
-  "name": "Minesweeper",
-  "category": "Puzzle",
-  "icon": "💣",
-  "color": "#9fb8d9",
-  "description": "Clear the board without detonating a mine.",
-  "details": "Three difficulty levels, a timer, and a flag counter.",
-  "controls": "Click to reveal; right-click or use the flag control to mark mines.",
-  "embedUrl": "https://mashukui.github.io/web-games/minesweeper/",
-  "providerUrl": "https://mashukui.github.io/web-games/minesweeper/",
-  "image": "/studyshelf-open-source/minesweeper.svg",
-  "tag": "OPEN SOURCE • LOGIC PUZZLE"
-},
-{
-  "slug": "opensource-memory-match",
-  "name": "Memory Match",
-  "category": "Puzzle",
-  "icon": "🃏",
-  "color": "#d7a7ff",
-  "description": "Flip cards and find every matching pair.",
-  "details": "A memory game with multiple difficulties and local score tracking.",
-  "controls": "Click or tap two cards at a time.",
-  "embedUrl": "https://mashukui.github.io/web-games/memory-match/",
-  "providerUrl": "https://mashukui.github.io/web-games/memory-match/",
-  "image": "/studyshelf-open-source/memory-match.svg",
-  "tag": "OPEN SOURCE • MEMORY GAME"
-},
-{
-  "slug": "opensource-star-defender",
-  "name": "Star Defender",
-  "category": "Action",
-  "icon": "🚀",
-  "color": "#89bfff",
-  "description": "Fight through waves of enemies and survive the onslaught.",
-  "details": "A compact space shooter built around dodging, shooting, and wave survival.",
-  "controls": "Use the controls shown in game; keyboard and touch supported.",
-  "embedUrl": "https://mashukui.github.io/web-games/star-defender/",
-  "providerUrl": "https://mashukui.github.io/web-games/star-defender/",
-  "image": "/studyshelf-open-source/star-defender.svg",
-  "tag": "OPEN SOURCE • SPACE SHOOTER"
-},
-{
-  "slug": "opensource-dino-run",
-  "name": "Dino Run",
-  "category": "Action",
-  "icon": "🦖",
-  "color": "#d6c58b",
-  "description": "Jump over cacti and duck beneath obstacles in an endless run.",
-  "details": "A fast endless runner with rising speed and quick reaction windows.",
-  "controls": "Press Space or Up to jump; Down to duck.",
-  "embedUrl": "https://mashukui.github.io/web-games/dino-run/",
-  "providerUrl": "https://mashukui.github.io/web-games/dino-run/",
-  "image": "/studyshelf-open-source/dino-run.svg",
-  "tag": "OPEN SOURCE • ENDLESS RUNNER"
-},
-{
-  "slug": "opensource-piano-tap",
-  "name": "Piano Tap",
-  "category": "Arcade",
-  "icon": "🎹",
-  "color": "#a9a6ff",
-  "description": "Tap the correct tiles before the board rolls past.",
-  "details": "A rhythm-and-reaction challenge where a missed tile ends the run.",
-  "controls": "Tap or click the dark tiles; use keyboard controls if shown.",
-  "embedUrl": "https://mashukui.github.io/web-games/piano-tap/",
-  "providerUrl": "https://mashukui.github.io/web-games/piano-tap/",
-  "image": "/studyshelf-open-source/piano-tap.svg",
-  "tag": "OPEN SOURCE • REACTION GAME"
-},
-{
-  "slug": "opensource-cross-road",
-  "name": "Cross Road",
-  "category": "Arcade",
-  "icon": "🐸",
-  "color": "#86d9a5",
-  "description": "Hop across traffic and rivers without getting hit.",
-  "details": "A tile-based crossing game with moving traffic and floating logs.",
-  "controls": "Arrow keys or WASD; touch controls are included.",
-  "embedUrl": "https://mashukui.github.io/web-games/cross-road/",
-  "providerUrl": "https://mashukui.github.io/web-games/cross-road/",
-  "image": "/studyshelf-open-source/cross-road.svg",
-  "tag": "OPEN SOURCE • HOPPER"
-},
-{
-  "slug": "opensource-slide-puzzle",
-  "name": "Slide Puzzle",
-  "category": "Puzzle",
-  "icon": "🧩",
-  "color": "#8fc5e8",
-  "description": "Slide the tiles back into order in as few moves as possible.",
-  "details": "A classic number-sliding puzzle with a move-count challenge.",
-  "controls": "Click or tap a tile next to the empty space.",
-  "embedUrl": "https://mashukui.github.io/web-games/slide-puzzle/",
-  "providerUrl": "https://mashukui.github.io/web-games/slide-puzzle/",
-  "image": "/studyshelf-open-source/slide-puzzle.svg",
-  "tag": "OPEN SOURCE • BRAIN TEASER"
-},
-{
-  "slug": "opensource-fruit-slice",
-  "name": "Fruit Slice",
-  "category": "Action",
-  "icon": "🍉",
-  "color": "#ff9c9c",
-  "description": "Slice fruit, chain combos, and dodge the bombs.",
-  "details": "A fast arcade slicing game designed for mouse and touch input.",
-  "controls": "Swipe or drag through fruit; avoid bombs.",
-  "embedUrl": "https://mashukui.github.io/web-games/fruit-slice/",
-  "providerUrl": "https://mashukui.github.io/web-games/fruit-slice/",
-  "image": "/studyshelf-open-source/fruit-slice.svg",
-  "tag": "OPEN SOURCE • ARCADE ACTION"
-},
-{
-  "slug": "opensource-bubble-shooter",
-  "name": "Bubble Shooter",
-  "category": "Puzzle",
-  "icon": "🫧",
-  "color": "#8bd9f0",
-  "description": "Aim, shoot, and match three or more bubbles.",
-  "details": "A color-matching shooter where clearing clusters drops connected bubbles.",
-  "controls": "Aim with mouse or touch and click to fire.",
-  "embedUrl": "https://mashukui.github.io/web-games/bubble-shooter/",
-  "providerUrl": "https://mashukui.github.io/web-games/bubble-shooter/",
-  "image": "/studyshelf-open-source/bubble-shooter.svg",
-  "tag": "OPEN SOURCE • MATCH & SHOOT"
-},
-{
-  "slug": "opensource-sudoku",
-  "name": "Sudoku",
-  "category": "Puzzle",
-  "icon": "🔢",
-  "color": "#b3c6ff",
-  "description": "Fill the grid with numbers without repeating in any row, column, or box.",
-  "details": "A number-logic puzzle with three difficulties and generated solvable boards.",
-  "controls": "Select a cell, then choose a number.",
-  "embedUrl": "https://mashukui.github.io/web-games/sudoku/",
-  "providerUrl": "https://mashukui.github.io/web-games/sudoku/",
-  "image": "/studyshelf-open-source/sudoku.svg",
-  "tag": "OPEN SOURCE • LOGIC CLASSIC"
-},
-{
-  "slug": "opensource-merge-drop",
-  "name": "Merge Drop",
-  "category": "Puzzle",
-  "icon": "🍉",
-  "color": "#f2a7c6",
-  "description": "Drop matching fruit to merge them into bigger fruit.",
-  "details": "A physics-style merge puzzle with chain reactions and score chasing.",
-  "controls": "Aim with mouse or touch, then drop the fruit.",
-  "embedUrl": "https://mashukui.github.io/web-games/merge-drop/",
-  "providerUrl": "https://mashukui.github.io/web-games/merge-drop/",
-  "image": "/studyshelf-open-source/merge-drop.svg",
-  "tag": "OPEN SOURCE • MERGE PUZZLE"
-},
-{
-  "slug": "opensource-water-sort",
-  "name": "Water Sort",
-  "category": "Puzzle",
-  "icon": "🧪",
-  "color": "#8fd8cb",
-  "description": "Sort the colored liquid until each tube holds one color.",
-  "details": "A relaxing sorting puzzle with solvable level generation.",
-  "controls": "Tap one tube, then another to pour.",
-  "embedUrl": "https://mashukui.github.io/web-games/water-sort/",
-  "providerUrl": "https://mashukui.github.io/web-games/water-sort/",
-  "image": "/studyshelf-open-source/water-sort.svg",
-  "tag": "OPEN SOURCE • RELAXING PUZZLE"
-},
-{
-  "slug": "opensource-slingshot",
-  "name": "Slingshot",
-  "category": "Skill",
-  "icon": "🏹",
-  "color": "#f3c27f",
-  "description": "Pull back, aim, and launch for a bullseye.",
-  "details": "A trajectory-based aim challenge with score bonuses for precision.",
-  "controls": "Drag back to aim and release to launch.",
-  "embedUrl": "https://mashukui.github.io/web-games/slingshot/",
-  "providerUrl": "https://mashukui.github.io/web-games/slingshot/",
-  "image": "/studyshelf-open-source/slingshot.svg",
-  "tag": "OPEN SOURCE • AIM CHALLENGE"
-},
-{
-  "slug": "opensource-helix-drop",
-  "name": "Helix Drop",
-  "category": "Action",
-  "icon": "🌀",
-  "color": "#b6a0ff",
-  "description": "Rotate a tower and guide the ball through its gaps.",
-  "details": "A fast falling-ball challenge with safe platforms and dangerous segments.",
-  "controls": "Move left or right to rotate the tower.",
-  "embedUrl": "https://mashukui.github.io/web-games/helix-drop/",
-  "providerUrl": "https://mashukui.github.io/web-games/helix-drop/",
-  "image": "/studyshelf-open-source/helix-drop.svg",
-  "tag": "OPEN SOURCE • 3D-STYLE ARCADE"
-},
-{
-  "slug": "opensource-gem-match",
-  "name": "Gem Match",
-  "category": "Puzzle",
-  "icon": "💎",
-  "color": "#9bd7ff",
-  "description": "Swap gems, match three, and trigger cascading combos.",
-  "details": "A match-three puzzle with cascades and score-building chains.",
-  "controls": "Swap adjacent gems using mouse or touch.",
-  "embedUrl": "https://mashukui.github.io/web-games/gem-match/",
-  "providerUrl": "https://mashukui.github.io/web-games/gem-match/",
-  "image": "/studyshelf-open-source/gem-match.svg",
-  "tag": "OPEN SOURCE • MATCH THREE"
-},
-{
-  "slug": "opensource-maze-muncher",
-  "name": "Maze Muncher",
-  "category": "Arcade",
-  "icon": "🟡",
-  "color": "#f3db80",
-  "description": "Clear the maze, dodge hunting ghosts, and grab power pellets.",
-  "details": "A maze-chase arcade game with multiple pursuers and temporary power-ups.",
-  "controls": "Use arrow keys or WASD to move.",
-  "embedUrl": "https://mashukui.github.io/web-games/maze-muncher/",
-  "providerUrl": "https://mashukui.github.io/web-games/maze-muncher/",
-  "image": "/studyshelf-open-source/maze-muncher.svg",
-  "tag": "OPEN SOURCE • MAZE CHASE"
-},
-{
-  "slug": "opensource-air-hockey",
-  "name": "Air Hockey",
-  "category": "Sports",
-  "icon": "🏒",
-  "color": "#83d8e6",
-  "description": "Outmaneuver the AI and score first in an air-hockey duel.",
-  "details": "A top-down sports game with responsive mallet movement and puck physics.",
-  "controls": "Drag or move to control your mallet.",
-  "embedUrl": "https://mashukui.github.io/web-games/air-hockey/",
-  "providerUrl": "https://mashukui.github.io/web-games/air-hockey/",
-  "image": "/studyshelf-open-source/air-hockey.svg",
-  "tag": "OPEN SOURCE • SPORTS ARCADE"
-},
-{
-  "slug": "opensource-reversi",
-  "name": "Reversi",
-  "category": "Puzzle",
-  "icon": "⚪",
-  "color": "#b8c4d6",
-  "description": "Flip your opponent’s discs and control the board.",
-  "details": "A classic strategy board game with legal-move hints and three AI levels.",
-  "controls": "Tap a highlighted legal move.",
-  "embedUrl": "https://mashukui.github.io/web-games/reversi/",
-  "providerUrl": "https://mashukui.github.io/web-games/reversi/",
-  "image": "/studyshelf-open-source/reversi.svg",
-  "tag": "OPEN SOURCE • BOARD STRATEGY"
-},
-{
-  "slug": "opensource-battleship",
-  "name": "Battleship",
-  "category": "Strategy",
-  "icon": "🚢",
-  "color": "#83b8ff",
-  "description": "Place your fleet and hunt down the enemy ships.",
-  "details": "A turn-based naval guessing game with AI difficulty options.",
-  "controls": "Place ships, then select grid squares to fire.",
-  "embedUrl": "https://mashukui.github.io/web-games/battleship/",
-  "providerUrl": "https://mashukui.github.io/web-games/battleship/",
-  "image": "/studyshelf-open-source/battleship.svg",
-  "tag": "OPEN SOURCE • TACTICAL PUZZLE"
-},
-{
-  "slug": "opensource-sokoban",
-  "name": "Sokoban",
-  "category": "Puzzle",
-  "icon": "📦",
-  "color": "#e3bb8a",
-  "description": "Push every crate onto a target without getting stuck.",
-  "details": "A thoughtful crate-pushing puzzle with 30 levels and undo support.",
-  "controls": "Arrow keys or WASD to move; undo is available in game.",
-  "embedUrl": "https://mashukui.github.io/web-games/sokoban/",
-  "providerUrl": "https://mashukui.github.io/web-games/sokoban/",
-  "image": "/studyshelf-open-source/sokoban.svg",
-  "tag": "OPEN SOURCE • LEVEL PUZZLE"
-},
-{
-  "slug": "opensource-lights-out",
-  "name": "Lights Out",
-  "category": "Puzzle",
-  "icon": "💡",
-  "color": "#f0d77c",
-  "description": "Switch off every light by flipping neighboring cells.",
-  "details": "A logic puzzle where each move toggles a cell and its neighbors.",
-  "controls": "Tap a light to toggle it and its neighbors.",
-  "embedUrl": "https://mashukui.github.io/web-games/lights-out/",
-  "providerUrl": "https://mashukui.github.io/web-games/lights-out/",
-  "image": "/studyshelf-open-source/lights-out.svg",
-  "tag": "OPEN SOURCE • LOGIC CHALLENGE"
-},
+    },
+  ...licensedGames,
+  ...openSourceGames,
 ];
