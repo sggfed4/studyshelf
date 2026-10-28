@@ -55,6 +55,8 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Pin Wrangler 4: the action's default is older and can't read wrangler.jsonc.
+          wranglerVersion: '4.154.0'
           command: |
             d1 migrations apply studyshelf-db --remote
             deploy
