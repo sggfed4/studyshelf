@@ -755,7 +755,9 @@ function SourceDetail({ source }) {
             </div>
             {source.hosted
               ? <p className="fine-print">Open-source HTML5 game by <a href="https://github.com/mashukui" target="_blank" rel="noopener noreferrer">mashukui</a>, hosted on StudyShelf under the <a href="/play/LICENSE.txt" target="_blank" rel="noopener">MIT License</a>. <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Source code ↗</a></p>
-              : <p className="fine-print">Game provided by an independent third party. Some games include controls or overlays managed by the provider.</p>}
+              : source.publisher
+                ? <p className="fine-print">Published by {source.publisher} and distributed by <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">GameDistribution</a>. The distributor may show a short ad before the game starts.</p>
+                : <p className="fine-print">Game provided by an independent third party. Some games include controls or overlays managed by the provider.</p>}
           </div>
         </section>
         <VotePanel source={source} />
