@@ -66,7 +66,7 @@ async function handleApi(request, env) {
     const dbError = await requireDatabase(env);
     if (dbError) return dbError;
     const slug = url.searchParams.get('slug') || '';
-    if (!isValidSlug(slug)) return json({ error: 'A valid game slug is required.' }, 400);
+    if (!isValidSlug(slug)) return json({ error: 'A valid source slug is required.' }, 400);
     const result = await env.DB.prepare(
       'SELECT SUM(CASE WHEN direction = 1 THEN 1 ELSE 0 END) AS upvotes, SUM(CASE WHEN direction = -1 THEN 1 ELSE 0 END) AS downvotes FROM votes WHERE game_slug = ?'
     ).bind(slug).first();
@@ -155,7 +155,7 @@ async function handleApi(request, env) {
     const recent = await env.DB.prepare(
       "SELECT COUNT(*) AS total FROM game_reports WHERE reporter_hash = ? AND created_at >= datetime('now', '-1 day')"
     ).bind(reporterHash).first();
-    if ((recent?.total || 0) >= 10) return json({ error: 'Limit reached: each browser can report up to 10 games per day.' }, 429);
+    if ((recent?.total || 0) >= 10) return json({ error: 'Limit reached: each browser can report up to 10 sources per day.' }, 429);
     await env.DB.prepare(
       "INSERT INTO game_reports (game_slug, reason, details, reporter_hash) VALUES (?, ?, ?, ?)"
     ).bind(body.slug, body.reason, details, reporterHash).run();
@@ -213,7 +213,7 @@ async function handleApi(request, env) {
 
     if (path === '/api/admin/reports/fix-game' && method === 'POST') {
       const body = await readJson(request);
-      if (!isValidSlug(body?.slug)) return json({ error: 'A valid game slug is required.' }, 400);
+      if (!isValidSlug(body?.slug)) return json({ error: 'A valid source slug is required.' }, 400);
       const result = await env.DB.prepare("UPDATE game_reports SET status = 'fixed', updated_at = datetime('now') WHERE game_slug = ? AND status = 'open'").bind(body.slug).run();
       return json({ ok: true, fixed: result.meta?.changes || 0 });
     }

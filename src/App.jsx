@@ -308,7 +308,7 @@ function VotePanel({ source }) {
   }
 
   return <section className="community-vote-panel" aria-label={`Vote for ${source.name}`}>
-    <div className="community-vote-copy"><p className="eyebrow">COMMUNITY RATING</p><h2>Was this game good?</h2><p>One vote per game per browser. You can change or remove your vote.</p></div>
+    <div className="community-vote-copy"><p className="eyebrow">COMMUNITY RATING</p><h2>Was this source good?</h2><p>One vote per source per browser. You can change or remove your vote.</p></div>
     <div className="community-vote-actions">
       <button type="button" className={`vote-button ${myVote === 'up' ? 'selected' : ''}`} disabled={busy} onClick={() => castVote('up')} aria-pressed={myVote === 'up'}><span aria-hidden="true">▲</span> Upvote <strong>{counts.upvotes}</strong></button>
       <button type="button" className={`vote-button ${myVote === 'down' ? 'selected' : ''}`} disabled={busy} onClick={() => castVote('down')} aria-pressed={myVote === 'down'}><span aria-hidden="true">▼</span> Downvote <strong>{counts.downvotes}</strong></button>
@@ -318,9 +318,9 @@ function VotePanel({ source }) {
 }
 
 const SUGGESTION_TYPES = {
-  game: { label: 'Game request', title: 'Game title', placeholder: 'e.g. Snow Rider 3D', details: 'Official game link or anything we should know' },
-  feature: { label: 'Feature idea', title: 'Your idea', placeholder: 'e.g. Leaderboards for each game', details: 'How would it work? Why would it help?' },
-  bug: { label: 'Bug report', title: 'What went wrong?', placeholder: 'e.g. A game won’t load on my Chromebook', details: 'Which game or page, which device, and what happened' },
+  game: { label: 'Source request', title: 'Source name', placeholder: 'e.g. Snow Rider 3D', details: 'Official link or anything we should know' },
+  feature: { label: 'Feature idea', title: 'Your idea', placeholder: 'e.g. Leaderboards for each source', details: 'How would it work? Why would it help?' },
+  bug: { label: 'Bug report', title: 'What went wrong?', placeholder: 'e.g. A source won’t load on my Chromebook', details: 'Which source or page, which device, and what happened' },
   other: { label: 'Something else', title: 'Subject', placeholder: 'What’s on your mind?', details: 'Anything else we should know' },
 }
 
@@ -361,7 +361,7 @@ function SuggestionForm() {
 
   const type = SUGGESTION_TYPES[kind]
   return <section className="game-request-panel" id="suggest">
-    <div><p className="eyebrow">COMMUNITY SUGGESTIONS</p><h2>Suggestions & requests</h2><p>Want a game added, have an idea for the site, or found something broken? Suggestions go straight to the site owner for review.</p></div>
+    <div><p className="eyebrow">COMMUNITY SUGGESTIONS</p><h2>Suggestions & requests</h2><p>Want a source added, have an idea for the site, or found something broken? Suggestions go straight to the site owner for review.</p></div>
     <form className="game-request-form" onSubmit={submit}>
       <div className="kind-picker" role="radiogroup" aria-label="Suggestion type">{Object.entries(SUGGESTION_TYPES).map(([value, option]) => <button type="button" key={value} role="radio" aria-checked={kind === value} className={`chip ${kind === value ? 'active' : ''}`} onClick={() => setKind(value)}>{option.label}</button>)}</div>
       <label>{type.title}<input required minLength={2} maxLength={100} value={title} onChange={(event) => setTitle(event.target.value)} placeholder={type.placeholder} /></label>
@@ -377,7 +377,7 @@ function AdminDashboard() {
   const [authenticated, setAuthenticated] = useState(false)
   const [data, setData] = useState(null)
   const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState('Enter your private admin token to load votes and game requests.')
+  const [message, setMessage] = useState('Enter your private admin token to load votes and source requests.')
   const [error, setError] = useState(false)
   const [kindFilter, setKindFilter] = useState('all')
 
@@ -467,27 +467,27 @@ function AdminDashboard() {
     {!authenticated && <form className="admin-login" onSubmit={(event) => { event.preventDefault(); void loadData(token) }}><label>Admin token<input type="password" autoComplete="current-password" value={token} onChange={(event) => setToken(event.target.value)} placeholder="Paste the ADMIN_TOKEN secret" required /></label><button className="primary-button" disabled={busy || !token.trim()}>{busy ? 'Checking…' : 'Open dashboard'}</button></form>}
     {message && <p className={`community-message ${error ? 'is-error' : ''}`} role="status">{message}</p>}
     {authenticated && data && <>
-      <div className="admin-metrics"><article><span>Games with votes</span><strong>{data.gameTotals.length}</strong></article><article><span>Total upvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.upvotes || 0), 0)}</strong></article><article><span>Total downvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.downvotes || 0), 0)}</strong></article><article><span>Unique plays (7 days)</span><strong>{playTotals.reduce((sum, row) => sum + (row.plays7d || 0), 0)}</strong></article><article><span>Pending suggestions</span><strong>{pendingCount('all')}</strong></article><article><span>Open game reports</span><strong>{openReports.length}</strong></article></div>
-      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">NEEDS ATTENTION</p><h2>Broken game reports</h2></div><span className="result-count">{brokenGames.length} {brokenGames.length === 1 ? 'game' : 'games'} affected</span></div>
+      <div className="admin-metrics"><article><span>Sources with votes</span><strong>{data.gameTotals.length}</strong></article><article><span>Total upvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.upvotes || 0), 0)}</strong></article><article><span>Total downvotes</span><strong>{data.gameTotals.reduce((sum, row) => sum + (row.downvotes || 0), 0)}</strong></article><article><span>Unique plays (7 days)</span><strong>{playTotals.reduce((sum, row) => sum + (row.plays7d || 0), 0)}</strong></article><article><span>Pending suggestions</span><strong>{pendingCount('all')}</strong></article><article><span>Open source reports</span><strong>{openReports.length}</strong></article></div>
+      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">NEEDS ATTENTION</p><h2>Broken source reports</h2></div><span className="result-count">{brokenGames.length} {brokenGames.length === 1 ? 'source' : 'sources'} affected</span></div>
         <div className="request-list">{brokenGames.map((group) => {
           const game = gamesBySlug.get(group.slug)
           return <article className="admin-request" key={group.slug}>
             <div className="admin-request-top"><div><h3>{game?.name || group.slug}</h3><p>{Object.entries(group.reasons).map(([reason, count]) => `${REPORT_REASONS[reason] || reason} ×${count}`).join(' · ')}</p></div><div className="admin-request-badges"><span className="request-status status-rejected">{group.reports.length} open</span></div></div>
             <ul className="report-entries">{group.reports.map((report) => <li key={report.id}><span>{REPORT_REASONS[report.reason] || report.reason}</span>{report.details && <q>{report.details}</q>}<small>{report.updated_at} UTC</small><button type="button" className="text-button" disabled={busy} onClick={() => void deleteReport(report.id)}>Delete</button></li>)}</ul>
-            <div className="admin-request-actions"><button className="secondary-button" disabled={busy} onClick={() => void fixGame(group.slug)}>✓ Mark fixed</button>{game && <a className="secondary-button" href={`/sources/${game.slug}`} target="_blank" rel="noopener noreferrer">Test game ↗</a>}{game && <a className="secondary-button" href={game.embedUrl} target="_blank" rel="noopener noreferrer">Open embed URL ↗</a>}</div>
+            <div className="admin-request-actions"><button className="secondary-button" disabled={busy} onClick={() => void fixGame(group.slug)}>✓ Mark fixed</button>{game && <a className="secondary-button" href={`/sources/${game.slug}`} target="_blank" rel="noopener noreferrer">Test source ↗</a>}{game && <a className="secondary-button" href={game.embedUrl} target="_blank" rel="noopener noreferrer">Open embed URL ↗</a>}</div>
           </article>
-        })}{!brokenGames.length && <p className="admin-empty">No open reports. Every game is working, as far as players know.</p>}</div>
+        })}{!brokenGames.length && <p className="admin-empty">No open reports. Every source is working, as far as players know.</p>}</div>
         {fixedReports.length > 0 && <details className="admin-fixed-reports"><summary>Recently fixed ({fixedReports.length})</summary><ul className="report-entries">{fixedReports.map((report) => <li key={report.id}><span>{gamesBySlug.get(report.slug)?.name || report.slug}</span><q>{REPORT_REASONS[report.reason] || report.reason}</q><small>{report.updated_at} UTC</small><button type="button" className="text-button" disabled={busy} onClick={() => void reopenReport(report.id)}>Reopen</button></li>)}</ul></details>}
       </section>
-      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">RANKING</p><h2>Votes by game</h2></div><button className="secondary-button" disabled={busy} onClick={() => void loadData(token)}>Refresh</button></div>
-        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game slug</th><th>Upvotes</th><th>Downvotes</th><th>Total</th></tr></thead><tbody>{data.gameTotals.map((row) => <tr key={row.slug}><td>{row.slug}</td><td>{row.upvotes || 0}</td><td>{row.downvotes || 0}</td><td>{row.total || 0}</td></tr>)}</tbody></table>{!data.gameTotals.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
+      <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">RANKING</p><h2>Votes by source</h2></div><button className="secondary-button" disabled={busy} onClick={() => void loadData(token)}>Refresh</button></div>
+        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Source slug</th><th>Upvotes</th><th>Downvotes</th><th>Total</th></tr></thead><tbody>{data.gameTotals.map((row) => <tr key={row.slug}><td>{row.slug}</td><td>{row.upvotes || 0}</td><td>{row.downvotes || 0}</td><td>{row.total || 0}</td></tr>)}</tbody></table>{!data.gameTotals.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
       </section>
       <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">ANONYMOUS VOTE LOG</p><h2>Recent voters</h2></div><span className="result-count">Latest {data.votes.length}</span></div>
-        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game</th><th>Vote</th><th>Anonymous voter ref</th><th>Last updated (UTC)</th></tr></thead><tbody>{data.votes.map((vote, index) => <tr key={`${vote.slug}-${vote.voter_ref}-${index}`}><td>{vote.slug}</td><td><span className={`vote-kind ${vote.direction === 1 ? 'up' : 'down'}`}>{vote.direction === 1 ? '▲ Upvote' : '▼ Downvote'}</span></td><td><code>{vote.voter_ref}</code></td><td>{vote.updated_at} UTC</td></tr>)}</tbody></table>{!data.votes.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
+        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Source</th><th>Vote</th><th>Anonymous voter ref</th><th>Last updated (UTC)</th></tr></thead><tbody>{data.votes.map((vote, index) => <tr key={`${vote.slug}-${vote.voter_ref}-${index}`}><td>{vote.slug}</td><td><span className={`vote-kind ${vote.direction === 1 ? 'up' : 'down'}`}>{vote.direction === 1 ? '▲ Upvote' : '▼ Downvote'}</span></td><td><code>{vote.voter_ref}</code></td><td>{vote.updated_at} UTC</td></tr>)}</tbody></table>{!data.votes.length && <p className="admin-empty">No votes have been submitted yet.</p>}</div>
         <p className="fine-print">Voter references are salted hashes, not names, email addresses, or IP addresses. Votes are anonymous and can be changed by the same browser.</p>
       </section>
       <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">POPULARITY</p><h2>Most played</h2></div><span className="result-count">Unique browsers per day</span></div>
-        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Game</th><th>Last 7 days</th><th>All time</th></tr></thead><tbody>{playTotals.map((row) => <tr key={row.slug}><td>{gamesBySlug.get(row.slug)?.name || row.slug}</td><td>{row.plays7d || 0}</td><td>{row.plays || 0}</td></tr>)}</tbody></table>{!playTotals.length && <p className="admin-empty">No plays recorded yet.</p>}</div>
+        <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Source</th><th>Last 7 days</th><th>All time</th></tr></thead><tbody>{playTotals.map((row) => <tr key={row.slug}><td>{gamesBySlug.get(row.slug)?.name || row.slug}</td><td>{row.plays7d || 0}</td><td>{row.plays || 0}</td></tr>)}</tbody></table>{!playTotals.length && <p className="admin-empty">No plays recorded yet.</p>}</div>
       </section>
       <section className="admin-section"><div className="admin-section-heading"><div><p className="eyebrow">INBOX</p><h2>Suggestions</h2></div><span className="result-count">{pendingCount('all')} pending</span></div>
         <div className="kind-picker admin-kind-filter" role="group" aria-label="Filter suggestions">{[['all', 'All'], ...Object.entries(SUGGESTION_TYPES).map(([value, option]) => [value, option.label])].map(([value, label]) => <button type="button" key={value} aria-pressed={kindFilter === value} className={`chip ${kindFilter === value ? 'active' : ''}`} onClick={() => setKindFilter(value)}>{label} <span>{pendingCount(value)}</span></button>)}</div>
@@ -502,7 +502,7 @@ function Logo() {
 }
 
 function Header({ active = 'sources' }) {
-  return <header className="topbar"><Logo /><nav aria-label="Main navigation"><a className={active === 'sources' ? 'active' : ''} href="/">Games</a><a className={active === 'rooms' ? 'active' : ''} href="/rooms">Rooms</a><ThemeToggle /></nav></header>
+  return <header className="topbar"><Logo /><nav aria-label="Main navigation"><a className={active === 'sources' ? 'active' : ''} href="/">Sources</a><a className={active === 'rooms' ? 'active' : ''} href="/rooms">Rooms</a><ThemeToggle /></nav></header>
 }
 
 function Footer() {
@@ -617,10 +617,10 @@ function SourcesPage() {
     <section className="home-hero">
       {playersToday > 0 && <p className="live-pill"><i aria-hidden="true" />{playersToday.toLocaleString()} {playersToday === 1 ? 'player' : 'players'} today</p>}
       <h1>StudyShelf<span className="accent-dot">.</span></h1>
-      <p className="home-hero__copy">Find a game, jump in, and make the most of your break.</p>
+      <p className="home-hero__copy">Find a source, jump in, and make the most of your break.</p>
       <nav className="quick-nav" aria-label="Quick links">
-        <a href="#library"><span aria-hidden="true">▦</span> Game library</a>
-        <button type="button" onClick={playRandom}><span aria-hidden="true">🎲</span> Random game</button>
+        <a href="#library"><span aria-hidden="true">▦</span> Source library</a>
+        <button type="button" onClick={playRandom}><span aria-hidden="true">🎲</span> Random source</button>
         <a href="/rooms"><span aria-hidden="true">◈</span> Rooms</a>
         <a href="#suggest"><span aria-hidden="true">✎</span> Suggest</a>
       </nav>
@@ -630,28 +630,28 @@ function SourcesPage() {
       <a className="daily-pick" href={`/sources/${dailyPick.slug}`} style={{ '--tile-color': dailyPick.color }}>
         <img src={dailyPick.image} alt="" loading="lazy" decoding="async" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
         <div className="daily-pick__copy">
-          <p className="eyebrow">★ GAME OF THE DAY</p>
+          <p className="eyebrow">★ SOURCE OF THE DAY</p>
           <h2>{dailyPick.name}</h2>
           <p>{dailyPick.description}</p>
           <span className="primary-button">Play now <span>↘</span></span>
         </div>
       </a>
       <Shelf eyebrow="PICK UP WHERE YOU LEFT OFF" title="Continue playing" items={recent} stats={stats} action={<button type="button" className="text-button" onClick={clearRecent}>Clear</button>} />
-      <Shelf eyebrow="YOUR SHELF" title="Saved games" items={saved} stats={stats} />
+      <Shelf eyebrow="YOUR SHELF" title="Saved sources" items={saved} stats={stats} />
       <Shelf eyebrow="WHAT EVERYONE’S PLAYING" title="Trending this week" items={trending} stats={stats} action={<button type="button" className="text-button" onClick={() => setSort('trending')}>See all</button>} />
     </>}
     <div className="page-heading page-heading--catalog" id="library">
-      <div><p className="eyebrow">BROWSE & PLAY</p><h2>Game Library</h2></div>
-      <span className="result-count">{filtered.length} games</span>
+      <div><p className="eyebrow">BROWSE & PLAY</p><h2>Source Library</h2></div>
+      <span className="result-count">{filtered.length} sources</span>
     </div>
     <div className="toolbar">
-      <label className="search-box"><span>⌕</span><input ref={searchRef} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search games..." aria-label="Search games" aria-keyshortcuts="/" /><kbd title="Press / to search">/</kbd></label>
+      <label className="search-box"><span>⌕</span><input ref={searchRef} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search sources..." aria-label="Search sources" aria-keyshortcuts="/" /><kbd title="Press / to search">/</kbd></label>
       <label className="filter-select"><span className="sr-only">Sort by</span><select value={sort} onChange={(event) => setSort(event.target.value)}>{Object.entries(SORTS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-      <button type="button" className="secondary-button random-button" onClick={playRandom} title="Open a random game from this list">🎲 <span>Random</span></button>
+      <button type="button" className="secondary-button random-button" onClick={playRandom} title="Open a random source from this list">🎲 <span>Random</span></button>
     </div>
     <div className="category-chips" role="group" aria-label="Categories">{categories.map((item) => <button type="button" key={item} aria-pressed={category === item} className={`chip ${category === item ? 'active' : ''}`} onClick={() => setCategory(item)}>{item} <span>{categoryCounts[item]}</span></button>)}</div>
     <div className="source-grid">{filtered.map((source) => <SourceCard key={source.slug} source={source} stat={stats[source.slug]} hot={hot.has(source.slug)} />)}</div>
-    {filtered.length === 0 && <div className="empty-state"><h2>No matching games</h2><p>Try a different search or category — or suggest the game below.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
+    {filtered.length === 0 && <div className="empty-state"><h2>No matching sources</h2><p>Try a different search or category — or suggest it below.</p><button onClick={() => { setQuery(''); setCategory('All') }}>Clear filters</button></div>}
     <NativeBannerAd className="home-native-ad" />
     <SuggestionForm />
   </Shell>
@@ -734,7 +734,7 @@ function SourceDetail({ source }) {
   setPageTitle(source.name)
 
   return <Shell active="sources">
-    <a className="back-link" href="/">← All games</a>
+    <a className="back-link" href="/">← All sources</a>
     <div className="source-detail-layout">
       <div className="source-detail-main">
         <section className="detail-header">
@@ -743,27 +743,27 @@ function SourceDetail({ source }) {
             <span hidden>{source.icon}</span>
           </div>
           <div className="detail-copy">
-            <p className="eyebrow">{source.category} / GAME</p>
+            <p className="eyebrow">{source.category} / SOURCE</p>
             <h1>{source.name}</h1>
             <p>{source.details || source.description}</p>
             <div className="detail-actions">
-              <button className="primary-button" onClick={() => { startGame(); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Game loaded' : 'Play here'} <span>↘</span></button>
+              <button className="primary-button" onClick={() => { startGame(); document.getElementById('source-player')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>{showFrame ? 'Source loaded' : 'Play here'} <span>↘</span></button>
               <button className={`secondary-button ${saved ? 'saved' : ''}`} onClick={toggleSave}>{saved ? '★ Saved' : '☆ Save'}</button>
               {source.hosted
                 ? <a className="secondary-button" href={source.embedUrl} target="_blank" rel="noopener">Open in new tab ↗</a>
                 : <a className="secondary-button" href={source.providerUrl} target="_blank" rel="noopener noreferrer">Open provider ↗</a>}
             </div>
             {source.hosted
-              ? <p className="fine-print">Open-source HTML5 game by <a href="https://github.com/mashukui" target="_blank" rel="noopener noreferrer">mashukui</a>, hosted on StudyShelf under the <a href="/play/LICENSE.txt" target="_blank" rel="noopener">MIT License</a>. <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Source code ↗</a></p>
+              ? <p className="fine-print">Open-source HTML5 project by <a href="https://github.com/mashukui" target="_blank" rel="noopener noreferrer">mashukui</a>, hosted on StudyShelf under the <a href="/play/LICENSE.txt" target="_blank" rel="noopener">MIT License</a>. <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">Source code ↗</a></p>
               : source.publisher
-                ? <p className="fine-print">Published by {source.publisher} and distributed by <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">GameDistribution</a>. The distributor may show a short ad before the game starts.</p>
-                : <p className="fine-print">Game provided by an independent third party. Some games include controls or overlays managed by the provider.</p>}
+                ? <p className="fine-print">Published by {source.publisher} and distributed by <a href={source.providerUrl} target="_blank" rel="noopener noreferrer">GameDistribution</a>. The distributor may show a short ad before it starts.</p>
+                : <p className="fine-print">Source provided by an independent third party. Some sources include controls or overlays managed by the provider.</p>}
           </div>
         </section>
         <VotePanel source={source} />
         <section className="player-panel" id="source-player">
           <div className="player-panel-heading">
-            <div><p className="eyebrow">GAME PLAYER</p><h2>{showFrame ? source.name : 'Ready when you are'}</h2></div>
+            <div><p className="eyebrow">PLAYER</p><h2>{showFrame ? source.name : 'Ready when you are'}</h2></div>
             <div className="player-panel-actions">
               {showFrame && <button className="secondary-button" type="button" onClick={() => setFrameVersion((value) => value + 1)}>Reload</button>}
               {showFrame && <button className="secondary-button" type="button" onClick={openFullscreen}>Fullscreen ⛶</button>}
@@ -771,16 +771,16 @@ function SourceDetail({ source }) {
               <button className={`secondary-button report-toggle ${showReport ? 'saved' : ''}`} type="button" onClick={() => setShowReport((open) => !open)} aria-expanded={showReport} aria-controls="report-panel">⚑ Not working?</button>
             </div>
           </div>
-          {openReports >= 2 && <p className="report-warning" role="note">⚠ {openReports} players reported problems with this game recently. If it won’t start, try <strong>Reload</strong> or <strong>Open provider</strong>.</p>}
+          {openReports >= 2 && <p className="report-warning" role="note">⚠ {openReports} players reported problems with this source recently. If it won’t start, try <strong>Reload</strong> or <strong>Open provider</strong>.</p>}
           {showReport && <ReportGamePanel source={source} onClose={() => setShowReport(false)} />}
           {showFrame
             ? <div className="source-frame-wrap"><iframe key={frameVersion} ref={iframeRef} className="source-frame" src={source.embedUrl} title={source.name} allow="fullscreen; autoplay; gamepad" allowFullScreen loading="eager" referrerPolicy="strict-origin-when-cross-origin" /></div>
-            : <div className="player-placeholder"><span>{source.icon}</span><p>Launch the game in the player, or open the provider directly.</p><button className="primary-button" onClick={startGame}>Load game ↘</button></div>}
+            : <div className="player-placeholder"><span>{source.icon}</span><p>Launch it in the player, or open the provider directly.</p><button className="primary-button" onClick={startGame}>Load source ↘</button></div>}
         </section>
         <ResponsiveGameBanner />
         {source.controls && <section className="controls-note"><p className="eyebrow">CONTROLS</p><p>{source.controls}</p></section>}
-        <Shelf eyebrow="MORE LIKE THIS" title={`More ${source.category} games`} items={similar} stats={stats} action={<a className="text-button" href={`/?cat=${encodeURIComponent(source.category)}`}>See all</a>} />
-        <div className="detail-bottom"><a href="/#suggest">Suggest a game or feature ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
+        <Shelf eyebrow="MORE LIKE THIS" title={`More ${source.category} sources`} items={similar} stats={stats} action={<a className="text-button" href={`/?cat=${encodeURIComponent(source.category)}`}>See all</a>} />
+        <div className="detail-bottom"><a href="/#suggest">Suggest a source or feature ↗</a><a href="/rooms">Explore Rooms ↗</a></div>
       </div>
     </div>
     <NativeBannerAd className="game-native-ad" />
@@ -796,10 +796,10 @@ function RoomsPage() {
 
 function InfoPage({ kind }) {
   const content = {
-    about: { title: 'About StudyShelf', intro: 'StudyShelf organizes a browsable collection of browser games and useful web tools.', body: 'Game pages link to independently operated providers. StudyShelf does not claim ownership of third-party content, and provider availability may change.' },
-    privacy: { title: 'Privacy', intro: 'Last updated October 15, 2026.', body: 'StudyShelf stores saved-game preferences in your browser. Hosting providers may process technical information required to deliver and protect the site. When you open an external game or room, that provider may receive connection data and handle it under its own privacy policy. StudyShelf also loads third-party advertising scripts for banner, native, and floating advertisements. Advertising providers may process technical data and use cookies or similar technologies under their own privacy policies. If you vote or send a suggestion, StudyShelf stores the game slug, vote direction or suggestion text, timestamps, and a salted hash of a random browser identifier to limit repeat submissions. When you load a game, StudyShelf records the game slug, the date, and that same salted hash so it can count unique players per day for the Trending and Most played lists. Your recently played games are kept only in your browser. It does not ask for your name or email address for these features and does not store raw IP addresses in this voting system. Avoid sharing personal or sensitive information in request details.' },
-    terms: { title: 'Terms', intro: 'Use StudyShelf responsibly and follow the rules that apply to you.', body: 'StudyShelf is a directory and viewer for third-party games and content. We do not own or guarantee external sources, their availability, or their content. Use of external providers and advertisements is subject to their own terms. Do not use the site to violate applicable laws, access controls, or network policies.' },
-    contact: { title: 'Contact', intro: 'Need help with StudyShelf?', body: 'For support or to report a game issue, email support@studyshelf.org. This address must be configured to receive messages before the site is promoted.' },
+    about: { title: 'About StudyShelf', intro: 'StudyShelf organizes a browsable collection of sources (browser games, puzzles, and interactive projects) and useful web tools.', body: 'Source pages link to independently operated providers or host open-source projects. StudyShelf does not claim ownership of third-party content, and provider availability may change.' },
+    privacy: { title: 'Privacy', intro: 'Last updated October 15, 2026.', body: 'StudyShelf stores saved-source preferences in your browser. Hosting providers may process technical information required to deliver and protect the site. When you open an external source or room, that provider may receive connection data and handle it under its own privacy policy. StudyShelf also loads third-party advertising scripts for banner, native, and floating advertisements. Advertising providers may process technical data and use cookies or similar technologies under their own privacy policies. If you vote or send a suggestion, StudyShelf stores the source slug, vote direction or suggestion text, timestamps, and a salted hash of a random browser identifier to limit repeat submissions. When you load a source, StudyShelf records the source slug, the date, and that same salted hash so it can count unique players per day for the Trending and Most played lists. Your recently played sources are kept only in your browser. It does not ask for your name or email address for these features and does not store raw IP addresses in this voting system. Avoid sharing personal or sensitive information in request details.' },
+    terms: { title: 'Terms', intro: 'Use StudyShelf responsibly and follow the rules that apply to you.', body: 'StudyShelf is a directory and viewer for third-party sources (including browser games) and other content. We do not own or guarantee external sources, their availability, or their content. Use of external providers and advertisements is subject to their own terms. Do not use the site to violate applicable laws, access controls, or network policies.' },
+    contact: { title: 'Contact', intro: 'Need help with StudyShelf?', body: 'For support or to report a problem with a source, email support@studyshelf.org. This address must be configured to receive messages before the site is promoted.' },
   }
   const page = content[kind] || content.about
   setPageTitle(page.title)
