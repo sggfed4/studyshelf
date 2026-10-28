@@ -197,8 +197,8 @@
 }
 .source-detail-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 180px;
-  gap: 22px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
   align-items: start;
 }
 .source-detail-main {
@@ -304,16 +304,9 @@
   font-size: 12px;
   line-height: 1.6;
 }
-.game-ad-rail {
-  min-width: 0;
-  padding-top: 148px;
-  display: flex;
-  justify-content: center;
-}
 .game-banner-ad {
   width: 100%;
-  position: sticky;
-  top: 22px;
+  margin: 18px auto 22px;
 }
 .game-banner-ad .ad-slot__unit {
   max-width: 100%;
@@ -323,20 +316,12 @@
 }
 
 @media (min-width: 1500px) {
-  .source-detail-layout { grid-template-columns: minmax(0, 1fr) 190px; gap: 26px; }
   .source-frame-wrap { width: min(100%, 62vw, 108vh); }
 }
 @media (max-width: 1189px) {
   .source-detail-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 18px;
-  }
-  .game-ad-rail {
-    padding-top: 0;
-    justify-content: center;
-  }
-  .game-banner-ad {
-    position: static;
   }
   .game-banner-ad .ad-slot__unit {
     max-width: 100%;
@@ -378,7 +363,7 @@
   .player-panel-actions .secondary-button { min-height: 31px; padding: 0 8px; font-size: 9px; }
   .player-panel-actions > a { font-size: 10px; }
   .player-placeholder { min-height: 190px; }
-  .game-ad-rail { margin-top: 0; }
+  .game-banner-ad { margin: 14px auto 18px; }
   .home-native-ad, .game-native-ad { margin-top: 20px; padding: 13px 8px; }
   .native-ad__host { min-height: 90px; }
   .controls-note { padding: 10px 11px; }
@@ -389,4 +374,71 @@
   .source-detail-layout .detail-art { width: 88px; height: 88px; }
   .source-detail-layout .detail-copy h1 { font-size: 28px; }
   .player-placeholder { min-height: 180px; }
+}
+
+/* Community voting, requests, and private admin dashboard */
+.community-vote-panel,.game-request-panel,.admin-section,.admin-login{border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#101d2d,#0b1420);padding:20px;margin:20px 0}
+.community-vote-panel{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
+.community-vote-copy h2,.game-request-panel h2,.admin-section h2{margin:0 0 8px;font-family:'Space Grotesk',sans-serif;font-size:20px;letter-spacing:-.04em}
+.community-vote-copy>p:not(.eyebrow),.game-request-panel>div>p:not(.eyebrow){margin:0;color:#91a4ba;font-size:12px;line-height:1.65}
+.community-vote-actions{display:flex;gap:9px;flex-wrap:wrap}
+.vote-button{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 13px;border:1px solid #30435a;border-radius:10px;background:#111e2d;color:#c7d7e9;font-size:12px;font-weight:700}
+.vote-button strong{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:6px;background:#1c2e43;color:#dcecff}
+.vote-button:hover,.vote-button.selected{border-color:#83b9ee;background:#172c43;color:#d9edff}
+.vote-button:disabled,.admin-request-actions button:disabled{opacity:.55;cursor:wait}
+.community-message{margin:10px 0 0;color:#9bc8f4;font-size:11px;line-height:1.55}
+.community-message.is-error{color:#ffb6a7}
+.game-request-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,1fr);gap:24px;margin-top:26px}
+.game-request-form{display:grid;gap:12px}
+.game-request-form label,.admin-login label{display:grid;gap:6px;color:#a9bad0;font-size:11px;font-weight:700}
+.game-request-form label span{color:#7589a0;font-weight:400}
+.game-request-form input,.game-request-form textarea,.admin-login input{width:100%;border:1px solid #293c53;border-radius:9px;background:#091321;color:#e5f1ff;padding:11px 12px;outline:none;font:inherit;font-size:12px;resize:vertical}
+.game-request-form input:focus,.game-request-form textarea:focus,.admin-login input:focus{border-color:#6e9fce;box-shadow:0 0 0 3px #6e9fce1f}
+.game-request-form .primary-button{justify-self:start}
+.admin-page{max-width:1120px;margin:0 auto}
+.admin-login{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px;max-width:760px;margin-top:0}
+.admin-login .primary-button{min-height:42px}
+.admin-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.admin-metrics article{display:grid;gap:10px;padding:17px;border:1px solid var(--line);border-radius:13px;background:#0e1928}
+.admin-metrics article span{color:#8fa2b9;font-size:11px}
+.admin-metrics article strong{font-family:'Space Grotesk',sans-serif;font-size:28px;letter-spacing:-.05em}
+.admin-section{margin:18px 0}
+.admin-section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.admin-section-heading h2{margin-bottom:0}
+.admin-table-wrap{width:100%;overflow:auto;border:1px solid #1d2c40;border-radius:10px}
+.admin-table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}
+.admin-table th,.admin-table td{padding:11px 12px;border-bottom:1px solid #1b293b;text-align:left}
+.admin-table th{background:#121f30;color:#91a7c0;font-size:10px;font-weight:700;letter-spacing:.04em}
+.admin-table td{color:#c1d0e2}
+.admin-table tr:last-child td{border-bottom:0}
+.admin-table code{color:#a8d4ff;font-size:10px}
+.vote-kind{font-size:10px;font-weight:700}
+.vote-kind.up{color:#9fdfbb}
+.vote-kind.down{color:#ffb6a7}
+.admin-empty{padding:16px;color:#8194aa;font-size:12px}
+.request-list{display:grid;gap:10px}
+.admin-request{padding:15px;border:1px solid #213249;border-radius:11px;background:#0a1421}
+.admin-request-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.admin-request h3{margin:0 0 5px;font-family:'Space Grotesk',sans-serif;font-size:16px}
+.admin-request-top p{margin:0;color:#788ba2;font-size:10px}
+.admin-request-details{color:#a4b5c9;font-size:12px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.request-status{padding:5px 8px;border-radius:7px;background:#1c2a3d;color:#b7c8dc;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.request-status.status-approved{background:#173629;color:#a6e4bd}
+.request-status.status-rejected{background:#3a2428;color:#ffb8b8}
+.request-status.status-pending{background:#3a3020;color:#f3d39b}
+.admin-request-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.admin-request-actions .secondary-button,.admin-request-actions .danger-button{min-height:32px;padding:0 10px;font-size:10px}
+.danger-button{border:1px solid #693e48;border-radius:9px;background:#2b171e;color:#ffc0c7;font-weight:700}
+.danger-button:hover{background:#45212a}
+@media(max-width:720px){
+  .community-vote-panel{align-items:flex-start;padding:15px;gap:15px}
+  .community-vote-actions{width:100%}
+  .vote-button{flex:1;justify-content:center;padding:0 8px;font-size:10px}
+  .game-request-panel{grid-template-columns:1fr;padding:16px;gap:16px}
+  .admin-login{grid-template-columns:1fr}
+  .admin-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .admin-metrics article{padding:13px}
+  .admin-metrics article strong{font-size:24px}
+  .admin-section{padding:13px}
+  .admin-request{padding:12px}
 }

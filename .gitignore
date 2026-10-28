@@ -28,3 +28,5 @@ src/games-before-restore.js
 README-HOVER-CARDS.txt
 README-STUDYSHELF-UPDATE.txt
 public/MADKIDGAMES-ads.txt-line.txt
+
+*.bak

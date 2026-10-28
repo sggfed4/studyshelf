@@ -1,8 +1,27 @@
-﻿{
-  "name": "studyshelf",
-  "compatibility_date": "2026-10-15",
-  "assets": {
-    "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "studyshelf",
+	"main": "./worker.js",
+	"compatibility_date": "2026-10-15",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "studyshelf-db",
+			"database_id": "REPLACE_WITH_D1_DATABASE_ID",
+			"migrations_dir": "migrations"
+		},
+		{
+			"binding": "studyshelf_db",
+			"database_name": "studyshelf-db",
+			"database_id": "5b470f68-e347-4a63-b538-76477e1aeb51"
+		}
+	]
 }
