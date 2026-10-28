@@ -1,5 +1,25 @@
-import { licensedGames } from './licensedGames.js'
+import { LICENSED_GAMES_ENABLED, licensedGames } from './licensedGames.js'
 import { openSourceGames } from './openSourceGames.js'
+
+// Older versions of the two licensed games that replaced existing entries, shown while licensed games are off.
+const licensedFallbacks = [
+{
+      slug: 'car-eats-car-2-racing-game', name: "Car Eats Car 2 - Racing Game", category: 'Driving', icon: '🏁', color: '#c6e7ff',
+      description: "Race, steer, and handle the challenges in Car Eats Car 2 - Racing Game.",
+      details: "A browser driving game focused on vehicle control, timing, and reaching the next goal. Difficulty and handling depend on the selected mode.",
+      controls: "Use the keyboard or the on-screen controls shown in the game. Vehicle bindings may vary by version.",
+      embedUrl: 'https://www.madkidgames.com/full/car-eats-car-2-racing-game', providerUrl: 'https://www.madkidgames.com/game/car-eats-car-2-racing-game',
+      image: 'https://www.madkidgames.com/games/car-eats-car-2-racing-game/thumb_2.jpg', tag: 'RACING & DRIVING',
+    },
+{
+      slug: 'drift-boss', name: 'Drift Boss', category: 'Racing', icon: '🚗', color: '#f8d6a8',
+      description: 'Time your turns and drift across a narrow floating track.',
+      details: 'A one-button driving challenge where every turn demands precise timing.',
+      controls: 'Click, tap, or press Space to turn.',
+      embedUrl: 'https://riddleschool.org/drift-boss', providerUrl: 'https://riddleschool.org/drift-boss',
+      image: 'https://riddleschool.org/thumbs/drift-boss.webp', tag: 'ONE-BUTTON RACING',
+    },
+]
 
 export const games = [
 {
@@ -1362,6 +1382,6 @@ export const games = [
       embedUrl: 'https://riddleschool.org/slope', providerUrl: 'https://riddleschool.org/slope',
       image: 'https://riddleschool.org/thumbs/slope.webp', tag: '3D REFLEX',
     },
-  ...licensedGames,
+  ...(LICENSED_GAMES_ENABLED ? licensedGames : licensedFallbacks),
   ...openSourceGames,
 ];

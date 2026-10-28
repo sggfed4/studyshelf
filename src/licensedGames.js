@@ -1,6 +1,10 @@
 // Games embedded from GameDistribution (Azerion's licensed HTML5 distribution network). Each is listed by its
 // original developer or an established licensed publisher; `publisher` is the company GameDistribution shows.
 // Knockoffs that reuse famous names under unrelated uploaders were left out on purpose.
+// GameDistribution only serves these on websites registered in its publisher program; anywhere else each game
+// shows "… is not available here". Keep this off until studyshelf.org is approved as a GameDistribution publisher.
+export const LICENSED_GAMES_ENABLED = false
+
 export const licensedGames = [
   {
     slug: 'moto-x3m', name: 'Moto X3M', category: 'Racing', icon: '🏍️', color: '#ffd0a4',
