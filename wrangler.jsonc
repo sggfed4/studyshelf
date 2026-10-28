@@ -1,6 +1,7 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "studyshelf",
+	"account_id": "0754869b5f2ec03f00cf4abb42847406",
 	"main": "./worker.js",
 	"compatibility_date": "2026-10-15",
 	"assets": {

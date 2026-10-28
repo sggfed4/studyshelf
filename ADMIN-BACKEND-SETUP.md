@@ -65,11 +65,10 @@ The database (`studyshelf-db`) already exists and its ID is set in `wrangler.jso
 `.github/workflows/ci.yml` lints and builds every push and pull request. Pushes to `main` also run
 `wrangler d1 migrations apply studyshelf-db --remote` and `wrangler deploy`.
 
-One-time setup, in the GitHub repo under **Settings → Secrets and variables → Actions**:
+One-time setup, in the GitHub repo under **Settings → Secrets and variables → Actions** (the account ID is already in `wrangler.jsonc`):
 
 - `CLOUDFLARE_API_TOKEN`: create one at dash.cloudflare.com → My Profile → API Tokens using the
   **Edit Cloudflare Workers** template, then add **Account → D1 → Edit** permission.
-- `CLOUDFLARE_ACCOUNT_ID`: shown on the right side of the Cloudflare dashboard's Workers overview.
 
 `ADMIN_TOKEN` and `HASH_SALT` stay as Worker secrets (`npx wrangler secret put …`). They are not GitHub secrets.
 
