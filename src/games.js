@@ -576,14 +576,6 @@ export const games = [
       image: 'https://www.madkidgames.com/games/altos-adventure/thumb_2.jpg', tag: 'ARCADE & SKILL',
     },
 {
-      slug: 'five-nights-at-freddy-s', name: "Five Nights at Freddy's", category: 'Action', icon: '👾', color: '#ffc7c7',
-      description: "React quickly and survive the challenges in Five Nights at Freddy's.",
-      details: "An action-oriented browser game built around movement, timing, and avoiding hazards. Learn the controls and see how far you can get.",
-      controls: "Use the keyboard or touchscreen controls shown in the game.",
-      embedUrl: 'https://www.madkidgames.com/full/five-nights-at-freddy-s', providerUrl: 'https://www.madkidgames.com/game/five-nights-at-freddy-s',
-      image: 'https://www.madkidgames.com/games/five-nights-at-freddy-s/thumb_2.jpg', tag: 'ACTION & SURVIVAL',
-    },
-{
       slug: 'stickman-world-battle', name: "Stickman World Battle", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Stickman World Battle.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1104,14 +1096,6 @@ export const games = [
       image: 'https://www.madkidgames.com/games/pegidle/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
 {
-      slug: 'idle-worker-tycoon', name: "Idle Worker Tycoon", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
-      description: "Build, manage, or defend your way through Idle Worker Tycoon.",
-      details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
-      controls: "Use the mouse or touchscreen to interact with menus and units. Follow the game’s on-screen instructions.",
-      embedUrl: 'https://www.madkidgames.com/full/idle-worker-tycoon', providerUrl: 'https://www.madkidgames.com/game/idle-worker-tycoon',
-      image: 'https://www.madkidgames.com/games/idle-worker-tycoon/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
-    },
-{
       slug: 'happy-farm-day-farm-empire-idle-tycoon', name: "Happy Farm Day Farm Empire Idle Tycoon", category: 'Strategy', icon: '⚔️', color: '#d8e8b6',
       description: "Build, manage, or defend your way through Happy Farm Day Farm Empire Idle Tycoon.",
       details: "A strategy or simulation game where smart choices, upgrades, and managing resources help you progress.",
@@ -1240,14 +1224,6 @@ export const games = [
       image: 'https://www.madkidgames.com/games/boar-clan-animal-simulator/thumb_2.jpg', tag: 'STRATEGY & SIMULATION',
     },
 {
-      slug: 'dune-voodoo', name: 'Dune!', category: 'Arcade', icon: '🏜️', color: '#e8d7a9',
-      description: 'Build speed across the dunes, launch above the line, and land cleanly.',
-      details: 'One-button physics arcade game about momentum, airtime, and smooth landings.',
-      controls: 'Hold mouse or Space to build speed; release to launch.',
-      embedUrl: 'https://www.yalogames.com/game/dune', providerUrl: 'https://www.yalogames.com/game/dune',
-      image: 'https://appgallery.io/assets/screenshots/30daf0c902f593ef9296ef597b0ee12d.jpg?id=1291851950&s=1', tag: 'SKILL ARCADE',
-    },
-{
       slug: 'crazy-cattle-3d', name: 'Crazy Cattle 3D', category: 'Action', icon: '🐑', color: '#f0c2b8',
       description: 'Charge, launch rival sheep, and survive the chaotic arena.',
       details: 'Physics-based sheep battle royale with momentum-driven movement and unpredictable collisions.',
@@ -1366,14 +1342,6 @@ export const games = [
       controls: 'Follow the arrow-key and on-screen instructions.',
       embedUrl: 'https://ducklife.online/duck-life-space', providerUrl: 'https://ducklife.online/duck-life-space',
       image: 'https://play-lh.googleusercontent.com/oX47exmYlf0oET8oJ3J_r8oHkjLt3SOTM9r_b1NGbAnqK5bLjxPalhSSVykFLdjav5_Acuyer_ISh5FHdycpFQQ=w512-h512', tag: 'DUCK LIFE SERIES',
-    },
-{
-      slug: 'duck-life-adventure', name: 'Duck Life: Adventure', category: 'Adventure', icon: '🦆', color: '#c7e9b4',
-      description: 'Explore a duck-filled world, train, battle, and take on quests.',
-      details: 'A larger adventure entry with exploration and RPG-style progression.',
-      controls: 'Use keyboard and mouse; follow the tutorial.',
-      embedUrl: 'https://ducklife.online/duck-life-adventure', providerUrl: 'https://ducklife.online/duck-life-adventure',
-      image: 'https://play-lh.googleusercontent.com/Jph6eFNmHY1PR8LB696by776YCaRxZOrU5xVR2hyACyVXX90RhS2IiWmaqwbIzmJJwKbnqEtiP7S6WpPf1zV97o=w512-h512', tag: 'DUCK LIFE SERIES',
     },
 {
       slug: 'duck-life-battle', name: 'Duck Life: Battle', category: 'Action', icon: '🥊', color: '#c7e9b4',
