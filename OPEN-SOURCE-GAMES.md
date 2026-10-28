@@ -13,6 +13,10 @@ to its source.
 - **More games** points back to StudyShelf (`/`) instead of the upstream collection page.
 - The author's link to an unrelated video-downloader site (saveone.pro) is removed.
 
+The shared `i18n.js` also loads the author's GoatCounter visitor tracker. The importer turns it off with its
+documented switch (`GC_SITE = ''`), so StudyShelf visitors aren't counted on the author's dashboard, and the
+tracker script (`analytics.js`) isn't copied.
+
 The author credit and GitHub link in each footer are kept. Thumbnails in `public/play-thumbs/` are generated
 StudyShelf artwork, not upstream screenshots. Catalog text (descriptions, categories, controls) lives in the
 script's `GAMES` table.

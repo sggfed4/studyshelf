@@ -95,7 +95,12 @@ rmSync(playDir, { recursive: true, force: true })
 rmSync(thumbDir, { recursive: true, force: true })
 mkdirSync(playDir, { recursive: true })
 mkdirSync(thumbDir, { recursive: true })
-cpSync(join(upstream, 'i18n.js'), join(playDir, 'i18n.js'))
+// i18n.js also loads the author's GoatCounter visitor tracker. Use its documented off switch (empty GC_SITE) so
+// StudyShelf visitors aren't counted on the author's dashboard and no analytics.js request is made.
+const i18n = readFileSync(join(upstream, 'i18n.js'), 'utf8')
+const i18nNoTracking = i18n.replace(/^(\s*var GC_SITE = )'[^']*';/m, "$1'';")
+if (i18nNoTracking === i18n && !/^\s*var GC_SITE = '';/m.test(i18n)) throw new Error('i18n.js: GC_SITE not found — upstream markup changed')
+writeFileSync(join(playDir, 'i18n.js'), i18nNoTracking)
 cpSync(join(upstream, 'LICENSE'), join(playDir, 'LICENSE.txt'))
 
 const available = new Set(readdirSync(upstream, { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name))
